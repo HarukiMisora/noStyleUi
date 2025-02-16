@@ -1,0 +1,103 @@
+
+
+.default{
+    height: 32px;
+    padding: 10px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color .3s, background .3s, border .3s,border .3s ease;
+
+    border-radius: 4px;
+    font-size: 12px;
+
+    background-color: #0000;
+    border: 1px solid var(--default);
+    color: var(--default);
+
+    &:hover{
+        color: var(--success);
+        border: 1px solid var(--success);
+    }
+    &:active{
+        transform: translate(1px,2.5px);
+    }
+
+}
+.tertiary{
+    opacity: 0.5;
+    &:hover{
+        opacity: 1;
+        border: 1px solid var(--tertiary);
+        color: var(--tertiary);
+    }
+
+}
+.primary{
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+    color: var(--text-color);
+    &:hover{
+        border: 1px solid var(--primary-hover);
+        background-color: var(--primary-hover);
+        color: var(--text-color);
+    }
+    &:active{
+        background-color: var(--primary-active);
+    }
+}
+.success{
+    border: 1px solid var(--success);
+    background-color: var(--success);
+    color: var(--text-color);
+    &:hover{
+        border: 1px solid var(--success-hover);
+        background-color: var(--success-hover);
+        color: var(--text-color);
+    }
+    &:active{
+        background-color: var(--success-active);
+    }
+}
+.info{
+    border: 1px solid var(--info);
+    background-color: var(--info);
+    color: var(--text-color);
+    &:hover{
+        border: 1px solid var(--info-hover);
+        background-color: var(--info-hover);
+        color: var(--text-color);
+    }
+    &:active{
+        background-color: var(--info-active);
+    }
+}
+.warning{
+    border: 1px solid var(--warning);
+    background-color: var(--warning);
+    color: var(--text-color);
+    &:hover{
+        border: 1px solid var(--warning-hover);
+        background-color: var(--warning-hover);
+        color: var(--text-color);
+    }
+    &:active{
+        background-color: var(--warning-active);
+    }
+}
+.error{
+    border: 1px solid var(--error);
+    background-color: var(--error);
+    color: var(--text-color);
+    &:hover{
+        border: 1px solid var(--error-hover);
+        background-color: var(--error-hover);
+        color: var(--text-color);
+    }
+    &:active{
+        background-color: var(--error-active);
+    }
+}
+

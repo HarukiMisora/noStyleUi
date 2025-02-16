@@ -1,0 +1,38 @@
+
+
+
+.none{
+    &:active{
+        transform: translate(0,0);
+    }
+}
+
+.text{
+    &:active{
+        transform: translate(0,0);
+        padding-top: 13px;
+        padding-bottom: 7px;
+        padding-left: 11px;
+        padding-right: 9px;
+    }
+}
+.rotate{
+    transition: transform 1.5s ease;
+    &:active{
+        transition: transform 10s ease;
+
+        transform: translate(0,0) rotate(3600deg);
+    
+    }
+}
+.biger{
+    &:active{
+        transform: translate(0,0) scale(1.25);
+    
+    }
+}
+.small{
+    &:active{
+        transform: translate(0,0) scale(0.75);
+    }
+}
