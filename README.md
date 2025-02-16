@@ -28,9 +28,20 @@ like 随手 写一段没跑过的不知道什么效果的 `tailwindcss` 代码�
 也或许看上去还好，好的现在我们需要让这6个的盒子宽和高变成40*20px，我们需要一个一个修改，这让我感到不痛快。
 
 为了解决这个问题，我有了自己全新的写法，noStyleUi就此诞生了
+
+# 安装 noStyleUi
+
+```bash
+npm i nostyleui
+```
+
+### 文档地址:http://www.文档我还没写完.com/
+
+### 注意：该框架目前阶段还在基板开发中，仅供参考，现在可以观望。不建议现在就拿去当作生产工具，因为我还会更改很多东西，会影响后续版本的使用方法，会导致你更新框架时有概率也跟着改你自己的代码。
+
 # noStyleUi -> DOM
 
-#### 注意：该框架目前阶段还在基板开发中，仅供参考，现在可以观望。不建议现在就拿去当作生产工具，因为我还会更改很多东西，会影响后续版本的使用方法，会导致你更新框架时有概率也跟着改你自己的代码。
+
 
 什么是noStyleUi，字面意思，no need to write css in `<style></style>`。这个东西可以尽量帮助我们不用写class和css,思路和 tailwindcss 类似，但是我把class变成了属性。
 
@@ -88,4 +99,6 @@ like 随手 写一段没跑过的不知道什么效果的 `tailwindcss` 代码�
     <w-button type="error"  effect="rotate">rotate</w-button>
     <w-button type="error"  effect="rotate">rotate长按我</w-button>
 ```
+
+
   
