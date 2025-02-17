@@ -62,15 +62,25 @@ npm i nostyleui
 
 `<w-group></w-group>`不渲染任何dom，它只是负责给自己的一级子元素提供样式，它下面的所有一级子元素继承它的样式，但是它自身并不产生dom。注意，只影响第一级子元素，子元素的子元素不归它管。
 
+attribute="`p{number}`" 百分比%
+
+attribute="`v{number}`" vh/vw
+
+attribute="`$10px`" -> `$`符号会将样式挂载到`style`而不是`class`，这给我提供了更便捷的自定义样式的写法。
+
 `:flex=['col','g-20']`集成了`class="flex flex-col gap-20"`，如果只想要 `class="flex"` 可以直接`flex`不带任何参数,就像下面这样。
 
+
+
+
+
 ```html
-    <w-div flex></w-span> === <w-span flex=""></w-span>
+    <w-div flex></w-div> === <w-span flex=""></w-span>
 
     单一参数时也可以传入字符串
-    <w-div flex="col"></w-span>
-    <w-div flex="row"></w-span>
-    <w-div flex="g-20"></w-span>
+    <w-div flex="col"></w-div>
+    <w-div flex="row"></w-div>
+    <w-div flex="g-20"></w-div>
 ```
 
 
