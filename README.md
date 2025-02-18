@@ -34,6 +34,17 @@ like 随手 写一段没跑过的不知道什么效果的 `tailwindcss` 代码�
 ```bash
 npm i nostyleui
 ```
+# 使用 / 导入 
+
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+import nostyleui from 'nostyleui/index'
+
+createApp(App).use(nostyleui).mount('#app')
+```
+
+### 提示：如果代码提示没有生效，可以再 tsconfig.json 或者 tsconfig.app.json 里面 include 手动加入`"node_modules/nostyleui/interface.d.ts"`。
 
 ### 文档地址:http://www.文档我还没写完.com/
 
