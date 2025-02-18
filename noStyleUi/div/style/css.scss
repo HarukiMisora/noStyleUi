@@ -7,10 +7,10 @@ $i:0;
 @while $i<=1920{
    
     .w-#{$i}{
-        width: #{$i}px;
+        width: #{$i}px !important;
     }
     .h-#{$i}{
-        height: #{$i}px;
+        height: #{$i}px !important;
     }
 
 
@@ -20,13 +20,13 @@ $i:0;
 $i:0;
 @while $i<=500{
     .p-#{$i}{
-        padding: #{$i}px;
+        padding: #{$i}px !important;
     }
     .m-#{$i}{
-        margin: #{$i}px;
+        margin: #{$i}px !important;
     }
     .g-#{$i}{
-        gap: #{$i}px;
+        gap: #{$i}px !important;
     }
     $i:$i+1
 }
@@ -34,16 +34,16 @@ $i:0;
 $i:0;
 @while $i<=500{
     .px-#{$i}{
-        padding:0 #{$i}px;
+        padding:0 #{$i}px !important;
     }
     .py-#{$i}{
-        padding: #{$i}px 0;
+        padding: #{$i}px 0 !important;
     }
     .mx-#{$i}{
-        margin:0 #{$i}px;
+        margin:0 #{$i}px !important;
     }
     .my-#{$i}{
-        margin: #{$i}px 0;
+        margin: #{$i}px 0 !important;
     }
     $i:$i+1
 }
@@ -51,28 +51,28 @@ $i:0;
 $i:0;
 @while $i<=500{
     .pl-#{$i}{
-        padding-left: #{$i}px;
+        padding-left: #{$i}px !important;
     }
     .pr-#{$i}{
-        padding-right: #{$i}px;
+        padding-right: #{$i}px !important;
     }
     .pt-#{$i}{
-        padding-top: #{$i}px;
+        padding-top: #{$i}px !important;
     }
     .pb-#{$i}{
-        padding-bottom: #{$i}px;
+        padding-bottom: #{$i}px !important;
     }
     .ml-#{$i}{
-        margin-left: #{$i}px;
+        margin-left: #{$i}px !important;
     }
     .mr-#{$i}{
-        margin-right: #{$i}px;
+        margin-right: #{$i}px !important;
     }
     .mt-#{$i}{
-        margin-top: #{$i}px;
+        margin-top: #{$i}px !important;
     }
     .mb-#{$i}{
-        margin-bottom: #{$i}px;
+        margin-bottom: #{$i}px !important;
     }
     $i:$i+1
 }
@@ -81,16 +81,16 @@ $i:0;
 @while $i<=100{
    
     .w-p#{$i}{
-        width:#{$i}+'%';
+        width:#{$i}+'%' !important;
     }
     .w-v#{$i}{
-        width:#{$i}+'vw';
+        width:#{$i}+'vw' !important;
     }
     .h-p#{$i}{
-        height:#{$i}+'%';
+        height:#{$i}+'%' !important;
     }
     .h-v#{$i}{
-        height:#{$i}+'vw';
+        height:#{$i}+'vh' !important;
     }
     $i:$i+1 
 
@@ -98,38 +98,47 @@ $i:0;
 
 @each $i in $colors {
     .bg-#{meta.inspect($i)}{
-        background-color:$i;
+        background-color:$i !important;
     }
     .bc-#{meta.inspect($i)}{
-        background-color:$i;
+        background-color:$i !important;
     }
     .c-#{meta.inspect($i)}{
-        color: $i; 
+        color: $i !important; 
     }
 }
 .flex{
-    display: flex;
+    display: flex !important;
 }
 .flex-col{
-    flex-direction: column;
+    flex-direction: column !important;
 }
 .flex-col-r{
-    flex-direction: column-reverse;
+    flex-direction: column-reverse !important;
 }
 .flex-row{
-    flex-direction: row;
+    flex-direction: row !important;
 }
 .flex-row-r{
-    flex-direction: row-reverse;
+    flex-direction: row-reverse !important;
 }
 .flex-inh{
-    flex-direction: inherit;
+    flex-direction: inherit !important;
 }
 .flex-ini{
-    flex-direction: initial;
+    flex-direction: initial !important;
 }
 .flex-un{
-    flex-direction: unset;
+    flex-direction: unset !important;
+}
+.flex-wrap{
+    flex-wrap: wrap !important;
+}
+.flex-nowrap{
+    flex-wrap: nowrap !important;
+}
+.flex-1{
+    flex: 1 !important;
 }
 
 .c-primary{
