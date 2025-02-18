@@ -22,7 +22,7 @@ setTimeout(()=>{
     <w-div bg="black" c="red" h="400" w="p100" p="20" flex >
     <w-div w="p50" p="10" bc="$#fff" flex="col">
       <w-span>基础</w-span>
-      <w-div  w="p100" flex="g-10" mb="20" >
+      <w-div  w="p100" :flex="['g-10','wrap']" mb="20" >
         <w-button type="default" >default</w-button>
         <w-button type="primary" >primary</w-button>
         <w-button type="success" >success</w-button>
@@ -33,7 +33,7 @@ setTimeout(()=>{
         <w-button >none</w-button>
       </w-div>
       <w-span>点击特效</w-span>
-      <w-div bc="$#fff"  flex="g-10" mb="20"  >
+      <w-div bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
         <w-button type="default"  >default</w-button>
         <w-button type="primary"  >box</w-button>
         <w-button type="success"  effect="text">text</w-button>
@@ -43,6 +43,14 @@ setTimeout(()=>{
         <w-button type="error"  effect="rotate">rotate长按我</w-button>
 
         <w-button type="success" effect="none">none</w-button>
+      </w-div>
+      <w-span>抽象按钮</w-span>
+      <w-div bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
+        <w-button type="default"  >default</w-button>
+        <w-button type="primary"  >solid</w-button>
+        <w-button type="success" abstract="dash" >dash</w-button>
+        <w-button type="info" abstract="galss">galss</w-button>
+        <w-button type="warning" abstract="cut" >cut</w-button>
       </w-div>
     </w-div>
       <w-div w="p50" p="10" :bg="urls">右面</w-div>

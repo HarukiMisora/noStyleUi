@@ -1,7 +1,7 @@
 
 type typeT = StringConstructor|NumberConstructor|ObjectConstructor|ArrayConstructor
 
-import type {buttonEffectType, buttonType, flexT} from './config'
+import type {buttonEffectType, buttonType, buttonAbstractType } from './config'
 import type {PropType} from 'vue'
 
 export interface configT{ 
@@ -42,6 +42,10 @@ export interface configT{
         effect:{
            type:PropType<buttonEffectType>
            default:buttonEffectType
+        },
+        abstract:{
+            type:PropType<buttonAbstractType>,
+            default:buttonAbstractType
         }
     }
 

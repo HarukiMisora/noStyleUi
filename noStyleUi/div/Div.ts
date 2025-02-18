@@ -21,6 +21,9 @@ const flexOptionActive = {
     ini:(value:string)=>'flex-ini',
     un:(value:string)=>'flex-un',
     g:(value:string)=>`g-${value}`,
+    wrap:(value:string)=>`flex-wrap`,
+    nowrap:(value:string)=>`flex-nowrap`,
+    1:()=>'flex-1',
     undefined:()=>''
 }
 

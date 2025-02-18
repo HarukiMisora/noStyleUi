@@ -5,6 +5,7 @@ import type {PropType} from 'vue'
 export type flexT = string|boolean|string[]
 export type buttonType = 'default'|'primary'|'info'|'success'|'warning'|'error'|'tertiary'|'none'
 export type buttonEffectType = 'box'|'text'|'none'|'biger'|'small'|'rotate'
+export type buttonAbstractType = 'solid'|'dash'|'galss'|'cut'
 export const config:configT = {
     colors:{
         primary:'#365636'
@@ -42,6 +43,10 @@ export const config:configT = {
         effect:{
             type:String as PropType<buttonEffectType>,
             default:'box'
+        },
+        abstract:{
+            type:String as PropType<buttonAbstractType>,
+            default:'solid'
         }
         
         
