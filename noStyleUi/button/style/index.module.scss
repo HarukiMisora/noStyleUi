@@ -17,9 +17,10 @@
     border: 1px solid var(--default);
     color: var(--default);
 
-    &:hover{
+    &:hover,&:focus-visible{
         color: var(--success);
         border: 1px solid var(--success);
+        outline: none;
     }
     &:active{
         transform: translate(1px,2.5px);
@@ -28,7 +29,7 @@
 }
 .tertiary{
     opacity: 0.5;
-    &:hover{
+    &:hover,&:focus-visible{
         opacity: 1;
         border: 1px solid var(--tertiary);
         color: var(--tertiary);
@@ -39,7 +40,7 @@
     border: 1px solid var(--primary);
     background-color: var(--primary);
     color: var(--text-color);
-    &:hover{
+    &:hover,&:focus-visible{
         border: 1px solid var(--primary-hover);
         background-color: var(--primary-hover);
         color: var(--text-color);
@@ -52,7 +53,7 @@
     border: 1px solid var(--success);
     background-color: var(--success);
     color: var(--text-color);
-    &:hover{
+    &:hover,&:focus-visible{
         border: 1px solid var(--success-hover);
         background-color: var(--success-hover);
         color: var(--text-color);
@@ -65,7 +66,7 @@
     border: 1px solid var(--info);
     background-color: var(--info);
     color: var(--text-color);
-    &:hover{
+    &:hover,&:focus-visible{
         border: 1px solid var(--info-hover);
         background-color: var(--info-hover);
         color: var(--text-color);
@@ -78,7 +79,7 @@
     border: 1px solid var(--warning);
     background-color: var(--warning);
     color: var(--text-color);
-    &:hover{
+    &:hover,&:focus-visible{
         border: 1px solid var(--warning-hover);
         background-color: var(--warning-hover);
         color: var(--text-color);
@@ -91,7 +92,7 @@
     border: 1px solid var(--error);
     background-color: var(--error);
     color: var(--text-color);
-    &:hover{
+    &:hover,&:focus-visible{
         border: 1px solid var(--error-hover);
         background-color: var(--error-hover);
         color: var(--text-color);
