@@ -14,6 +14,9 @@ export interface configT{
         h:StringConstructor
         x:StringConstructor
         y:StringConstructor
+        f:StringConstructor //font-size
+        fw:StringConstructor //font-weet
+        radius:StringConstructor //font-weet
         p:StringConstructor
         pt:StringConstructor
         pb:StringConstructor

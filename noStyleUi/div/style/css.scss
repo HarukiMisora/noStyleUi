@@ -28,6 +28,9 @@ $i:0;
     .g-#{$i}{
         gap: #{$i}px !important;
     }
+    .fw-#{$i}{
+        font-weight: $i !important;
+    }
     $i:$i+1
 }
 
@@ -44,6 +47,9 @@ $i:0;
     }
     .my-#{$i}{
         margin: #{$i}px 0 !important;
+    }
+    .fw-#{$i + 500}{
+        font-weight: #{$i+500} !important;
     }
     $i:$i+1
 }
@@ -92,8 +98,25 @@ $i:0;
     .h-v#{$i}{
         height:#{$i}+'vh' !important;
     }
+    .f-#{$i}{
+        font-size: #{$i}+'px' !important;
+    }
+    .radius-#{$i}{
+        border-radius: #{$i}+'px' !important;
+        overflow: hidden !important;
+    }
+
+ 
     $i:$i+1 
 
+}
+$i:0;
+@while $i<=50{
+    .radius-p#{$i}{
+        border-radius: #{$i}+'%' !important;
+        overflow: hidden !important;
+    }
+    $i:$i+1 
 }
 
 @each $i in $colors {

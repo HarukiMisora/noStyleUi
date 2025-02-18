@@ -19,10 +19,10 @@ setTimeout(()=>{
 <template>
   <div style="display: flex;flex-direction: column;" class="test test1">
 
-    <w-div bg="black" c="red" h="400" w="p100" p="20" flex >
-    <w-div w="p50" p="10" bc="$#fff" flex="col">
+    <w-div bg="black" c="red" h="400" w="p100" p="20" flex radius="25" >
+    <w-div w="p50" p="10" bc="$#fff" flex="col" >
       <w-span>基础</w-span>
-      <w-div  w="p100" :flex="['g-10','wrap']" mb="20" >
+      <w-div  w="p100" :flex="['g-10','wrap']" mb="20" radius="">
         <w-button type="default" >default</w-button>
         <w-button type="primary" >primary</w-button>
         <w-button type="success" >success</w-button>
@@ -44,7 +44,7 @@ setTimeout(()=>{
 
         <w-button type="success" effect="none">none</w-button>
       </w-div>
-      <w-span>抽象按钮</w-span>
+      <w-span f="45" >抽象按钮</w-span>
       <w-div bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
         <w-button type="default"  >default</w-button>
         <w-button type="primary"  >solid</w-button>

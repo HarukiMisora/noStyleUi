@@ -32,12 +32,15 @@ export function renderHelper(props:PropT){
 
     const className:{[key:string]:Boolean} ={}
     const styles:{[key:string]:string|undefined} ={}
-    const attributeGrop:(keyof Omit<typeof props,'flex'>)[] = ['w','h','x','y','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','c']
+    const attributeGrop:(keyof Omit<typeof props,'flex'>)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','c','radius']
     const attributeGropStyle: {[key in typeof attributeGrop[number]]:string} = {
         w:'width',
         h:'height',
         x:'x',
         y:'y',
+        f:'font-size',
+        fw:'font-weight',
+        radius:'border-radius',
         p:'padding',
         pt:'padding-top',
         pb:'padding-bottom',
