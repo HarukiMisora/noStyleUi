@@ -14,16 +14,16 @@ const styleProps = {
 type PropT = {[key in keyof typeof styleProps]?:string}
 
 const flexOptionActive = {
-    col:(value:string)=>'flex-col',
-    row:(value:string)=>'flex-row',
-    'col-r':(value:string)=>'flex-col-r',
-    'row-r':(value:string)=>'flex-row-r',
-    inh:(value:string)=>'flex-inh',
-    ini:(value:string)=>'flex-ini',
-    un:(value:string)=>'flex-un',
+    col:()=>'flex-col',
+    row:()=>'flex-row',
+    'col-r':()=>'flex-col-r',
+    'row-r':()=>'flex-row-r',
+    inh:()=>'flex-inh',
+    ini:()=>'flex-ini',
+    un:()=>'flex-un',
     g:(value:string)=>`g-${value}`,
-    wrap:(value:string)=>`flex-wrap`,
-    nowrap:(value:string)=>`flex-nowrap`,
+    wrap:()=>`flex-wrap`,
+    nowrap:()=>`flex-nowrap`,
     center:()=>'flex-center',
     i:(value:string)=>`items-${value}`,
     j:(value:string)=>`justify-${value}`,
@@ -65,36 +65,6 @@ export function renderHelper(props:PropT){
         bg:'background',
         bc:'background-color',
         
-    }
-    const flexGrup = {
-        col:{
-            type:'flex-direction',
-            value:'column'
-        },
-        row:{
-            type:'flex-direction',
-            value:'row'
-        },
-        'col-r':{
-            type:'flex-direction',
-            value:'column-reverse'
-        },
-        'row-r':{
-            type:'flex-direction',
-            value:'row-reverse'
-        },
-        inh:{
-            type:'flex-direction',
-            value:'inherit'
-        },
-        ini:{
-            type:'flex-direction',
-            value:'initial'
-        },
-        un:{
-            type:'flex-direction',
-            value:'unset' 
-        }
     }
     
     //
