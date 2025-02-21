@@ -16,7 +16,7 @@ export const button = defineComponent({
     props:buttonProps,
     setup(props){
         
-        console.log(props);
+        // console.log(props);
         
     },
     render(){
@@ -33,13 +33,13 @@ export const button = defineComponent({
             className[buttonS[this.$props.type]] = true 
         }
         if(this.$props.effect!=='box'){
-            console.log(this.$props.effect);
+            // console.log(this.$props.effect);
             
             className[effectS[this.$props.effect]] = true 
             
         }
 
-        console.log(className);
+        // console.log(className);
         
         return h('button',{
             class:className,

@@ -2,6 +2,7 @@
 
 import {computed, defineComponent , h, ref, watch, watchEffect, type PropType} from 'vue'
 import { config } from '../config/config'
+import type { Value } from 'sass'
 // import   './style/css.scss'
 
 
@@ -23,6 +24,9 @@ const flexOptionActive = {
     g:(value:string)=>`g-${value}`,
     wrap:(value:string)=>`flex-wrap`,
     nowrap:(value:string)=>`flex-nowrap`,
+    center:()=>'flex-center',
+    i:(value:string)=>`items-${value}`,
+    j:(value:string)=>`justify-${value}`,
     1:()=>'flex-1',
     undefined:()=>''
 }
@@ -129,7 +133,7 @@ export function renderHelper(props:PropT){
         if(Array.isArray(props.flex)){
             for(let i of props.flex){
                 const option = i.split('-')
-                console.log(option);
+                // console.log(option);
                 const thisClass = flexOptionActive[<keyof typeof flexOptionActive>option?.[0]]?.(option?.[1])
                 if(thisClass){
                     className[thisClass] = true
@@ -141,7 +145,7 @@ export function renderHelper(props:PropT){
         }else{
 
             const option = props?.flex?.split?.('-') ||''
-            console.log(option);
+            // console.log(option);
             const thisClass = flexOptionActive[<keyof typeof flexOptionActive>option?.[0]]?.(option?.[1])
             if(thisClass){
                 className[thisClass] = true

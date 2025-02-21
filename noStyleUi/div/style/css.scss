@@ -1,6 +1,7 @@
 
 @use  './colors.scss' as *;
 @use './theme.scss' as *;
+@use './flex.scss' as *;
 @use 'sass:meta';
 
 $i:0;
@@ -129,39 +130,6 @@ $i:0;
     .c-#{meta.inspect($i)}{
         color: $i !important; 
     }
-}
-.flex{
-    display: flex !important;
-}
-.flex-col{
-    flex-direction: column !important;
-}
-.flex-col-r{
-    flex-direction: column-reverse !important;
-}
-.flex-row{
-    flex-direction: row !important;
-}
-.flex-row-r{
-    flex-direction: row-reverse !important;
-}
-.flex-inh{
-    flex-direction: inherit !important;
-}
-.flex-ini{
-    flex-direction: initial !important;
-}
-.flex-un{
-    flex-direction: unset !important;
-}
-.flex-wrap{
-    flex-wrap: wrap !important;
-}
-.flex-nowrap{
-    flex-wrap: nowrap !important;
-}
-.flex-1{
-    flex: 1 !important;
 }
 
 .c-primary{

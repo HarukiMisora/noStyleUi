@@ -16,7 +16,7 @@ export{
 
 
 export default function install(Vue:any){
-    console.log(Vue);
+    // console.log(Vue);
     Vue.component('WDiv',WDiv)
     Vue.component('WSpan',WSpan)
     Vue.component('WButton',WButton)

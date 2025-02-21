@@ -44,7 +44,7 @@ setTimeout(()=>{
 
         <w-button type="success" effect="none">none</w-button>
       </w-div>
-      <w-span f="45" >抽象按钮</w-span>
+      <w-span  >抽象按钮</w-span>
       <w-div bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
         <w-button type="default"  >default</w-button>
         <w-button type="primary"  >solid</w-button>
