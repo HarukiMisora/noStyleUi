@@ -34,7 +34,7 @@ export interface configT{
 
         //颜色相关
         c:StringConstructor
-        bg:StringConstructor
+        bg:[StringConstructor,ArrayConstructor]
         bc:StringConstructor
 
 

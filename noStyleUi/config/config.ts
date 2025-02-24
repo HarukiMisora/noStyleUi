@@ -36,7 +36,7 @@ export const config:configT = {
 
         //颜色
         c:String,
-        bg:String,
+        bg:[String,Array],
         bc:String,
 
         flex:[String,Boolean,Array]

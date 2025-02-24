@@ -2,7 +2,6 @@
 
 import {computed, defineComponent , h, ref, watch, watchEffect, type PropType} from 'vue'
 import { config } from '../config/config'
-import type { Value } from 'sass'
 // import   './style/css.scss'
 
 
@@ -29,6 +28,13 @@ const flexOptionActive = {
     j:(value:string)=>`justify-${value}`,
     1:()=>'flex-1',
     undefined:()=>''
+}
+const bgOptionActive = {
+   c:(value:string)=>`bc-${value}`,
+   s:(value:string)=>`bs-${value}`,
+   x:(value:string)=>`bp-x-${value}`,
+   y:(value:string)=>`bp-y-${value}`,
+   r:(value:string)=>`bp-r-${value}`,
 }
 
 
@@ -81,19 +87,50 @@ export function renderHelper(props:PropT){
     }
 
     if(props.bg!==undefined){
-        // const type = props.bg.split('.')[1]
-        // console.log(type);
-        if(props.bg[0] ==='$'){
+        if(Array.isArray(props.bg)){
+            const size =['auto','auto']
+            for(let i of props.bg){
+                if(new RegExp('^.*.(jpg|png|gif)$').test(i)){
+                    // console.log(props.bg);
+                    styles.backgroundImage = `url("${i}")`
+                    continue
+                }
+                const option = i.split('-')
+                console.log(option);
+                let thisClass = ''
+                const sizePix = option[1].indexOf('p')?(option[1].indexOf('v')?'px':`v${option[0]}`):'%'
+                const sizeValue = sizePix === 'px'?option[1]:option[1].slice(1)
+                switch(option[0]){
+                    case 'w':size[0] = sizeValue + sizePix;break;
+                    case 'h':size[1] = sizeValue + sizePix;break;
+                    default:{
+                        thisClass = bgOptionActive[<keyof typeof bgOptionActive>option?.[0]]?.(option?.[1])
+                    }break;
+                }
+                if(thisClass){
+                    className[thisClass] = true
+                }
+
+                console.log(size,styles);
+                if(size[0]!=='auto'||size[1]!=='auto'){
+                    styles.backgroundSize = `${size[0]} ${size[1]}`
+
+                }
+                
+
+                // console.log(styles);
+                
+            }
+        }else if(props.bg[0] ==='$'){
             styles.background = props.bg.slice(1)
         }else if(new RegExp('^.*.(jpg|png|gif)$').test(props.bg)){
             // console.log(props.bg);
-            styles.background = `url("${props.bg}")`
+            styles.backgroundImage = `url("${props.bg}")`
         }
         else{
             className[`bg-${props.bg}`] = true
             delete styles.background
         }
-        
     }
 
 
@@ -147,14 +184,17 @@ function createTag(tag:string){
             }
         },
         setup(props){
-            
+
+
     
         },
         render(){
             const {className,styles} = renderHelper(<PropT>this.$props)
             return h(tag,{
                 class:className,
-                style:styles,
+                style:{
+                    ...styles,
+                },
                 // class:this.className,
                 // style:this.styles
         

@@ -1,6 +1,8 @@
 import { defineComponent, h } from 'vue'
 import { config } from '../config/config'
 import { renderHelper } from '../div/Div'
+
+
 import buttonS from './style/index.module.scss'
 import effectS from './style/effect.module.scss'
 
@@ -15,7 +17,7 @@ export const button = defineComponent({
     name:`Wbutton`,
     props:buttonProps,
     setup(props){
-        
+        // console.log(buttonS);
         // console.log(props);
         
     },
@@ -29,7 +31,6 @@ export const button = defineComponent({
             if(this.$props.type !=='none'){
                 className[buttonS.default] = true 
             }
-          
             className[buttonS[this.$props.type]] = true 
         }
         if(this.$props.effect!=='box'){
