@@ -1,6 +1,6 @@
 
 
-import {computed, defineComponent , h, ref, watch, watchEffect, type PropType} from 'vue'
+import { defineComponent , h} from 'vue'
 import { config } from '../config/config'
 // import   './style/css.scss'
 
@@ -96,10 +96,10 @@ export function renderHelper(props:PropT){
                     continue
                 }
                 const option = i.split('-')
-                console.log(option);
+                // console.log(option);
                 let thisClass = ''
-                const sizePix = option[1].indexOf('p')?(option[1].indexOf('v')?'px':`v${option[0]}`):'%'
-                const sizeValue = sizePix === 'px'?option[1]:option[1].slice(1)
+                const sizePix = option[1]?.indexOf('p')?(option[1]?.indexOf('v')?'px':`v${option[0]}`):'%'
+                const sizeValue = sizePix === 'px'?option[1]:option[1]?.slice(1)
                 switch(option[0]){
                     case 'w':size[0] = sizeValue + sizePix;break;
                     case 'h':size[1] = sizeValue + sizePix;break;
@@ -111,7 +111,7 @@ export function renderHelper(props:PropT){
                     className[thisClass] = true
                 }
 
-                console.log(size,styles);
+                // console.log(size,styles);
                 if(size[0]!=='auto'||size[1]!=='auto'){
                     styles.backgroundSize = `${size[0]} ${size[1]}`
 
@@ -124,7 +124,7 @@ export function renderHelper(props:PropT){
         }else if(props.bg[0] ==='$'){
             styles.background = props.bg.slice(1)
         }else if(new RegExp('^.*.(jpg|png|gif)$').test(props.bg)){
-            // console.log(props.bg);
+            console.log(props.bg);
             styles.backgroundImage = `url("${props.bg}")`
         }
         else{
@@ -183,7 +183,7 @@ function createTag(tag:string){
                 default:''
             }
         },
-        setup(props){
+        setup(){
 
 
     

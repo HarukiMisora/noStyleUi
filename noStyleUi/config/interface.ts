@@ -1,5 +1,5 @@
 
-type typeT = StringConstructor|NumberConstructor|ObjectConstructor|ArrayConstructor
+type pxT = [StringConstructor,NumberConstructor]
 
 import type {buttonEffectType, buttonType, buttonAbstractType } from './config'
 import type {PropType} from 'vue'
@@ -10,27 +10,27 @@ export interface configT{
     },
     props:{
         //像素相关
-        w:StringConstructor
-        h:StringConstructor
-        x:StringConstructor
-        y:StringConstructor
-        f:StringConstructor //font-size
-        fw:StringConstructor //font-weet
-        radius:StringConstructor //font-weet
-        p:StringConstructor
-        pt:StringConstructor
-        pb:StringConstructor
-        pl:StringConstructor
-        pr:StringConstructor
-        px:StringConstructor
-        py:StringConstructor
-        m:StringConstructor
-        mb:StringConstructor
-        mt:StringConstructor
-        ml:StringConstructor
-        mr:StringConstructor
-        mx:StringConstructor
-        my:StringConstructor
+        w:pxT
+        h:pxT
+        x:pxT
+        y:pxT
+        f:pxT //font-size
+        fw:pxT //font-weet
+        radius:pxT //font-weet
+        p:pxT
+        pt:pxT
+        pb:pxT
+        pl:pxT
+        pr:pxT
+        px:pxT
+        py:pxT
+        m:pxT
+        mb:pxT
+        mt:pxT
+        ml:pxT
+        mr:pxT
+        mx:pxT
+        my:pxT
 
         //颜色相关
         c:StringConstructor

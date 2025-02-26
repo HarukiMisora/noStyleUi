@@ -2,25 +2,77 @@
 import { ref } from 'vue';
 
 const a = ref(<string>'a')
-const urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
+let urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
+import { WData } from '../noStyleUi/test/data';
 
-setTimeout(()=>{
-  a.value = 'p25'
-},1000)
-setTimeout(()=>{
-  a.value = '$1000%'
-},2000)
-setTimeout(()=>{
-  
-  a.value = '200'
-},3000)
+
+
+
+
+
+
+const testData = ref([
+  {
+    type:1,
+    sex:0,
+    like:'red'
+  },
+  {
+    type:0,
+    sex:0,
+    like:'red'
+  },
+  {
+    type:1,
+    sex:0,
+    like:'red'
+  },
+  {
+    type:1,
+    sex:0,
+    like:'blue'
+  },
+  {
+    type:1,
+    sex:1,
+    like:'blue'
+  },
+  {
+    type:0,
+    sex:1,
+    like:'red'
+  },
+  {
+    type:1,
+    sex:0,
+    like:'red'
+  },
+  {
+    type:1,
+    sex:0,
+    like:'blue'
+  },
+  {
+    type:1,
+    sex:1,
+    like:'red'
+  }
+])
+const green = ref('blue')
+const colors = ['red','black','green','white','blue']
+
+
+
+
+
+
+
 </script>
 
 <template>
   <div style="display: flex;flex-direction:column;" class="test test1">
-
-    <w-div :bg="['c-black',urls,'s-fill','r-n']"  c="red" h="400" w="p100" p="20" flex radius="25" >
-    <!-- <w-div w="p50" p="10" bc="$#fff" flex="col" > -->
+    <w-div :bg="['c-black',urls,'s-fill','r-n']"  c="red" h="400" w="p100" p="20" flex radius="25" style="text-align: center;">
+    <!-- <w-div w="p50" p="10" bc="$#fff" flex="col" > --> 
       <!-- <w-span>基础</w-span>
       <w-div  w="p100" :flex="['g-10','wrap']" mb="20" radius="">
         <w-button type="default" >default</w-button>
@@ -53,7 +105,7 @@ setTimeout(()=>{
         <w-button type="warning" abstract="cut" >cut</w-button>
       </w-div>
     </w-div> -->
-      <w-div w="p50" p="10" >右面</w-div>
+      <w-div w="p50" p="10"  >右面</w-div>
     </w-div>
 
     <div style="margin: 20px;text-align: center;font-size: 24px;">比对</div>

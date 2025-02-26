@@ -16,7 +16,7 @@ type PropT = {[key in keyof  typeof buttonProps]?:string}
 export const button = defineComponent({
     name:`Wbutton`,
     props:buttonProps,
-    setup(props){
+    setup(){
         // console.log(buttonS);
         // console.log(props);
         

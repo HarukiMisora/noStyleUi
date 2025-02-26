@@ -6,5 +6,10 @@ export default defineConfig({
   plugins: [vue()],
   server:{
     port:8088
-  }
+  },
+  build:{
+    rollupOptions:{
+      input:'index.ts'
+    }
+  },
 })
