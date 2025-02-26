@@ -25,7 +25,7 @@ export const  WVar = defineComponent(
         setup(props, ctx) {
             watchEffect(()=>{
                 WData.set(props.var,props.val)
-                console.log(props.var);
+                // console.log(props.var);
 
             })
         },

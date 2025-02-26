@@ -7,10 +7,6 @@ import { WData } from '../noStyleUi/test/data';
 
 
 
-
-
-
-
 const testData = ref([
   {
     type:1,
@@ -107,7 +103,19 @@ const colors = ['red','black','green','white','blue']
     </w-div> -->
       <w-div w="p50" p="10"  >右面</w-div>
     </w-div>
-
+    <w-div :bg="['red','s-fill']">卧槽啊</w-div>
+    <w-group w="200" bg="red" :flex="['i-center']">
+      <w-div >asdasd</w-div>
+      <w-div>
+        <w-div >asdasd</w-div>
+      </w-div>
+      <w-div>
+        <w-group >
+          <w-div :bg="['s-fill']" :flex="['g-20']" >asd煮香肠</w-div>
+          <w-div >asdasd</w-div>
+        </w-group>
+      </w-div>
+    </w-group>
     <div style="margin: 20px;text-align: center;font-size: 24px;">比对</div>
 
     <div class="bg-black c-red h-400 w-p100 flex p-20">

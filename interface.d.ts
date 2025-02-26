@@ -1,4 +1,4 @@
-import {WDiv,WSpan,WButton,WVar} from './index'
+import {WDiv,WSpan,WButton,WVar,WGroup} from './index'
 
 declare var require :any
 declare module 'vue'{
@@ -7,6 +7,7 @@ declare module 'vue'{
         WSpan:typeof WSpan
         WButton:typeof WButton
         WVar:typeof WVar
+        WGroup:typeof WGroup
 
     }
 }

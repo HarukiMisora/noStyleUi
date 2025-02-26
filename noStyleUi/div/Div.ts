@@ -90,11 +90,20 @@ export function renderHelper(props:PropT){
         if(Array.isArray(props.bg)){
             const size =['auto','auto']
             for(let i of props.bg){
+                if(i ===undefined){
+                    continue
+                }
                 if(new RegExp('^.*.(jpg|png|gif)$').test(i)){
                     // console.log(props.bg);
                     styles.backgroundImage = `url("${i}")`
                     continue
+                }else if(i.indexOf('-') === -1){
+                    className[`bc-${i}`] = true
+                    delete styles.background
+                    continue
                 }
+
+                
                 const option = i.split('-')
                 // console.log(option);
                 let thisClass = ''
@@ -114,7 +123,6 @@ export function renderHelper(props:PropT){
                 // console.log(size,styles);
                 if(size[0]!=='auto'||size[1]!=='auto'){
                     styles.backgroundSize = `${size[0]} ${size[1]}`
-
                 }
                 
 
