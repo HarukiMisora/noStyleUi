@@ -17,7 +17,7 @@ export {group as WGroup} from './noStyleUi/group/group.ts'
 
 export default function install(Vue:any){
     // console.log(Vue);
-    console.log(variables);
+    // console.log(variables);
     Vue.component('WVar',WVar)
     Vue.component('WGroup',WGroup)
     
