@@ -104,17 +104,11 @@ const colors = ['red','black','green','white','blue']
       <w-div w="p50" p="10"  >右面</w-div>
     </w-div>
     <w-div :bg="['red','s-fill']">卧槽啊</w-div>
-    <w-group w="200" bg="red" :flex="['i-center']">
-      <w-div >asdasd</w-div>
-      <w-div>
-        <w-div >asdasd</w-div>
-      </w-div>
-      <w-div>
-        <w-group >
-          <w-div :bg="['s-fill']" :flex="['g-20']" >asd煮香肠</w-div>
-          <w-div >asdasd</w-div>
-        </w-group>
-      </w-div>
+    <w-group  :cus-props="[['type','error']]">
+      <w-button>asd</w-button>
+      <w-button type="success">asd</w-button>
+      <w-button>asd</w-button>
+      <w-button>asd</w-button>
     </w-group>
     <div style="margin: 20px;text-align: center;font-size: 24px;">比对</div>
 

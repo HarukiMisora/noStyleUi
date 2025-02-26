@@ -1,7 +1,7 @@
 
 type pxT = [StringConstructor,NumberConstructor]
 
-import type {buttonEffectType, buttonType, buttonAbstractType } from './config'
+import type {buttonEffectType, buttonType, buttonAbstractType, groupCusPropsType } from './config'
 import type {PropType} from 'vue'
 
 export interface configT{ 
@@ -49,6 +49,11 @@ export interface configT{
         abstract:{
             type:PropType<buttonAbstractType>,
             default:buttonAbstractType
+        }
+    },
+    groupProps:{
+        cusProps:{
+            type:PropType<groupCusPropsType>
         }
     }
 
