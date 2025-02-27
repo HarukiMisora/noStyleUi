@@ -46,7 +46,7 @@ createApp(App).use(nostyleui).mount('#app')
 
 ### 提示：如果代码提示没有生效，可以再 tsconfig.json 或者 tsconfig.app.json 里面 include 手动加入`"node_modules/nostyleui/interface.d.ts"`。
 
-### 文档地址:http://www.文档我还没写完.com/
+### 文档地址:https://www.iamwzc.com/TMXK/noStyleUiDoc/
 
 ### 注意：该框架目前阶段还在基板开发中，仅供参考，现在可以观望。不建议现在就拿去当作生产工具，因为我还会更改很多东西，会影响后续版本的使用方法，会导致你更新框架时有概率也跟着改你自己的代码。
 
@@ -103,7 +103,7 @@ attribute="`$10px`" -> `$`符号会将样式挂载到`style`而不是`class`，�
 
 这里只介绍一个 `BUTTON` 组件的用法，预览组件效果或者查阅其它组件请前往 noStyleUi 文档地址阅读。
 
-文档地址:http://www.文档我还没写完.com/
+文档地址:https://www.iamwzc.com/TMXK/noStyleUiDoc/
 
 当然，UI库的部分现在我只实现了0.5个 `BUTTON`
 
