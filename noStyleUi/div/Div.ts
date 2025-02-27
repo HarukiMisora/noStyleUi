@@ -93,7 +93,7 @@ export function renderHelper(props:PropT){
                 if(i ===undefined){
                     continue
                 }
-                if(new RegExp('^.*.(jpg|png|gif)$').test(i)){
+                if(new RegExp('^.*.(jpg|png|gif|webp|avif|svg)$').test(i)){
                     // console.log(props.bg);
                     styles.backgroundImage = `url("${i}")`
                     continue
@@ -131,8 +131,8 @@ export function renderHelper(props:PropT){
             }
         }else if(props.bg[0] ==='$'){
             styles.background = props.bg.slice(1)
-        }else if(new RegExp('^.*.(jpg|png|gif)$').test(props.bg)){
-            console.log(props.bg);
+        }else if(new RegExp('^.*.(jpg|png|gif|webp|avif|svg)$').test(props.bg)){
+            // console.log(props.bg);
             styles.backgroundImage = `url("${props.bg}")`
         }
         else{

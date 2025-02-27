@@ -6,7 +6,7 @@ import { renderHelper } from '../div/Div'
 import buttonS from './style/index.module.scss'
 import effectS from './style/effect.module.scss'
 import abstractS from './style/abstract.module.scss'
-console.log(buttonS);
+// console.log(buttonS);
 
 const buttonProps = {
     ...config.props,

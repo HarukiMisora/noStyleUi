@@ -1,4 +1,4 @@
-import {WDiv,WSpan,WButton,WVar,WGroup} from './index'
+export {WDiv,WSpan,WButton,WVar,WGroup} from './index'
 
 declare var require :any
 declare module 'vue'{
