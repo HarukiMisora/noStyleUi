@@ -1,0 +1,65 @@
+
+
+
+
+.unseen{
+    background-color: unset;
+   
+}
+.dash{
+    background-color: unset;
+    border-style:dashed;
+    &:hover{
+        border-style: dashed;
+    }
+}
+.glass{
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+.round{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.unseen,.dash,.glass{
+    &:hover{
+        background-color: unset;
+    }
+    &.primary{
+        color: var(--primary);
+        &:hover{
+            color: var(--primary-hover);
+        }
+    }
+    &.success{
+        color: var(--success);
+        &:hover{
+            color: var(--success-hover);
+        }
+    }
+    &.info{
+        color: var(--info);
+        &:hover{
+            color: var(--info-hover);
+        }
+    }
+    &.warning{
+        color: var(--warning);
+        &:hover{
+            color: var(--warning-hover);
+        }
+    }
+    &.error{
+        color: var(--error);
+        &:hover{
+            color: var(--error-hover);
+        }
+    }
+    &.tertiary{
+        color: var(--tertiary);
+        &:hover{
+            color: var(--tertiary-hover);
+        }
+    }
+}

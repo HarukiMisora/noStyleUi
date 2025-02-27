@@ -68,8 +68,8 @@ const colors = ['red','black','green','white','blue']
 <template>
   <div style="display: flex;flex-direction:column;" class="test test1">
     <w-div :bg="['c-black',urls,'s-fill','r-n']"  c="red" h="400" w="p100" p="20" flex radius="25" style="text-align: center;">
-    <!-- <w-div w="p50" p="10" bc="$#fff" flex="col" > --> 
-      <!-- <w-span>基础</w-span>
+    <w-div w="p50" p="10" bc="$#fff" flex="col" > 
+      <w-span>基础</w-span>
       <w-div  w="p100" :flex="['g-10','wrap']" mb="20" radius="">
         <w-button type="default" >default</w-button>
         <w-button type="primary" >primary</w-button>
@@ -78,7 +78,7 @@ const colors = ['red','black','green','white','blue']
         <w-button type="warning" >warning</w-button>
         <w-button type="error" >error</w-button>
         <w-button type="tertiary">tertiary</w-button>
-        <w-button >none</w-button>
+        <w-button type="none">none</w-button>
       </w-div>
       <w-span>点击特效</w-span>
       <w-div bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
@@ -93,14 +93,14 @@ const colors = ['red','black','green','white','blue']
         <w-button type="success" effect="none">none</w-button>
       </w-div>
       <w-span  >抽象按钮</w-span>
-      <w-div bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
+      <w-div :bg="['s-fill']"  :flex="['g-10','wrap']" mb="20"  >
         <w-button type="default"  >default</w-button>
-        <w-button type="primary"  >solid</w-button>
+        <w-button type="primary"  abstract="unseen">unseen</w-button>
         <w-button type="success" abstract="dash" >dash</w-button>
-        <w-button type="info" abstract="galss">galss</w-button>
-        <w-button type="warning" abstract="cut" >cut</w-button>
+        <w-button type="info"    abstract="glass">glass</w-button>
+        <w-button type="warning" abstract="round" >round</w-button>
       </w-div>
-    </w-div> -->
+    </w-div>
       <w-div w="p50" p="10"  >右面</w-div>
     </w-div>
     <w-div :bg="['red','s-fill']">卧槽啊</w-div>

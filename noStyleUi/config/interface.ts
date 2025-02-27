@@ -41,7 +41,10 @@ export interface configT{
         flex:(StringConstructor|BooleanConstructor|ArrayConstructor)[]
     }
     buttonProps:{
-        type:PropType<buttonType>
+        type:{
+            type:PropType<buttonType>
+            default:'default'
+        }
         effect:{
            type:PropType<buttonEffectType>
            default:buttonEffectType
