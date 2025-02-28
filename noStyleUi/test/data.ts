@@ -1,12 +1,5 @@
-import { nextTick } from "vue";
 
-function waitOneSecondThenReturn(value: any): Promise<any> {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(value); // 1秒后返回value
-        }, 1000);
-    });
-}
+
 
 export const WData:{[key:string]:any} ={
 
@@ -21,11 +14,12 @@ export const WData:{[key:string]:any} ={
     get(key:string){
         // console.log(this[key]);
         
-       return this[key]
-   },
-   getf(key:string){
+    return this[key]
+    },
+    getf(key:string){
     // console.log(this[key]);
-    
-   return ()=>this[key]
-}
+
+        return ()=>this[key]
+
+    }
 }

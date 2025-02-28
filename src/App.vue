@@ -58,7 +58,9 @@ const green = ref('blue')
 const colors = ['red','black','green','white','blue']
 
 
-
+const test =(e)=>{
+  window.alert('111',e)
+}
 
 
 
@@ -71,14 +73,14 @@ const colors = ['red','black','green','white','blue']
     <w-div w="p50" p="10" bc="$#fff" flex="col" > 
       <w-span>基础</w-span>
       <w-div  w="p100" :flex="['g-10','wrap']" mb="20" radius="">
-        <w-button type="default" >default</w-button>
-        <w-button type="primary" >primary</w-button>
-        <w-button type="success" >success</w-button>
-        <w-button type="info"  >info</w-button>
-        <w-button type="warning" >warning</w-button>
-        <w-button type="error" >error</w-button>
-        <w-button type="tertiary">tertiary</w-button>
-        <w-button type="none">none</w-button>
+        <w-button type="default" disabled @click="test" >default</w-button>
+        <w-button type="primary" disabled @click="test">primary</w-button>
+        <w-button type="success" @click="test">success</w-button>
+        <w-button type="info"  disabled>info</w-button>
+        <w-button type="warning" disabled>warning</w-button>
+        <w-button type="error" disabled>error</w-button>
+        <w-button type="tertiary" disabled>tertiary</w-button>
+        <w-button type="none" disabled>none</w-button>
       </w-div>
       <w-span>点击特效</w-span>
       <w-div bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
@@ -94,11 +96,11 @@ const colors = ['red','black','green','white','blue']
       </w-div>
       <w-span  >抽象按钮</w-span>
       <w-div :bg="['s-fill']"  :flex="['g-10','wrap']" mb="20"  >
-        <w-button type="default"  >default</w-button>
-        <w-button type="primary"  abstract="unseen">unseen</w-button>
-        <w-button type="success" abstract="dash" >dash</w-button>
-        <w-button type="info"    abstract="glass">glass</w-button>
-        <w-button type="warning" abstract="round" >round</w-button>
+        <w-button type="default" disabled >default</w-button>
+        <w-button type="primary" disabled  abstract="unseen">unseen</w-button>
+        <w-button type="success" disabled abstract="dash" >dash</w-button>
+        <w-button type="info"    disabled abstract="glass">glass</w-button>
+        <w-button type="warning" disabled abstract="round" >round</w-button>
       </w-div>
     </w-div>
       <w-div w="p50" p="10"  >右面</w-div>

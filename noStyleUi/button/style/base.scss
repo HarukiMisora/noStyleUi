@@ -1,0 +1,95 @@
+
+@use './var.scss' as config;
+
+@use 'sass:list';
+
+@debug list.append(10px 20px, 30px); 
+
+.default{
+    height: 32px;
+    padding: 10px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color .3s, background .3s, border .3s,border .3s ease;
+
+    border-radius: 4px;
+    font-size: 12px;
+
+    background-color: #0000;
+    border: 1px solid var(--default);
+    color: var(--default);
+
+    user-select: none;
+    &.disabled{
+        cursor: not-allowed;
+        color: var(--tertiary);
+        border-color: var(--tertiary-disabled)
+    }
+
+    &:hover:not(.disabled,.unseen,.dash,.glass),&:focus-visible:not(.disabled,.unseen,.dash,.glass){
+        color: var(--success);
+        border: 1px solid var(--success);
+        outline: none;
+    }
+    &:active:not(.disabled,.rotate,.text,.biger,.small,.none){
+        transform: translate(1px,2.5px);
+    }
+
+}
+.tertiary{
+    opacity: 0.5;
+    &:hover:not(.disabled),&:focus-visible:not(.disabled){
+        opacity: 1;
+        border: 1px solid var(--tertiary);
+        color: var(--tertiary);
+    }
+
+}
+
+@each $i in config.$types {
+    @if$i != 'tertiary'{
+        .#{$i}{
+            border: 1px solid var(--#{$i});
+            background-color: var(--#{$i});
+            color: var(--text-color);
+            &:hover:not(.disabled,.unseen,.dash,.glass),&:focus-visible:not(.disabled,.unseen,.dash,.glass){
+                border: 1px solid var(--#{$i}-hover);
+                background-color: var(--#{$i}-hover);
+                color: var(--text-color);
+            }
+            &:active:not(.disabled,.unseen,.dash,.glass){
+                background-color: var(--#{$i}-active);
+            }
+            &.disabled{
+                background-color: var(--#{$i}-disabled);
+                border-color: var(--#{$i}-disabled);
+            }
+        }
+    }
+
+}
+.unseen{
+    background-color: unset;
+   
+}
+.dash{
+    background-color: unset;
+    border-style:dashed;
+    &:hover{
+        border-style: dashed;
+    }
+}
+.glass{
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+.round{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+

@@ -1,4 +1,4 @@
-export {WDiv,WSpan,WButton,WVar,WGroup} from './index'
+export {WDiv,WSpan,WButton,WGroup} from './index'
 
 declare var require :any
 declare module 'vue'{
@@ -6,7 +6,6 @@ declare module 'vue'{
         WDiv:typeof WDiv
         WSpan:typeof WSpan
         WButton:typeof WButton
-        WVar:typeof WVar
         WGroup:typeof WGroup
 
     }

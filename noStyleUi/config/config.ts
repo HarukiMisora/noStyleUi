@@ -54,6 +54,14 @@ export const config:configT = {
         abstract:{
             type:String as PropType<buttonAbstractType>,
             default:'default'
+        },
+        disabled:{
+            type:Boolean,
+            default:false
+        },
+        onClick:{
+            type:Function,
+            default:()=>{}
         }
     },
     groupProps:{

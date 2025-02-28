@@ -52,6 +52,14 @@ export interface configT{
         abstract:{
             type:PropType<buttonAbstractType>,
             default:buttonAbstractType
+        },
+        disabled:{
+            type:BooleanConstructor,
+            default:boolean
+        },
+        onClick:{
+            type:FunctionConstructor,
+            default:Function
         }
     },
     groupProps:{
