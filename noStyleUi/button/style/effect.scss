@@ -1,14 +1,15 @@
 
 
-
 .none{
     &:active{
         transform: translate(0,0);
     }
 }
-
 .text{
-    &:active{
+    &.disabeld{
+        color: red !important;
+    }
+    &:active:not(.disabled){
         transform: translate(0,0);
         padding-top: 13px;
         padding-bottom: 7px;
@@ -18,7 +19,7 @@
 }
 .rotate{
     transition: transform 1.5s ease;
-    &:active{
+    &:active:not(.disabled){
         transition: transform 10s ease;
 
         transform: translate(0,0) rotate(3600deg);
@@ -26,13 +27,13 @@
     }
 }
 .biger{
-    &:active{
+    &:active:not(.disabled){
         transform: translate(0,0) scale(1.25);
     
     }
 }
 .small{
-    &:active{
+    &:active:not(.disabled){
         transform: translate(0,0) scale(0.75);
     }
 }

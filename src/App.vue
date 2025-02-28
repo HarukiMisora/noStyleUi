@@ -84,15 +84,15 @@ const test =(e)=>{
       </w-div>
       <w-span>点击特效</w-span>
       <w-div bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
-        <w-button type="default"  >default</w-button>
-        <w-button type="primary"  >box</w-button>
-        <w-button type="success"  effect="text">text</w-button>
-        <w-button type="info" effect="biger">biger</w-button>
-        <w-button type="warning" effect="small">small</w-button>
-        <w-button type="error"  effect="rotate">rotate</w-button>
-        <w-button type="error"  effect="rotate">rotate长按我</w-button>
+        <w-button type="default"  disabled>default</w-button>
+        <w-button type="primary"  disabled>box</w-button>
+        <w-button type="success" disabled effect="text">text</w-button>
+        <w-button type="info" disabled effect="biger">biger</w-button>
+        <w-button type="warning" disabled effect="small">small</w-button>
+        <w-button type="error" disabled  effect="rotate">rotate</w-button>
+        <w-button type="error"  disabled effect="rotate">rotate长按我</w-button>
 
-        <w-button type="success" effect="none">none</w-button>
+        <w-button type="success" disabled effect="none">none</w-button>
       </w-div>
       <w-span  >抽象按钮</w-span>
       <w-div :bg="['s-fill']"  :flex="['g-10','wrap']" mb="20"  >
