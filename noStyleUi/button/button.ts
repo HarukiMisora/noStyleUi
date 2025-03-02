@@ -24,7 +24,7 @@ export const button = defineComponent({
             }
         }
         return{
-            handleClick
+            handleClick,
         }
         
     },
@@ -69,6 +69,15 @@ export const button = defineComponent({
                 h('path',{d:'M7.75 7.75L5.6 5.6'}),
             ])
         ])
+        const icon = this.$props.loading?loadingIcon:this.$slots.icon?.()
+        if(icon!==undefined&&!this.$props.loading){
+            if(Array.isArray(icon)&&icon[0].props){
+                icon[0].props.style = icon[0]?.props?.style||{};
+                icon[0].props.style.width =16
+                icon[0].props.style.marginRight =5
+            }
+        }
+        
 
         return h('button',{
             class:className,
@@ -76,7 +85,7 @@ export const button = defineComponent({
             onClick:this.handleClick
     
         },[
-            this.$props.loading?loadingIcon:this.$slots.icon?.(),
+            icon,
             this.$slots.default?.()
         ])
     }
