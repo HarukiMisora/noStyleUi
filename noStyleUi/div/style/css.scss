@@ -137,5 +137,18 @@ $i:0;
     color: var(--primary);
 }
 
+.w-button-loading{
+    width: 16px;
+    animation:roll 1s linear infinite;
+    margin-right: 5px;
+}
 
+@keyframes roll {
+    0%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
 

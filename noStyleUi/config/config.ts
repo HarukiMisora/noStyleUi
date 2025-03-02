@@ -59,6 +59,10 @@ export const config:configT = {
             type:Boolean,
             default:false
         },
+        loading:{
+            type:Boolean,
+            default:false
+        },
         onClick:{
             type:Function,
             default:()=>{}

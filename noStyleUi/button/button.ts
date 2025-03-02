@@ -45,18 +45,45 @@ export const button = defineComponent({
         if(this.$props.effect!=='box'){
             className[buttonS[this.$props.effect]] = true 
         }
-        if(this.$props.disabled){
+        if(this.$props.disabled||this.$props.loading){
             className[buttonS.disabled] = true
         }
+        if(this.$props.loading){
+            className[buttonS.loading] = true
 
-
+    
+        }
+        if(this.$el){
+            
+        }
+        const loadingIcon = h('svg',{
+            xmlns:'http://www.w3.org/2000/svg',
+            'xmlns:xlink':'http://www.w3.org/1999/xlink',
+            viewBox:"0 0 24 24",
+            class:'w-button-loading'
+        },[
+            h('g',{
+                fill:'none',
+                stroke:'currentColor',
+                'stroke-width':'2',
+                'stroke-linecap':'round',
+                'stroke-linejoin':'round',
+            },[
+                h('path',{d:'M12 6V3'}),
+                h('path',{d:'M6 12H3'}),
+                h('path',{d:'M7.75 7.75L5.6 5.6'}),
+            ])
+        ])
 
         return h('button',{
             class:className,
             style:styles,
             onClick:this.handleClick
     
-        },this.$slots.default?.())
+        },[
+            this.$props.loading?loadingIcon:this.$slots.icon?.(),
+            this.$slots.default?.()
+        ])
     }
     
 })

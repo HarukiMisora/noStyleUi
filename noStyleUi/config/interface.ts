@@ -57,6 +57,10 @@ export interface configT{
             type:BooleanConstructor,
             default:boolean
         },
+        loading:{
+            type:BooleanConstructor,
+            default:boolean
+        }
         onClick:{
             type:FunctionConstructor,
             default:Function

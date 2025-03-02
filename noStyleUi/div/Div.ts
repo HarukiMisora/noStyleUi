@@ -213,7 +213,23 @@ function createTag(tag:string){
 }
 const div = createTag('div')
 const span = createTag('span')
+const wp = createTag('p')
+const wa = createTag('a')
+const h1 = createTag('h1')
+const img = createTag('img')
 
-export  {div,span}
+const ul = createTag('ul')
+const ol = createTag('ol')
+const li = createTag('li')
+
+const canvas = createTag('canvas')
+const video = createTag('video')
+const tarck = createTag('tarck')
+
+const meter = createTag('meter')
+
+const details = createTag('details')
+const summary = createTag('summary')
+export  {div,span,wa,wp,h1,ul,ol,li,canvas,video,tarck,meter,details,summary,img}
 
 // export default Div
