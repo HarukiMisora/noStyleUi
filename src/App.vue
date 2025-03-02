@@ -22,7 +22,7 @@ const test =(e:MouseEvent)=>{
       <w-span>基础</w-span>
       <w-div  w="p100" :flex="['g-10','wrap']" mb="20" radius="">
         <w-button type="default" disabled @click="test" >default</w-button>
-        <w-button type="primary" disabled @click="test">primary</w-button>
+        <w-button type="primary" loading @click="test">primary</w-button>
         <w-button type="success" @click="test">success</w-button>
         <w-button type="info"  disabled>info</w-button>
         <w-button type="warning" disabled>warning</w-button>

@@ -18,7 +18,7 @@ export const button = defineComponent({
     props:buttonProps,
     setup(props){
         const handleClick = (e: MouseEvent): void => {
-            if (!props.disabled) {
+            if (!props.disabled&&!props.loading) {
               const { onClick } = props
               if (onClick)onClick(e)
             }
@@ -50,11 +50,6 @@ export const button = defineComponent({
         }
         if(this.$props.loading){
             className[buttonS.loading] = true
-
-    
-        }
-        if(this.$el){
-            
         }
         const loadingIcon = h('svg',{
             xmlns:'http://www.w3.org/2000/svg',
