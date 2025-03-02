@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+import {Accessibility} from '@vicons/ionicons5'
 let urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
 
 
@@ -27,7 +27,12 @@ const test =(e:MouseEvent)=>{
           </template>
           default
         </w-button>
-        <w-button type="primary" loading @click="test">primary</w-button>
+        <w-button type="primary"  @click="test">
+          <template #icon>
+            <Accessibility></Accessibility>
+          </template>
+          primary
+        </w-button>
         <w-button type="success" @click="test">success</w-button>
         <w-button type="info"  disabled>info</w-button>
         <w-button type="warning" disabled>warning</w-button>

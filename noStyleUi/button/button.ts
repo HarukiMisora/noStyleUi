@@ -74,7 +74,8 @@ export const button = defineComponent({
         ])
         const icon = this.$props.loading && this.$props.type !=='none'?loadingIcon:this.$slots.icon?.()
         if(icon!==undefined&&!this.$props.loading){
-            if(Array.isArray(icon)&&icon[0].props){
+            if(Array.isArray(icon)){
+                icon[0].props = icon[0].props ||{}
                 icon[0].props.style = icon[0]?.props?.style||{};
                 icon[0].props.style.width =16
                 icon[0].props.style.marginRight =5
