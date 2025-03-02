@@ -6,6 +6,7 @@ export type flexT = string|boolean|string[]
 export type buttonType = 'default'|'primary'|'info'|'success'|'warning'|'error'|'tertiary'|'none'
 export type buttonEffectType = 'box'|'text'|'none'|'biger'|'small'|'rotate'
 export type buttonAbstractType = 'default'|'unseen'|'dash'|'glass'|'round'
+export type buttonSizeType = 'mini'|'small'|'defalut'|'biger'
 export type groupCusPropsType = [string,string][]
 export const config:configT = {
     colors:{
@@ -63,6 +64,15 @@ export const config:configT = {
             type:Boolean,
             default:false
         },
+        round:{
+            type:Boolean,
+            default:false
+        },
+        size:{
+            type:String,
+            default:'default'
+        },
+ 
         onClick:{
             type:Function,
             default:()=>{}

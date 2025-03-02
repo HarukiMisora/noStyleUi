@@ -32,7 +32,7 @@ export const button = defineComponent({
         
         const {className,styles} = renderHelper(<PropT>this.$props)
 
-
+        
 
         if(this.$props.type !=='none'){
             className[buttonS.default] = true 
@@ -49,6 +49,12 @@ export const button = defineComponent({
         }
         if(this.$props.loading && this.$props.type !=='none'){
             className[buttonS.loading] = true
+        }
+        if(this.$props.size !=='default'){
+            className[buttonS[`size-${this.$props.size}`]] = true
+        }
+        if(this.$props.round){
+            className[buttonS.roundRadius] = true 
         }
         const loadingIcon = h('svg',{
             xmlns:'http://www.w3.org/2000/svg',

@@ -43,7 +43,7 @@ export interface configT{
     buttonProps:{
         type:{
             type:PropType<buttonType>
-            default:'default'
+            default:string
         }
         effect:{
            type:PropType<buttonEffectType>
@@ -60,6 +60,14 @@ export interface configT{
         loading:{
             type:BooleanConstructor,
             default:boolean
+        }
+        round:{
+            type:BooleanConstructor,
+            default:boolean
+        }
+        size:{
+            type:StringConstructor,
+            default:string
         }
         onClick:{
             type:FunctionConstructor,

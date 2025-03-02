@@ -22,7 +22,17 @@
     .w-button-loading{
         margin: 0;
     }
+    &.size-biger{
+        width: 40px;
+    }
+    &.size-small{
+        width: 28px;
+    }
+    &.size-mini{
+        width: 22px;
+    }
 }
+
 
 .unseen,.dash,.glass{
     &:hover,&.disabled{
