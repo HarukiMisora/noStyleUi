@@ -33,12 +33,11 @@ export const button = defineComponent({
         const {className,styles} = renderHelper(<PropT>this.$props)
 
 
-        if(this.$props.type!==undefined){
-            if(this.$props.type !=='none'){
-                className[buttonS.default] = true 
-            }
-            className[buttonS[this.$props.type]] = true 
+
+        if(this.$props.type !=='none'){
+            className[buttonS.default] = true 
         }
+        className[buttonS[this.$props.type]] = true 
         if(this.$props.abstract!=='default'){
             className[buttonS[this.$props.abstract]] = true 
         }
@@ -48,14 +47,18 @@ export const button = defineComponent({
         if(this.$props.disabled||this.$props.loading){
             className[buttonS.disabled] = true
         }
-        if(this.$props.loading){
+        if(this.$props.loading && this.$props.type !=='none'){
             className[buttonS.loading] = true
         }
         const loadingIcon = h('svg',{
             xmlns:'http://www.w3.org/2000/svg',
             'xmlns:xlink':'http://www.w3.org/1999/xlink',
             viewBox:"0 0 24 24",
-            class:'w-button-loading'
+            class:'w-button-loading',
+            style:{
+                width:16,
+                marginRight:this.$props.abstract==='round'?0:5
+            }
         },[
             h('g',{
                 fill:'none',
@@ -69,7 +72,7 @@ export const button = defineComponent({
                 h('path',{d:'M7.75 7.75L5.6 5.6'}),
             ])
         ])
-        const icon = this.$props.loading?loadingIcon:this.$slots.icon?.()
+        const icon = this.$props.loading && this.$props.type !=='none'?loadingIcon:this.$slots.icon?.()
         if(icon!==undefined&&!this.$props.loading){
             if(Array.isArray(icon)&&icon[0].props){
                 icon[0].props.style = icon[0]?.props?.style||{};
@@ -86,7 +89,7 @@ export const button = defineComponent({
     
         },[
             icon,
-            this.$slots.default?.()
+            this.$props.loading&&this.$props.abstract==='round'?'':this.$slots.default?.()
         ])
     }
     

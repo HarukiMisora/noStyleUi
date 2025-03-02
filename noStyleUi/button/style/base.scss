@@ -72,26 +72,7 @@
     }
 
 }
-.unseen{
-    background-color: unset;
-   
-}
-.dash{
-    background-color: unset;
-    border-style:dashed;
-    &:hover{
-        border-style: dashed;
-    }
-}
-.glass{
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(5px);
-}
-.round{
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-}
+
 
 
 

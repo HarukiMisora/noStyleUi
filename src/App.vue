@@ -33,7 +33,7 @@ const test =(e:MouseEvent)=>{
         <w-button type="warning" disabled>warning</w-button>
         <w-button type="error" disabled>error</w-button>
         <w-button type="tertiary" disabled>tertiary</w-button>
-        <w-button type="none" disabled>none</w-button>
+        <w-button type="none" loading disabled>none</w-button>
       </w-div>
       <w-span>点击特效</w-span>
       <w-div  bc="$#fff"  :flex="['g-10','wrap']" mb="20"  >
