@@ -70,6 +70,7 @@ export function renderHelper(props:PropT){
         c:'color',
         bg:'background',
         bc:'background-color',
+        bd:'border'
         
     }
     
@@ -168,6 +169,30 @@ export function renderHelper(props:PropT){
             // className['flex-'+<string>props.flex] = flexGrup[<keyof typeof flexGrup>props.flex]!==undefined
         }
         
+    }
+    const borderStyles = ['dashed','dotted','double','groove','hidden','inset','none','outset','ridge','solid']
+
+    const setBdOptionActive = (value:any)=>{
+        // const 
+        if(borderStyles.includes(value)){
+            return className[`bd-s-${value}`] = true
+        }
+        if(!Number.isNaN(value*1)){
+            return className[`bd-w-${value}`] = true
+        }
+        return false
+    }
+    if(props.bd!==undefined){
+        if(Array.isArray(props.bd)){
+            for(let i of props.bd){
+                setBdOptionActive(i)
+            }
+            
+        }else if(typeof props.bd === 'string'){
+            if(!setBdOptionActive(props.bd)){
+                styles.border = props.bd
+            }
+        }
     }
 
     // console.log(className,styles);

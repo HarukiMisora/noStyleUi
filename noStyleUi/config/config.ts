@@ -35,11 +35,13 @@ export const config:configT = {
         mr:[String,Number],
         mx:[String,Number],
         my:[String,Number],
+        
+        bd:[String,Array],
 
         //颜色
         c:String,
-        bg:[String,Array],
         bc:String,
+        bg:[String,Array],
 
         flex:[String,Boolean,Array]
     },

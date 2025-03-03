@@ -4,6 +4,7 @@
 @use './flex.scss' as *;
 @use './background.scss' as *;
 @use 'sass:meta';
+@use './border.scss';
 
 $i:0;
 @while $i<=1920{

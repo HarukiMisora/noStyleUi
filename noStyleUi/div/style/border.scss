@@ -1,0 +1,23 @@
+
+$borderStyles:dashed,dotted,double,groove,hidden,inset,none,outset,ridge,solid;
+
+
+@each $i in $borderStyles{
+  .bd-s-#{$i}{
+    border-style: $i;
+  }
+}
+
+.bd-s-inh{
+  border-style:inherit;
+}
+.bd-s-ini{
+  border-style:initial;
+}
+$i:0;
+@while $i<=10{
+  .bd-w-#{$i}{
+    border-width: #{$i}px;
+  }
+  $i:$i+1;
+}

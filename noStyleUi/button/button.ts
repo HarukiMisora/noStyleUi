@@ -32,8 +32,6 @@ export const button = defineComponent({
         
         const {className,styles} = renderHelper(<PropT>this.$props)
 
-        
-
         if(this.$props.type !=='none'){
             className[buttonS.default] = true 
         }
@@ -78,6 +76,7 @@ export const button = defineComponent({
                 h('path',{d:'M7.75 7.75L5.6 5.6'}),
             ])
         ])
+        
         const icon = this.$props.loading && this.$props.type !=='none'?loadingIcon:this.$slots.icon?.()
         if(icon!==undefined&&!this.$props.loading){
             if(Array.isArray(icon)){
@@ -88,7 +87,6 @@ export const button = defineComponent({
             }
         }
         
-
         return h('button',{
             class:className,
             style:styles,

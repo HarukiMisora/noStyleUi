@@ -32,11 +32,13 @@ export interface configT{
         mx:pxT
         my:pxT
 
+        bd:[StringConstructor,ArrayConstructor]
+
         //颜色相关
         c:StringConstructor
-        bg:[StringConstructor,ArrayConstructor]
         bc:StringConstructor
 
+        bg:[StringConstructor,ArrayConstructor]
 
         flex:(StringConstructor|BooleanConstructor|ArrayConstructor)[]
     }

@@ -3,8 +3,6 @@
 
 @use 'sass:list';
 
-@debug list.append(10px 20px, 30px); 
-
 .default{
     height: 32px;
     padding: 10px;
