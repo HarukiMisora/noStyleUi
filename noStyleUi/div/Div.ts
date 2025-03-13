@@ -171,31 +171,120 @@ export function renderHelper(props:PropT){
         
     }
     const borderStyles = ['dashed','dotted','double','groove','hidden','inset','none','outset','ridge','solid']
-
+    let   borderColors = {
+        '':new Array(0),
+        'l-':new Array(0),
+        'r-':new Array(0),
+        't-':new Array(0),
+        'b-':new Array(0),
+        'x-':new Array(0),
+        'y-':new Array(0)
+    }
     const setBdOptionActive = (value:any)=>{
-        // const 
-        if(borderStyles.includes(value)){
-            return className[`bd-s-${value}`] = true
+        const option = value.toString().split('-')
+        let direction = <keyof typeof borderColors> (['l','r','t','b','x','y'].includes(option[0])?option[0]+'-':'')
+        value = direction?option[1]:value
+        // console.log(option);
+        
+        for(let i of option){
+            if(direction.includes(i))continue
+            if(borderStyles.includes(i)){
+                 className[`bd-s-${direction+i}`] = true
+                 continue
+            }
+            if(!Number.isNaN(i*1)){
+                className[`bd-w-${direction+i}`] = true
+                continue
+            }
+            borderColors[direction].push(i)
+            className[`bd-c-${direction+i}`] = true
         }
-        if(!Number.isNaN(value*1)){
-            return className[`bd-w-${value}`] = true
+        
+
+    }
+    const setBorderMixColor = (direction:keyof typeof borderColors,styleName:string)=>{
+
+
+        className[`bd-c-${direction+borderColors[direction][0]}`] = false
+        
+        for(let color of borderColors[direction].slice(1)){
+            
+            className[`bd-c-${direction+color}`] = false
+            const lastColor = styles[styleName]?styles[styleName]:borderColors[direction][0] 
+            // console.log(color,lastColor);
+
+            styles[styleName] = `color-mix(in lch, ${lastColor}, ${color})`
         }
-        return false
     }
     if(props.bd!==undefined){
+        
         if(Array.isArray(props.bd)){
             for(let i of props.bd){
                 setBdOptionActive(i)
             }
-            
+            if(borderColors[''].length>1){
+                setBorderMixColor('','borderColor')
+            }
+            if(borderColors['x-'].length>1){
+                styles.borderLeftColor = ''
+                styles.borderRightColor = ''
+                setBorderMixColor('x-','borderLeftColor')
+                setBorderMixColor('x-','borderRightColor')
+            }
+            else if(borderColors['x-']?.[0]?.slice(0,1) === '#'){
+                styles.borderLeftColor = borderColors['x-'][0]
+                styles.borderRightColor = borderColors['x-'][0]
+            }
+            if(borderColors['y-'].length>1){
+                styles.borderTopColor = ''
+                styles.borderBottomColor = ''
+                setBorderMixColor('y-','borderTopColor')
+                setBorderMixColor('y-','borderBottomColor')
+            }
+            else if(borderColors['y-']?.[0]?.slice(0,1) === '#'){
+                styles.borderTopColor = borderColors['y-'][0]
+                styles.borderBottomColor = borderColors['y-'][0]
+            }
+            if(borderColors['l-'].length>1){
+                styles.borderLeftColor = ''
+                setBorderMixColor('l-','borderLeftColor')
+            }
+            else if(borderColors['l-']?.[0]?.slice(0,1) === '#'){
+                styles.borderLeftColor = borderColors['l-'][0]
+            }
+            if(borderColors['r-'].length>1){
+                styles.borderRightColor = ''
+                setBorderMixColor('r-','borderRightColor')
+            }
+            else if(borderColors['r-']?.[0]?.slice(0,1) === '#'){
+                styles.borderRightColor = borderColors['r-'][0]
+            }
+            if(borderColors['t-'].length>1){
+                styles.borderTopColor = ''
+                setBorderMixColor('t-','borderTopColor')
+            }
+            else if(borderColors['t-']?.[0]?.slice(0,1) === '#'){
+                styles.borderTopColor = borderColors['t-'][0]
+            }
+            if(borderColors['b-'].length>1){
+                styles.borderBottomColor = ''
+                setBorderMixColor('b-','borderBottomColor')
+            }
+            else if(borderColors['b-']?.[0]?.slice(0,1) === '#'){
+                styles.borderBottomColor = borderColors['b-'][0]
+            }
         }else if(typeof props.bd === 'string'){
-            if(!setBdOptionActive(props.bd)){
-                styles.border = props.bd
+            const arr = props.bd.split(' ')
+            for(let i of arr.sort((a,b)=>{
+                return b.indexOf('-') - a.indexOf('-') 
+            })){
+                setBdOptionActive(i)
             }
         }
     }
 
-    // console.log(className,styles);
+    // console.log(className,styles,borderColors);
+
     
     return {className,styles}
 

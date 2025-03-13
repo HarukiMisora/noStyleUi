@@ -6,7 +6,33 @@ $borderStyles:dashed,dotted,double,groove,hidden,inset,none,outset,ridge,solid;
   .bd-s-#{$i}{
     border-style: $i;
   }
+
 }
+@each $i in $borderStyles{
+  .bd-s-x-#{$i}{
+    border-left-style: $i;
+    border-right-style: $i;
+  }
+  .bd-s-y-#{$i}{
+    border-top-style: $i;
+    border-bottom-style: $i;
+  }
+}
+@each $i in $borderStyles{
+  .bd-s-t-#{$i}{
+    border-top-style: $i;
+  }
+  .bd-s-r-#{$i}{
+    border-right-style: $i;
+  }
+  .bd-s-b-#{$i}{
+    border-bottom-style: $i;
+  }
+  .bd-s-l-#{$i}{
+    border-left-style: $i;
+  }
+}
+
 
 .bd-s-inh{
   border-style:inherit;
@@ -18,6 +44,22 @@ $i:0;
 @while $i<=10{
   .bd-w-#{$i}{
     border-width: #{$i}px;
+  }
+  $i:$i+1;
+}
+$i:0;
+@while $i<=10{
+  .bd-w-l-#{$i}{
+    border-left-width: #{$i}px;
+  }
+  .bd-w-r-#{$i}{
+    border-right-width: #{$i}px;
+  }
+  .bd-w-t-#{$i}{
+    border-top-width: #{$i}px;
+  }
+  .bd-w-b-#{$i}{
+    border-bottom-width: #{$i}px;
   }
   $i:$i+1;
 }

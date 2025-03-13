@@ -132,6 +132,33 @@ $i:0;
     .c-#{meta.inspect($i)}{
         color: $i !important; 
     }
+    .bd-c-#{meta.inspect($i)}{
+        border-color: $i !important; 
+    }
+}
+@each $i in $colors {
+    .bd-c-x-#{meta.inspect($i)}{
+        border-left-color: $i !important; 
+        border-right-color: $i !important; 
+    }
+    .bd-c-y-#{meta.inspect($i)}{
+        border-top-color: $i !important; 
+        border-bottom-color: $i !important; 
+    }
+}
+@each $i in $colors {
+    .bd-c-l-#{meta.inspect($i)}{
+        border-left-color: $i !important; 
+    }
+    .bd-c-t-#{meta.inspect($i)}{
+        border-top-color: $i !important; 
+    }
+    .bd-c-r-#{meta.inspect($i)}{
+        border-right-color: $i !important; 
+    }
+    .bd-c-b-#{meta.inspect($i)}{
+        border-bottom-color: $i !important; 
+    }
 }
 
 .c-primary{

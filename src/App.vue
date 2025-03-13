@@ -16,9 +16,10 @@ const test =(e:MouseEvent)=>{
 </script>
 
 <template>
-  <div style="display: flex;flex-direction:column;" class="test test1">
+  <div style="display: flex;flex-direction:column;" class="test test1" >
     <w-div :bg="['c-black',urls,'s-fill','r-n']"  c="red" h="400" w="p100" p="20" flex radius="25" style="text-align: center;">
-    <w-div w="p50" p="10" bc="$#fff" flex="col" :bd="['t-dashed','1']"> 
+
+    <w-div w="p50" p="10" bc="$#fff" flex="col" :bd="['x-1-blue-dashed-red-green','solid','green-red']"> 
       <w-span>基础</w-span>
       <w-div  w="p100" :flex="['g-10','wrap']" mb="20" radius="" >
         <w-button type="default"  disabled @click="test" size="small" round>
@@ -79,7 +80,7 @@ const test =(e:MouseEvent)=>{
     </div>
 
   </div>
-  <w-button type="default">asdsd</w-button>
+  <!-- <w-button type="default">asdsd</w-button> -->
 </template>
 
 <style scoped>
