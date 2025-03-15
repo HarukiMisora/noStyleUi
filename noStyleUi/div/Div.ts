@@ -207,12 +207,12 @@ export function renderHelper(props:PropT){
                 // console.log(styles);
                 
             }
-            console.log(bgColors);
+            // console.log(bgColors);
 
     }
     
     if(props.bg!==undefined){
-        console.log(props.bg);
+        // console.log(props.bg);
         
         if(Array.isArray(props.bg)){
             
@@ -238,9 +238,13 @@ export function renderHelper(props:PropT){
 
 
     if(props.flex!==undefined){
+        // console.log(props.flex);
+        
         className.flex =  <string|boolean>props.flex !==false
         if(Array.isArray(props.flex)){
             for(let i of props.flex){
+                // console.log(i);
+                
                 const option = i.split('-')
                 // console.log(option);
                 const thisClass = flexOptionActive[<keyof typeof flexOptionActive>option?.[0]]?.(option?.[1])
@@ -373,7 +377,7 @@ export function renderHelper(props:PropT){
        
         }else if(typeof props.bd === 'string'){
             const arr = props.bd.split(' ')
-            console.log(arr);
+            // console.log(arr);
             setBdOptions(arr)
             
         }

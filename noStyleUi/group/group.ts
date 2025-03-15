@@ -8,6 +8,9 @@ const groupProps = {
 }as const
 //合并命令集
 const matchArrAtt = (prop1:unknown,prop2:unknown)=>{
+    if(prop1==undefined&&prop2==undefined){
+        return undefined
+    }
     return [...(Array.isArray(prop1)?prop1:[prop1]),...( Array.isArray(prop2)?prop2:[prop2] )]
 }
 
@@ -25,7 +28,7 @@ export const group = defineComponent({
         if(Array.isArray(vNodes)){
             for(let i of vNodes){
                 const bg = matchArrAtt(this.$props?.bg,i.props?.bg)
-                const flex = matchArrAtt(this.$props?.flex,i.props?.flex).filter((item)=>{return item!==false&&item!==undefined})                
+                const flex = matchArrAtt(this.$props?.flex,i.props?.flex)?.filter((item)=>{return item!==false&&item!==undefined})                
                 i.props = {
                     ...this.$props,
                     ...cusProps,

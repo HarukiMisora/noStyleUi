@@ -66,17 +66,17 @@ const test =(e:MouseEvent)=>{
 
       <w-div w="p50" p="10"  >
         右面
-      <!-- <w-div bg="https://www.iamwzc.com/Resources/back_class_normal.png     red blue r-n h-40 center #123456 green-red-blue-pink" h="300" :bd="['solid-green','l-dashed-50-red','']">卧槽啊</w-div> -->
+      <w-div bg="https://www.iamwzc.com/Resources/back_class_normal.png     red blue r-n h-40 center #123456 green-red-blue-pink" h="300" :bd="['solid-green','l-dashed-50-red','']">卧槽啊</w-div>
 
       </w-div>
 
     </w-div>
-    <w-group  :cus-props="[['type','error']]">
+    <!-- <w-group  :cus-props="[['type','error']]">
       <w-button>asd</w-button>
       <w-button type="success">asd</w-button>
       <w-button>asd</w-button>
       <w-button>asd</w-button>
-    </w-group>
+    </w-group> -->
     <div style="margin: 20px;text-align: center;font-size: 24px;">比对</div>
 
     <div class="bg-black c-red h-400 w-p100 flex p-20">
