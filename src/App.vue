@@ -17,7 +17,7 @@ const test =(e:MouseEvent)=>{
 
 <template>
   <div style="display: flex;flex-direction:column;" class="test test1" >
-    <w-div :bg="['c-black',urls,'s-fill','r-n']"  c="red" h="400" w="p100" p="20" flex radius="25" style="text-align: center;">
+    <w-div   c="red" h="400" w="p100" p="20" flex radius="25" style="text-align: center;">
 
     <w-div w="p50" p="10" bc="$#fff" flex="col" bd="x-1-blue-dashed-red-green solid green-red"> 
       <w-span>基础</w-span>
@@ -55,7 +55,7 @@ const test =(e:MouseEvent)=>{
         <w-button  type="success" disabled effect="none">none</w-button>
       </w-div>
       <w-span  >抽象按钮</w-span>
-      <w-div :bg="['s-fill']"  :flex="['g-10','wrap']" mb="20"  >
+      <w-div   :flex="['g-10','wrap']" mb="20"  >
         <w-button type="default" disabled >default</w-button>
         <w-button type="primary" round loading disabled  abstract="unseen">unseen</w-button>
         <w-button type="success" round loading disabled abstract="dash" >dash</w-button>
@@ -63,9 +63,14 @@ const test =(e:MouseEvent)=>{
         <w-button type="warning" round size="biger" disabled abstract="round" >round</w-button>
       </w-div>
     </w-div>
-      <w-div w="p50" p="10"  >右面</w-div>
+
+      <w-div w="p50" p="10"  >
+        右面
+      <!-- <w-div bg="https://www.iamwzc.com/Resources/back_class_normal.png     red blue r-n h-40 center #123456 green-red-blue-pink" h="300" :bd="['solid-green','l-dashed-50-red','']">卧槽啊</w-div> -->
+
+      </w-div>
+
     </w-div>
-    <w-div :bg="['red','s-fill']">卧槽啊</w-div>
     <w-group  :cus-props="[['type','error']]">
       <w-button>asd</w-button>
       <w-button type="success">asd</w-button>

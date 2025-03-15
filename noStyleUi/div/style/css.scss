@@ -124,10 +124,10 @@ $i:0;
 
 @each $i in $colors {
     .bg-#{meta.inspect($i)}{
-        background-color:$i !important;
+        background-color:$i;
     }
     .bc-#{meta.inspect($i)}{
-        background-color:$i !important;
+        background-color:$i;
     }
     .c-#{meta.inspect($i)}{
         color: $i !important; 

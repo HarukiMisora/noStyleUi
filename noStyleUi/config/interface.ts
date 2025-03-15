@@ -38,7 +38,10 @@ export interface configT{
         c:StringConstructor
         bc:StringConstructor
 
-        bg:[StringConstructor,ArrayConstructor]
+        bg:{
+            type:[StringConstructor,ArrayConstructor]
+            default:undefined
+        }
 
         flex:(StringConstructor|BooleanConstructor|ArrayConstructor)[]
     }
