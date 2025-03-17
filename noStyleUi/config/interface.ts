@@ -42,6 +42,7 @@ export interface configT{
             type:[StringConstructor,ArrayConstructor]
             default:undefined
         }
+        hover:[StringConstructor,ArrayConstructor]
 
         flex:(StringConstructor|BooleanConstructor|ArrayConstructor)[]
     }

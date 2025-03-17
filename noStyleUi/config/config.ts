@@ -45,6 +45,7 @@ export const config:configT = {
             type:[String,Array],
             default:undefined
         },
+        hover:[String,Array],
 
         flex:[String,Boolean,Array]
     },

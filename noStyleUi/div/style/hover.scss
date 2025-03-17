@@ -1,0 +1,81 @@
+
+
+@use  './colors.scss' as *;
+@use 'sass:meta';
+@each $i in $colors {
+  .hover-bg-#{meta.inspect($i)}:hover{
+      background-color:$i;
+  }
+  .hover-bc-#{meta.inspect($i)}:hover{
+      background-color:$i;
+  }
+  .hover-c-#{meta.inspect($i)}:hover{
+      color: $i !important; 
+  }
+  .hover-bd-c-#{meta.inspect($i)}:hover{
+      border-color: $i !important; 
+  }
+}
+
+.hover-bs-fill{
+  background-size: 100% 100%;
+}
+.hover-bs-contain{
+  background-size: auto 100%;
+  background-position: 50% 50%;
+}
+.hover-bs-cover{
+  background-size: 100% auto;
+  background-position: 0% 50%;
+}
+.hover-bs-none{
+  background-position: 50% 50%;
+}
+
+
+.hover-bp-center:hover{
+  background-position: 50% 50%;
+}
+.hover-bp-x-right:hover{
+  background-position-x: 100%;
+}
+.hover-bp-x-center:hover{
+  background-position-x: 50%;
+}
+.hover-bp-x-left:hover{
+  background-position-x: 0%;
+}
+.hover-bp-y-bottom:hover{
+  background-position-y: 100%;
+}
+.hover-bp-y-center:hover{
+  background-position-y: 50%;
+}
+.hover-bp-y-top:hover{
+  background-position-y: 0%;
+}
+
+.hover-bp-r-none:hover{
+  background-repeat:no-repeat;
+}
+.hover-bp-r-n:hover{
+  background-repeat:no-repeat;
+}
+.hover-bp-r-x:hover{
+  background-repeat:repeat-x;
+}
+.hover-bp-r-y:hover{
+  background-repeat:repeat-y;
+}
+.hover-bp-r-r:hover:hover{
+  background-repeat:round;
+}
+.hover-bp-r-round:hover{
+  background-repeat:round;
+}
+.hover-bp-r-s:hover{
+  background-repeat:space;
+}
+.hover-bp-r-space:hover{
+  background-repeat:space;
+}

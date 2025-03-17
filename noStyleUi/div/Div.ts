@@ -1,7 +1,9 @@
 
 
-import { defineComponent , h} from 'vue'
+import {  defineComponent , h, ref} from 'vue'
 import { config } from '../config/config'
+import colorValues from '../var/colorValues'
+import {isImage, isValidColor} from '../test/index'
 // import   './style/css.scss'
 
 
@@ -31,12 +33,16 @@ const flexOptionActive = {
 }
 
 
+interface renderHelperOptionsT {
+    disabled?:boolean
+}
 
-export function renderHelper(props:PropT){
+export function renderHelper(props:PropT,options:renderHelperOptionsT){
 
     const className:{[key:string]:Boolean} ={}
     const styles:{[key:string]:string|undefined} ={}
-    const attributeGrop:(keyof Omit<typeof props,'flex'>)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','c','radius']
+    const hoverStyles:{[key:string]:string|undefined} ={}
+    const attributeGrop:(keyof Omit<typeof props,'flex'|'hover'>)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','c','radius']
     const attributeGropStyle: {[key in typeof attributeGrop[number]]:string} = {
         w:'width',
         h:'height',
@@ -91,7 +97,7 @@ export function renderHelper(props:PropT){
                 if(!i){
                     continue
                 }
-                if(new RegExp('^.*.(jpg|png|gif|webp|avif|svg)$').test(i)){
+                if(isImage(i)){
                     // console.log(props.bg);
                     styles.backgroundImage = `url("${i}")`
                     continue
@@ -296,8 +302,6 @@ export function renderHelper(props:PropT){
             borderColors[direction].push(i)
             className[`bd-c-${direction+i}`] = true
         }
-        
-
     }
     const setBorderMixColor = (direction:keyof typeof borderColors,styleName:string)=>{
 
@@ -383,10 +387,123 @@ export function renderHelper(props:PropT){
         }
     }
 
-    // console.log(className,styles,borderColors);
+    if(props.hover !== undefined&&!options.disabled) {
+        const arr = Array.isArray(props.hover)?props.hover:props.hover.split(' ')
+        let lastColor = null
+        let lastBackgroundColor = null
+        for(let com of arr){
+            if(!com)continue
+
+      
+            
+            if(isValidColor(com)||colorValues.includes(com)){
+                
+                if(lastColor !==null){
+                    className[`hover-c-${lastColor}`] = false
+                    hoverStyles.color = `color-mix(in lch, ${lastColor}, ${com})`
+                    lastColor = hoverStyles.color
+                }else{
+                    className[`hover-c-${com}`] = true
+                    lastColor = com
+                }
+                continue
+            }
+            if(isImage(com)){
+                hoverStyles.backgroundImage = `url("${com}")`
+                continue
+            }
+            if(com.indexOf('-')){
+                const prop = com.split('-')
+                const propName = prop[0]
+                const propCount = prop.length - 1
+                // console.log(prop);
+                
+                if(propName === 'bg'){
+                    for(let i =1;i<=propCount;i++){
+                        const value = prop[i]
+                        if(isImage(value)){
+                            console.log(value);
+
+                            hoverStyles.backgroundImage = `url("${value}")`
+                            continue
+                        }
+                        if(['fill','contain','cover','cover','none'].includes(value)){
+                            className[`hover-bs-${value}`] = true
+                            continue
+                        }
+                        if(isValidColor(value)||colorValues.includes(value)){
+                
+                            if(lastBackgroundColor !==null){
+                                className[`hover-bg-${lastBackgroundColor}`] = false
+                                hoverStyles.backgroundColor = `color-mix(in lch, ${lastBackgroundColor}, ${value})`
+                                lastBackgroundColor = hoverStyles.backgroundColor
+                            }else{
+                                className[`hover-bg-${value}`] = true
+                                lastBackgroundColor = value
+                            }
+                            continue
+                        }
+                        if(['left','bottom','top','right','center'].includes(value)){
+                            switch(value){
+                                case 'left':className['hover-bp-x-left']=true;break;
+                                case 'right':className['hover-bp-x-right']=true;break;
+                                case 'top':className['hover-bp-y-top']=true;break;
+                                case 'bottom':className['hover-bp-y-bottom']=true;break;
+                                case 'center':className['hover-bp-center']=true;break;
+                            }
+                            continue
+                        }
+                        if((/^w:.*/).test(value)){
+                            // console.log(value);
+                            let trueValue = value.slice(2)
+                            const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
+                            const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
+
+                            const backgroundSizeX = trueValue==='auto'?trueValue:(sizeValue + sizePix) 
+                            const backgroundSizeY = hoverStyles.backgroundSizeY||styles.backgroundSize?.split(' ')[1]||'auto'
+
+                            hoverStyles.backgroundSize = `${backgroundSizeX} ${backgroundSizeY}`
+                            hoverStyles.backgroundSizeX = backgroundSizeX
+                            
+                            continue
+                        }
+                        if((/^h:.*/).test(value)){
+                            // console.log(value);
+                            let trueValue = value.slice(2)
+
+                            const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
+                            const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
+
+                            const backgroundSizeX = hoverStyles.backgroundSizeX||styles.backgroundSize?.split(' ')[0]||'auto'
+                            const backgroundSizeY = trueValue==='auto'?trueValue:(sizeValue + sizePix) 
+
+                            hoverStyles.backgroundSize = `${backgroundSizeX} ${backgroundSizeY}`
+                            hoverStyles.backgroundSizeY = backgroundSizeY
+                            continue
+
+                        }
+                        
+                        
+                    }
+                    continue
+                }
+
+
+                
+                continue
+            }
+            
+        }
+        
+    }
+    
+
+    // console.log(styles);
+
+    // console.log(className,styles,hoverStyles);
 
     
-    return {className,styles}
+    return {className,styles,hoverStyles}
 
 
 
@@ -405,18 +522,43 @@ function createTag(tag:string){
                 default:''
             }
         },
-        setup(){
+        setup(props){
+ 
+            let activeHover = ref(false)
+            const mouseEnterFunction = ()=>{
+                // console.log(props);
+                
+                if(!props.hover)return
+                activeHover.value = true
+            }
+            const mouseOutFunction =()=>{
+                if(!props.hover)return
+                activeHover.value = false
+            }
 
+            return {
+                mouseEnterFunction,
+                mouseOutFunction,
+                activeHover
+            }
 
-    
         },
         render(){
-            const {className,styles} = renderHelper(<PropT>this.$props)
+            const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props,{})
+            // console.log(this.activeHover);
+            
+            const styleAll = (()=>{
+                return this.activeHover?{...styles,...hoverStyles}:styles
+            })
+
             return h(tag,{
                 class:className,
                 style:{
-                    ...styles,
+                    ...styleAll(),
+                    // ...this.styles
                 },
+                onMouseenter:this.mouseEnterFunction,
+                onmouseleave:this.mouseOutFunction
                 // class:this.className,
                 // style:this.styles
         

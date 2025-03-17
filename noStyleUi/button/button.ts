@@ -1,4 +1,4 @@
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, ref } from 'vue'
 import { config } from '../config/config'
 import { renderHelper } from '../div/Div'
 
@@ -23,14 +23,35 @@ export const button = defineComponent({
               if (onClick)onClick(e)
             }
         }
+
+        let activeHover = ref(false)
+        const mouseEnterFunction = ()=>{
+            // console.log(props);
+            
+            if(!props.hover||props.disabled)return
+            activeHover.value = true
+        }
+        const mouseOutFunction =()=>{
+            if(!props.hover||props.disabled)return
+            activeHover.value = false
+        }
+
+
+
+
+
         return{
             handleClick,
+            mouseEnterFunction,
+            mouseOutFunction,
+            activeHover
         }
+
         
     },
     render(){
         
-        const {className,styles} = renderHelper(<PropT>this.$props)
+        const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props,{disabled:this.$props.disabled})
 
         if(this.$props.type !=='none'){
             className[buttonS.default] = true 
@@ -86,11 +107,15 @@ export const button = defineComponent({
                 icon[0].props.style.marginRight =5
             }
         }
-        
+        const styleAll = (()=>{
+            return this.activeHover?{...styles,...hoverStyles}:styles
+        })
         return h('button',{
             class:className,
-            style:styles,
-            onClick:this.handleClick
+            style:styleAll(),
+            onClick:this.handleClick,
+            onMouseenter:this.mouseEnterFunction,
+            onMouseleave:this.mouseOutFunction
     
         },[
             icon,
