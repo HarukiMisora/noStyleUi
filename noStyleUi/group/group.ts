@@ -24,17 +24,21 @@ export const group = defineComponent({
         this.$props.cusProps?.forEach(value => {
             cusProps[value[0]] =value[1]
         });
+        let TheHover = Array.isArray(this.$props.hover)?this.$props.hover.toString().replace(/,/g,' '):this.$props.hover
         
         if(Array.isArray(vNodes)){
             for(let i of vNodes){
                 const bg = matchArrAtt(this.$props?.bg,i.props?.bg)
-                const flex = matchArrAtt(this.$props?.flex,i.props?.flex)?.filter((item)=>{return item!==false&&item!==undefined})                
+                const flex = matchArrAtt(this.$props?.flex,i.props?.flex)?.filter((item)=>{return item!==false&&item!==undefined})
+                const hover = TheHover + ' '+ (Array.isArray(i.props?.hover)?i.props?.hover.toString().replace(/,/g,' '):i.props?.hover)
+                
                 i.props = {
                     ...this.$props,
                     ...cusProps,
                     ...i.props,
                     bg,
                     flex:flex?.length?flex:false,
+                    hover
 
                 }
             }

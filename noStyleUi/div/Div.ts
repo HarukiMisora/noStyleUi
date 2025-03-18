@@ -36,13 +36,35 @@ const flexOptionActive = {
 interface renderHelperOptionsT {
     disabled?:boolean
 }
-
+const setMixColor =(colors:string[])=>{
+    if(!isValidColor(colors[0])&&!colorValues.includes(colors[0])){
+        console.error(colors[0],'不是一个合法颜色')
+        return ''
+    }else{
+        let lastColor = colors[0]
+        let mixColor =''
+        const l = colors.length
+        let e = 0
+        for(let i=1;i<l;i++){
+            if(!isValidColor(colors[i])&&!colorValues.includes(colors[i])){
+                console.warn(colors[i],'不是一个合法颜色')
+                e += 1;
+                continue
+            }
+            mixColor= `color-mix(in lch, ${lastColor}, ${colors[i]})`
+            lastColor=mixColor
+        }
+        console.log(lastColor,mixColor);
+        
+        return l-e>1?mixColor:lastColor
+    }
+}
 export function renderHelper(props:PropT,options:renderHelperOptionsT){
 
     const className:{[key:string]:Boolean} ={}
     const styles:{[key:string]:string|undefined} ={}
     const hoverStyles:{[key:string]:string|undefined} ={}
-    const attributeGrop:(keyof Omit<typeof props,'flex'|'hover'>)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','c','radius']
+    const attributeGrop:(keyof Omit<typeof props,'flex'|'hover'>)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','radius']
     const attributeGropStyle: {[key in typeof attributeGrop[number]]:string} = {
         w:'width',
         h:'height',
@@ -73,17 +95,36 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         bd:'border'
         
     }
+
     
     //
     for(const i  of attributeGrop){
         if(props[i] !== undefined){
-            // console.log(props[i],i);
+            
+            
             if(props[i][0] ==='$'){
                 styles[attributeGropStyle[i]] = props[i].slice(1)
+            }else if(i === 'c'&&props[i].includes('-')){
+                // console.log(setMixColor(props[i].split('-')));
+                
+                styles.color = setMixColor(props[i].split('-'))
+                
+                
             }else{
                 className[`${i}-${props[i]}`] = true
                 delete styles[attributeGropStyle[i]]
             }
+        }
+    }
+    
+    if(props.c!==undefined){
+        if(props.c.includes('-')){
+            styles.color = setMixColor(props.c.split('-'))
+        }else if(isValidColor(props.c)){
+            
+            styles.color = props.c
+        }else{
+            className[`c-${props.c}`] = true
         }
     }
 

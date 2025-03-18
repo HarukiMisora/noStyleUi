@@ -20,7 +20,7 @@ const test =(e:MouseEvent)=>{
     <w-div   c="red" h="400" w="p100" p="20" flex radius="25" style="text-align: center;">
 
     <w-div w="p50" p="10" bc="$#fff" flex="col" bd="x-1-blue-dashed-red-green solid green-red"> 
-      <w-span :hover="`green blue bg-red-green-#000 ${urls} red blue #fff #000`" bd="red">基础</w-span>
+      <w-span c="red-blue" :hover="`green blue bg-red-green-#000 ${urls} red blue #fff #000`" bd="red">基础</w-span>
       <w-div  w="p100" :flex="['g-10','wrap']" mb="20" radius="" >
         <w-button type="default" disabled  @click="test" size="small" round hover="red bg-red-green">
           <template #icon>
@@ -83,7 +83,7 @@ const test =(e:MouseEvent)=>{
       <w-button>asd</w-button>
       <w-button type="success">asd</w-button>
       <w-button>asd</w-button>
-      <w-button>asd</w-button>
+      <w-button hover="bg-red">asd</w-button>
       <w-div>asdasd</w-div>
     </w-group>
     <div style="margin: 20px;text-align: center;font-size: 24px;">比对</div>
