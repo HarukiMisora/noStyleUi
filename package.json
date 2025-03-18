@@ -1,7 +1,7 @@
 {
   "name": "nostyleui",
   "private": false,
-  "version": "0.01.00",
+  "version": "0.02.01",
   "type": "module",
   "scripts": {
     "dev": "vite",

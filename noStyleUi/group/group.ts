@@ -17,7 +17,7 @@ const matchArrAtt = (prop1:unknown,prop2:unknown)=>{
 export const group = defineComponent({
     props:groupProps,
     render(){
-        // console.log(this.$props);
+        console.log(this.$props);
         
         const vNodes = this.$slots.default?.()
         const cusProps:any = {}
@@ -34,7 +34,7 @@ export const group = defineComponent({
                     ...cusProps,
                     ...i.props,
                     bg,
-                    flex,
+                    flex:flex?.length?flex:false,
 
                 }
             }
