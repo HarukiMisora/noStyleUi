@@ -144,6 +144,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
     if(props.bg!==undefined){
         const size =['auto','auto']
         mapProps(Array.isArray(props.bg)?props.bg:props.bg.split(' '),(value:string)=>{
+            if(!value)return;
             if(isImage(value)){
                 if(!value){
                     return
