@@ -55,7 +55,7 @@ const setMixColor =(colors:string[])=>{
             mixColor= `color-mix(in lch, ${lastColor}, ${colors[i]})`
             lastColor=mixColor
         }
-        console.log(lastColor,mixColor);
+        // console.log(lastColor,mixColor);
         
         return l-e>1?mixColor:lastColor
     }
@@ -143,6 +143,8 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
     
     if(props.bg!==undefined){
         const size =['auto','auto']
+        // console.log(Array.isArray(props.bg)?props.bg:props.bg.split(' '));
+        
         mapProps(Array.isArray(props.bg)?props.bg:props.bg.split(' '),(value:string)=>{
             if(!value)return;
             if(isImage(value)){
