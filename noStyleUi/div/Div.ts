@@ -263,15 +263,17 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         if(Array.isArray(props.flex)){
             for(let i of props.flex){
                 // console.log(i);
+                if(['row-r','col-r'].includes(i)){
+                    className[flexOptionActive[<keyof typeof flexOptionActive>i]?.(i)] = true
+                    continue
+                }
                 
                 const option = i.split('-')
-                // console.log(option);
+                console.log(option);
                 const thisClass = flexOptionActive[<keyof typeof flexOptionActive>option?.[0]]?.(option?.[1])
                 if(thisClass){
                     className[thisClass] = true
-
                 }
-                
             }
 
         }else{
