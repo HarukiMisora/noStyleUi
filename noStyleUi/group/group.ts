@@ -38,6 +38,7 @@ export const group = defineComponent({
         if(Array.isArray(vNodes)){
             for(let i of vNodes){
                 const bg =  matchArrAttToStr(<string|string[]>this.$props.bg,i.props?.bg)
+                const bd =  matchArrAttToStr(<string|string[]>this.$props.bd,i.props?.bd)
                 const flex = matchArrAtt(this.$props?.flex,i.props?.flex)?.filter((item)=>{return item!==false&&item!==undefined})
                 const hover = TheHover + ' '+ (Array.isArray(i.props?.hover)?i.props?.hover.toString().replace(/,/g,' '):i.props?.hover)
                 
@@ -46,6 +47,7 @@ export const group = defineComponent({
                     ...cusProps,
                     ...i.props,
                     bg,
+                    bd,
                     flex:flex?.length?flex:false,
                     hover
 

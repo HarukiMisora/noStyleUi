@@ -269,7 +269,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
                 }
                 
                 const option = i.split('-')
-                console.log(option);
+                // console.log(option);
                 const thisClass = flexOptionActive[<keyof typeof flexOptionActive>option?.[0]]?.(option?.[1])
                 if(thisClass){
                     className[thisClass] = true

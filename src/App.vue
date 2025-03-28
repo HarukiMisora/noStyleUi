@@ -78,8 +78,8 @@ const test =(e:MouseEvent)=>{
       </w-div>
 
     </w-div>
-    <w-group  :cus-props="[['type','error']]" hover="center " bg="center" c="#f00">
-      <w-div :bg="`${urls}`"  >asd</w-div>
+    <w-group  :cus-props="[['type','error']]" hover="center " bg="center" c="#f00" bd="solid-blue">
+      <w-div :bg="`${urls}`"  bd="r-0">asd</w-div>
       <w-button type="success">asd</w-button>
       <w-button>asd</w-button>
       <w-button hover="bg-red">asd</w-button>
