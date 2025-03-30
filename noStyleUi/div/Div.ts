@@ -512,7 +512,27 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
                             hoverStyles.backgroundSize = `${backgroundSizeX} ${backgroundSizeY}`
                             hoverStyles.backgroundSizeY = backgroundSizeY
                             continue
+                        }
+                        if((/^x:.*/).test(value)){
+                            // console.log(value);
+                            let trueValue = value.slice(2)
+                            const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
+                            const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
 
+                            const backgroundPositionX = (sizeValue + sizePix) 
+                            hoverStyles.backgroundPositionX = backgroundPositionX
+                            
+                            continue
+                        }
+                        if((/^y:.*/).test(value)){
+                            // console.log(value);
+                            let trueValue = value.slice(2)
+                            const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
+                            const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
+
+                            const backgroundPositionY = (sizeValue + sizePix) 
+                            hoverStyles.backgroundPositionY = backgroundPositionY
+                            continue
                         }
                         
                         
