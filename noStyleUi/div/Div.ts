@@ -411,13 +411,12 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         const arr = Array.isArray(props.hover)?props.hover:props.hover.split(' ')
         let lastColor = null
         let lastBackgroundColor = null
+        // console.log(arr);
         for(let com of arr){
             if(!com)continue
-
-      
+            // console.log(com);
             
             if(isValidColor(com)||colorValues.includes(com)){
-                
                 if(lastColor !==null){
                     className[`hover-c-${lastColor}`] = false
                     hoverStyles.color = `color-mix(in lch, ${lastColor}, ${com})`
@@ -441,9 +440,9 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
                 if(propName === 'bg'){
                     for(let i =1;i<=propCount;i++){
                         const value = prop[i]
+                        
                         if(isImage(value)){
-                            console.log(value);
-
+                            // console.log(value);
                             hoverStyles.backgroundImage = `url("${value}")`
                             continue
                         }
@@ -452,13 +451,15 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
                             continue
                         }
                         if(isValidColor(value)||colorValues.includes(value)){
+                            // console.log(value,lastBackgroundColor);
                 
                             if(lastBackgroundColor !==null){
                                 className[`hover-bg-${lastBackgroundColor}`] = false
                                 hoverStyles.backgroundColor = `color-mix(in lch, ${lastBackgroundColor}, ${value})`
                                 lastBackgroundColor = hoverStyles.backgroundColor
                             }else{
-                                className[`hover-bg-${value}`] = true
+                                className[`hover-bg-${value}`] = false
+                                hoverStyles.backgroundColor = value
                                 lastBackgroundColor = value
                             }
                             continue
@@ -514,6 +515,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             }
             
         }
+        // console.log(hoverStyles);
         
     }
     
