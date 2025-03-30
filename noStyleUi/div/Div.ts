@@ -416,7 +416,18 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             if(!com)continue
             // console.log(com);
             
-            if(isValidColor(com)||colorValues.includes(com)){
+            if(isValidColor(com)){
+                if(lastColor !==null){
+                    className[`hover-c-${lastColor}`] = false
+                    hoverStyles.color = `color-mix(in lch, ${lastColor}, ${com})`
+                    lastColor = hoverStyles.color
+                }else{
+                    hoverStyles.color = com
+                    lastColor = com
+                }
+                continue
+            }
+            if(colorValues.includes(com)){
                 if(lastColor !==null){
                     className[`hover-c-${lastColor}`] = false
                     hoverStyles.color = `color-mix(in lch, ${lastColor}, ${com})`
