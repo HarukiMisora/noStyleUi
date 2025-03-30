@@ -1,5 +1,5 @@
 import { config } from '../config/config'
-import { defineComponent, render } from "vue";
+import { defineComponent } from "vue";
 
 
 const groupProps = {

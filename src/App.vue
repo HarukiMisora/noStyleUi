@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {Accessibility} from '@vicons/ionicons5'
+// import {Accessibility} from '@vicons/ionicons5'
 let urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
 
 
 
 
 
-const test =()=>{
-  window.alert('111')
-}
+// const test =()=>{
+//   window.alert('111')
+// }
 
 
 
