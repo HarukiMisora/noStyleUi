@@ -477,10 +477,10 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
                         }
                         if(['left','bottom','top','right','center'].includes(value)){
                             switch(value){
-                                case 'left':className['hover-bp-x-left']=true;break;
-                                case 'right':className['hover-bp-x-right']=true;break;
-                                case 'top':className['hover-bp-y-top']=true;break;
-                                case 'bottom':className['hover-bp-y-bottom']=true;break;
+                                case 'left':className['hover-bp-x-left']=true;className['hover-bp-x-right']=false;break;
+                                case 'right':className['hover-bp-x-right']=true;className['hover-bp-x-left']=false;break;
+                                case 'top':className['hover-bp-y-top']=true;className['hover-bp-x-bottom']=false;break;
+                                case 'bottom':className['hover-bp-y-bottom']=true;className['hover-bp-x-top']=false;break;
                                 case 'center':className['hover-bp-center']=true;break;
                             }
                             continue

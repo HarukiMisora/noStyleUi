@@ -17,8 +17,10 @@ const test =()=>{
 
 <template>
   <div @mouseenter="" style="display: flex;flex-direction:column;" class="test test1" >
-    
-    <w-div bg="red" hover="#fff bg-#FF0">asd</w-div>
+    <w-group hover="#fff bg-#FF0-left">
+      <w-div :bg="urls+' black w-500 r-n'" h="500"  hover="#fff bg-#FF0-center">asd</w-div>
+
+    </w-group>
   </div>
 </template>
 
