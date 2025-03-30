@@ -1,12 +1,9 @@
 
 $borderStyles:dashed,dotted,double,groove,hidden,inset,none,outset,ridge,solid;
-
-
 @each $i in $borderStyles{
   .bd-s-#{$i}{
     border-style: $i;
   }
-
 }
 @each $i in $borderStyles{
   .bd-s-x-#{$i}{
@@ -32,8 +29,6 @@ $borderStyles:dashed,dotted,double,groove,hidden,inset,none,outset,ridge,solid;
     border-left-style: $i;
   }
 }
-
-
 .bd-s-inh{
   border-style:inherit;
 }
@@ -44,6 +39,18 @@ $i:0;
 @while $i<=10{
   .bd-w-#{$i}{
     border-width: #{$i}px;
+  }
+  $i:$i+1;
+}
+$i:0;
+@while $i<=10{
+  .bd-w-x-#{$i}{
+    border-left-width: #{$i}px;
+    border-right-width: #{$i}px;
+  }
+  .bd-w-y-#{$i}{
+    border-top-width: #{$i}px;
+    border-bottom-width: #{$i}px;
   }
   $i:$i+1;
 }

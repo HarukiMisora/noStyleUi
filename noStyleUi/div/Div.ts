@@ -336,8 +336,13 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         for(let i of arr){
             setBdOptionActive(i)
         }
+        // console.log(borderColors);
         if(borderColors[''].length>1){
             setBorderMixColor('','borderColor')
+        }else if(isValidColor(borderColors[''][0])){
+            // console.log(11111);
+            
+            styles.borderColor = borderColors[''][0]
         }
         if(borderColors['x-'].length>1){
             styles.borderLeftColor = ''
@@ -345,7 +350,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             setBorderMixColor('x-','borderLeftColor')
             setBorderMixColor('x-','borderRightColor')
         }
-        else if(borderColors['x-']?.[0]?.slice(0,1) === '#'){
+        else if(isValidColor(borderColors['x-'][0])){
             styles.borderLeftColor = borderColors['x-'][0]
             styles.borderRightColor = borderColors['x-'][0]
         }
@@ -355,7 +360,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             setBorderMixColor('y-','borderTopColor')
             setBorderMixColor('y-','borderBottomColor')
         }
-        else if(borderColors['y-']?.[0]?.slice(0,1) === '#'){
+        else if(isValidColor(borderColors['y-'][0])){
             styles.borderTopColor = borderColors['y-'][0]
             styles.borderBottomColor = borderColors['y-'][0]
         }
@@ -363,28 +368,28 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             styles.borderLeftColor = ''
             setBorderMixColor('l-','borderLeftColor')
         }
-        else if(borderColors['l-']?.[0]?.slice(0,1) === '#'){
+        else if(isValidColor(borderColors['l-'][0])){
             styles.borderLeftColor = borderColors['l-'][0]
         }
         if(borderColors['r-'].length>1){
             styles.borderRightColor = ''
             setBorderMixColor('r-','borderRightColor')
         }
-        else if(borderColors['r-']?.[0]?.slice(0,1) === '#'){
+        else if(isValidColor(borderColors['r-'][0])){
             styles.borderRightColor = borderColors['r-'][0]
         }
         if(borderColors['t-'].length>1){
             styles.borderTopColor = ''
             setBorderMixColor('t-','borderTopColor')
         }
-        else if(borderColors['t-']?.[0]?.slice(0,1) === '#'){
+        else if(isValidColor(borderColors['t-'][0])){
             styles.borderTopColor = borderColors['t-'][0]
         }
         if(borderColors['b-'].length>1){
             styles.borderBottomColor = ''
             setBorderMixColor('b-','borderBottomColor')
         }
-        else if(borderColors['b-']?.[0]?.slice(0,1) === '#'){
+        else if(isValidColor(borderColors['b-'][0])){
             styles.borderBottomColor = borderColors['b-'][0]
         }
 

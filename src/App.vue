@@ -6,7 +6,7 @@ let urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
 
 
 
-const test =(e:MouseEvent)=>{
+const test =()=>{
   window.alert('111')
 }
 
@@ -18,8 +18,8 @@ const test =(e:MouseEvent)=>{
 <template>
   <div @mouseenter="" style="display: flex;flex-direction:column;" class="test test1" >
     <w-div   c="red" h="400" w="p100" p="20" flex radius="25" style="text-align: center;">
-    <w-div w="p50" p="10" bc="$#fff" flex="col" bd="x-1-blue-dashed-red-green solid green-red"> 
-      <w-span c="red-blue" :hover="`green blue bg-red-green-#000 ${urls} red blue #fff #000`" bd="red">基础</w-span>
+    <w-div w="p50" p="10" bc="$#fff" flex="col" > 
+      <w-span c="red-blue" :hover="`green blue bg-red-green-#000 ${urls} red blue #fff #000`" >基础</w-span>
       <w-div  w="p100" :flex="['g-10','wrap','row-r']" mb="20" radius="" >
         <w-button type="default" disabled  @click="test" size="small" round hover="red bg-red-green">
           <template #icon>
@@ -63,12 +63,12 @@ const test =(e:MouseEvent)=>{
       </w-div>
     </w-div>
 
-      <w-div w="p50" p="10"  >
+      <w-div w="p50" p="10"  bd="#f1f-solid t-red-red" >
         右面
       <w-div 
         bg="https://www.iamwzc.com/Resources/back_class_normal.png  red blue r-n w-p50  center #123456 green-red-blue-pink" 
         h="300" 
-        :bd="['solid-green','l-dashed-50-red',]"
+        
         hover="bg-left-bottom-fill--w:p100-h:auto"
         style="transition:all .5s ease;"
       >
@@ -78,8 +78,8 @@ const test =(e:MouseEvent)=>{
       </w-div>
 
     </w-div>
-    <w-group  :cus-props="[['type','error']]" hover="center " bg="center" c="#f00" bd="solid-blue">
-      <w-div :bg="`${urls}`"  bd="r-0">asd</w-div>
+    <w-group  :cus-props="[['type','error']]" hover="center " bg="center" c="#f00" >
+      <w-div :bg="`${urls}`"  >asd</w-div>
       <w-button type="success">asd</w-button>
       <w-button>asd</w-button>
       <w-button hover="bg-red">asd</w-button>
