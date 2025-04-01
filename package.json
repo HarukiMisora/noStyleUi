@@ -1,20 +1,18 @@
 {
   "name": "nostyleui",
   "private": false,
-  "version": "0.02.12",
+  "version": "0.02.14",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:pack": "vite build && tsc -p tsconfig.lib.json",
+    "build:types": "tsc -p tsconfig.lib.json --emitDeclarationOnly"
   },
   "files": [
-    "index.ts",
-    "noStyleUi",
-    "interface.d.ts",
-    "README.md"
+    "dist"
   ],
-  "types": "interface.d.ts",
   "dependencies": {
     "sass": "^1.85.0",
     "vue": "^3.5.13"
@@ -28,7 +26,16 @@
     "vue-tsc": "^2.2.0"
   },
   "description": "-",
-  "main": "index.ts",
+  "main": "./dist/my-ui-library.umd.js",    
+  "module": "./dist/my-ui-library.es.js",   
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/no-style-ui.es.js",   
+      "require": "./dist/no-style-ui.umd.js"  
+    },
+    "./style": "./dist/nostyleui.css"  
+  },         
   "keywords": [
     "nostyleui"
   ],
