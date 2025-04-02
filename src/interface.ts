@@ -1,6 +1,5 @@
-export {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg} from './index'
-
-declare var require :any
+import {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg} from './index'
+import install from './index'
 declare module 'vue'{
     export interface GlobalComponents{
         WDiv:typeof WDiv
@@ -22,4 +21,4 @@ declare module 'vue'{
         WImg:typeof WImg
     }
 }
-export{}
+export default install

@@ -51,3 +51,6 @@ export default function install(Vue:any){
     Vue.directive('update',vUpdate)
     
 }
+
+
+
