@@ -1,7 +1,7 @@
 {
   "name": "nostyleui",
   "private": false,
-  "version": "0.02.15",
+  "version": "0.02.19",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -28,14 +28,21 @@
   "description": "-",
   "main": "./dist/my-ui-library.umd.js",    
   "module": "./dist/my-ui-library.es.js",   
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/types/interface.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/no-style-ui.es.js",   
-      "require": "./dist/no-style-ui.umd.js"  
+      "import": "./dist/no-style-ui.es.js",
+      "require": "./dist/no-style-ui.umd.js",
+      "types": "./dist/types/interface.d.ts"
     },
-    "./style": "./dist/nostyleui.css"  
-  },         
+    "./index": {
+      "import": "./dist/no-style-ui.es.js",
+      "require": "./dist/no-style-ui.umd.js",
+      "types": "./dist/types/interface.d.ts"
+    },
+    "./*": "./dist/*",
+    "./style": "./dist/nostyleui.css"
+  },      
   "keywords": [
     "nostyleui"
   ],
