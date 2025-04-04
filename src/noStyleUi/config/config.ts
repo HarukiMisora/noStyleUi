@@ -1,5 +1,5 @@
 
-import {type configT} from './interface'
+import {type configT} from './interface.d'
 import type {PropType} from 'vue'
 
 export type flexT = string|boolean|string[]
@@ -43,6 +43,10 @@ export const config:configT = {
         bc:String,
         bg:{
             type:[String,Array],
+            default:undefined
+        },
+        grid:{
+            type:[String,Array,Boolean],
             default:undefined
         },
         hover:[String,Array],

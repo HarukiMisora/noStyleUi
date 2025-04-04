@@ -42,6 +42,11 @@ export interface configT{
             type:[StringConstructor,ArrayConstructor]
             default:undefined
         }
+        grid:{
+            type:[StringConstructor,ArrayConstructor,BooleanConstructor],
+            default:undefined
+        }
+
         hover:[StringConstructor,ArrayConstructor]
 
         flex:(StringConstructor|BooleanConstructor|ArrayConstructor)[]

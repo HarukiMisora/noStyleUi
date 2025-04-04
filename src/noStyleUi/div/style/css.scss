@@ -6,6 +6,7 @@
 @use 'sass:meta';
 @use './border.scss';
 @use './hover.scss';
+@use './grid.scss';
 $i:0;
 @while $i<=1920{
    

@@ -5,7 +5,7 @@ import { config } from '../config/config'
 import colorValues from '../var/colorValues'
 import {isImage, isValidColor} from '../test/index'
 // import   './style/css.scss'
-
+import createteGridCss from './functions/createGrid.css'
 
 
 const styleProps = {
@@ -75,7 +75,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
     const className:{[key:string]:Boolean} ={}
     const styles:{[key:string]:string|undefined} ={}
     const hoverStyles:{[key:string]:string|undefined} ={}
-    const attributeGrop:(keyof Omit<typeof props,'flex'|'hover'>)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','radius']
+    const attributeGrop:(keyof Omit<typeof props,'flex'|'hover'|'grid'>)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','radius']
     const attributeGropStyle: {[key in typeof attributeGrop[number]]:string} = {
         w:'width',
         h:'height',
@@ -127,6 +127,15 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             }
         }
     }
+
+    if(props.grid !== void 0){
+        
+        const res = createteGridCss(props.grid)
+        console.log(res);
+        Object.assign(className,res.className)
+        Object.assign(styles,res.style)
+    }
+
     
     if(props.c!==undefined){
         if(props.c.includes('-')){
