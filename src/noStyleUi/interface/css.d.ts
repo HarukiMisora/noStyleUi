@@ -5,9 +5,20 @@ type valueOfCSSStyleDeclaration = string|undefined
 type myCSSStyleDeclaration = {
     [key in keyofCSSStyleDeclaration]: valueOfCSSStyleDeclaration
 }
-
+type createCssFuncT = (options:string[]|string,setClassName:setClassNameT,setStyle:setStyleT)=>void
 type setClassNameT =(name:string,value:boolean)=>void
 type setStyleT = (name:keyofCSSStyleDeclaration,value:valueOfCSSStyleDeclaration)=>void
+
+interface styleWithValuesT{
+  setStyle:setStyleT,
+  value:string[]
+}
+interface classNameWithValuesT{
+  setClassName:setClassNameT,
+  value:string[]
+}
+
+
 keyof ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','radius']['number']
 interface Pxs {
   w:string

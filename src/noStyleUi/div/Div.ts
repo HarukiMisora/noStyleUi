@@ -6,6 +6,7 @@ import colorValues from '../var/colorValues'
 import {isImage, isValidColor} from '../test/index'
 // import   './style/css.scss'
 import createteGridCss from './functions/createGrid.css'
+import createBgCss from './functions/createBg.css'
 
 
 const styleProps = {
@@ -61,13 +62,13 @@ const setMixColor =(colors:string[])=>{
     }
 }
 //遍历属性集合
-const mapProps =(values:string[],call:(value:string)=>void) =>{
-    let l = values.length
-    for(let i=0;i<l;i++){
-        call(values[i])
-    }
+// const mapProps =(values:string[],call:(value:string)=>void) =>{
+//     let l = values.length
+//     for(let i=0;i<l;i++){
+//         call(values[i])
+//     }
     
-}
+// }
 
 
 export function renderHelper(props:PropT,options:renderHelperOptionsT){
@@ -102,168 +103,46 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
 
         
     }
-
-    
-    //
-    for(const i  of attributeGrop){
-        if(props[i] !== undefined){
-            
-            
-            if(props[i][0] ==='$'){
-                styles[<keyofCSSStyleDeclaration>attributeGropStyle[i]] = props[i].slice(1)
-            }
-            // else if(i === 'c'&&props[i].includes('-')){
-            //     // console.log(setMixColor(props[i].split('-')));
-                
-            //     styles.color = setMixColor(props[i].split('-'))
-                
-                
-            // }
-            else{
-                className[`${i}-${props[i]}`] = true
-                delete styles[<keyofCSSStyleDeclaration>attributeGropStyle[i]]
-            }
-        }
-    }
-
     const setClassName:setClassNameT = (name,value=true) =>{
         className[name]= value
     }
     const setStyle:setStyleT = (name,value) =>{
         styles[name] = value
     }
+    //
+    for(const i  of attributeGrop){
+        if(props[i] !== void 0){
+            if(props[i][0] ==='$'){
+                styles[<keyofCSSStyleDeclaration>attributeGropStyle[i]] = props[i].slice(1)
+            }
+            else{
+                className[`${i}-${props[i]}`] = true
+                delete styles[<keyofCSSStyleDeclaration>attributeGropStyle[i]]
+            }
+        }
+    }
+    //grid属性集
     if(props.grid !== void 0){
         createteGridCss(props.grid,setClassName,setStyle)
     }
 
-    
+    //字体颜色
     if(props.c!== void 0){
         if(props.c.includes('-')){
             styles.color = setMixColor(props.c.split('-'))
         }else if(isValidColor(props.c)){
-            
             styles.color = props.c
         }else{
             className[`c-${props.c}`] = true
         }
     }
 
-    const bgColors:string[] = [];
     
-    if(props.bg!==undefined){
-        const size =['auto','auto']
-        // console.log(Array.isArray(props.bg)?props.bg:props.bg.split(' '));
-        
-        mapProps(Array.isArray(props.bg)?props.bg:props.bg.split(' '),(value:string)=>{
-            if(!value)return;
-            if(isImage(value)){
-                if(!value){
-                    return
-                }
-                styles.backgroundImage = `url("${value}")`
-                return
-            }
-            if(['fill','contain','cover','cover','none'].includes(value)){
-                className[`bs-${value}`] = true
-                return
-            }
-            if('center' === value){
-                className['bp-center'] = true
-                return
-            }
-            if(new RegExp('^.*(left|bottom|top|right|center)$').test(value)){
-                const options = value.split('-');
-                for(let d of options){
-                    // console.log(d);
-                    switch(d){
-                        case 'left':className['bp-x-left']=true;break;
-                        case 'right':className['bp-x-right']=true;break;
-                        case 'top':className['bp-y-top']=true;break;
-                        case 'bottom':className['bp-y-bottom']=true;break;
-                        case 'center':className['bp-center']=true;break;
-                        default:console.warn(d,'不是一个合法的option')
-                    }
-                    
-                }
-                return
-            }
 
-            if(value.slice(0,1)==='#'){
-                // console.log(i);
-                bgColors.push(value)
-                // console.log(bgColors[0]);
-                
-                if(bgColors.length>1){
-                    const lastColor = styles.backgroundColor?styles.backgroundColor:bgColors[0]
-                    className[`bc-${bgColors[0]}`] = false
-                    className[`bc-${value}`] = false
-                    styles.backgroundColor = `color-mix(in lch, ${lastColor}, ${value})`
-                }else{
-                    styles.backgroundColor = value
-                }
-
-                return
-            }
-            if(value.indexOf('-') === -1){
-                className[`bc-${value}`] = true
-                bgColors.push(value)
-                delete styles.background
-
-                if(bgColors.length>1){
-                    className[`bc-${bgColors[0]}`] = false
-                    className[`bc-${value}`] = false
-                    
-                    const lastColor = styles.backgroundColor?styles.backgroundColor:bgColors[0]
-                    
-                    styles.backgroundColor = `color-mix(in lch, ${lastColor}, ${value})`
-                }
-                // console.log(i);
-                
-                
-            }
-            const option = value.split('-')
-            // console.log(option);
-            let thisClass = ''
-            const sizePix = option[1]?.indexOf('p')?(option[1]?.indexOf('v')?'px':`v${option[0]}`):'%'
-            const sizeValue = sizePix === 'px'?option[1]:option[1]?.slice(1)
-
-            switch(option[0]){
-                case 'w':size[0] = sizeValue + sizePix;break;
-                case 'h':size[1] = sizeValue + sizePix;break;
-                case 'c':className[`bc-${option?.[1]}`] = true;break;
-                case 's':className[`bs-${option?.[1]}`] = true;break;
-                case 'x':className[`bp-x-${option?.[1]}`] = true;break;
-                case 'y':className[`bp-y-${option?.[1]}`] = true;break;
-                case 'r':className[`bp-r-${option?.[1]}`] = true;break;
-                default:{
-                    for(let i of option){
-                        bgColors.push(i)
-                        if(bgColors.length>1){
-                            className[`bc-${bgColors[0]}`] = false
-                            className[`bc-${i}`] = false
-                            
-                            const lastColor = styles.backgroundColor?styles.backgroundColor:bgColors[0]
-                            
-                            styles.backgroundColor = `color-mix(in lch, ${lastColor}, ${i})`
-                        }
-                    }
-
-                    // thisClass = bgOptionActive[<keyof typeof bgOptionActive>option?.[0]]?.(option?.[1])
-                }break;
-            }
-            if(thisClass){
-                className[thisClass] = true
-            }
-
-            // console.log(size,styles);
-            if(size[0]!=='auto'||size[1]!=='auto'){
-                styles.backgroundSize = `${size[0]} ${size[1]}`
-            }
-            
-        })
+    //bg属性集
+    if(props.bg !== void 0){
+        createBgCss(props.bg,setClassName,setStyle)
     }
-
-
 
     if(props.flex!==undefined){
         // console.log(props.flex);

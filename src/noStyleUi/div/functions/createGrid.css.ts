@@ -1,13 +1,6 @@
 import { analysisProps } from "./analysis"
 
-interface styleWithValuesT{
-  setStyle:setStyleT,
-  value:string[]
-}
-interface classNameWithValuesT{
-  setClassName:setClassNameT,
-  value:string[]
-}
+
 
 const actions:{[key:string]:Function} = {
   col:({setStyle,value}:styleWithValuesT)=>{
