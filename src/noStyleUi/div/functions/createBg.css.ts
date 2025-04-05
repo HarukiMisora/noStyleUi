@@ -16,7 +16,7 @@ const actions:{[key:string]:Function} = {
   posn:({setStyle,value}:styleWithValuesT)=>{
     const x = analysisPxs(value[1],'0')
     const y = analysisPxs(value[2],'0')
-    console.log(x,y);
+    // console.log(x,y);
     
     setStyle('backgroundPositionX',x)
     setStyle('backgroundPositionY',y)
@@ -38,7 +38,7 @@ const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
 
   let lastItem = '' //这个lastItem是记录上一个设置的类名，用来清除上一个设置的类名
   analysisProps(options,(propAndValue:string[])=>{
-    console.log(propAndValue);
+    // console.log(propAndValue);
 
 
     //颜色背景
