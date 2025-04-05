@@ -1,10 +1,15 @@
 
 type pxT = [StringConstructor,NumberConstructor]
+type buttonEffectType = 'box'|'text'|'none'|'biger'|'small'|'rotate'
+type flexT = string|boolean|string[]
+type buttonType = 'default'|'primary'|'info'|'success'|'warning'|'error'|'tertiary'|'none'
+type buttonAbstractType = 'default'|'unseen'|'dash'|'glass'|'round'
+type buttonSizeType = 'mini'|'small'|'defalut'|'biger'
+type groupCusPropsType = [string,string][]
 
-import type {buttonEffectType, buttonType, buttonAbstractType, groupCusPropsType } from './config'
-import type {PropType} from 'vue'
 
-export interface configT{ 
+
+interface configT{ 
     colors:{
         primary:string
     },

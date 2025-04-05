@@ -22,7 +22,7 @@ const test =(e:MouseEvent)=>{
       <w-div>2</w-div>
       <w-div>3</w-div>
       <w-div bg="red" grid="item gcol-1-3 grow-1-2" >4</w-div>
-      <w-div>5</w-div>
+      <w-div :bg="urls+'  h-50 w-500 r-n'">5</w-div>
       <w-div>5</w-div>
       <w-div>5</w-div>
       <w-div>5</w-div>

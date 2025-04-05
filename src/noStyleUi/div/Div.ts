@@ -73,10 +73,10 @@ const mapProps =(values:string[],call:(value:string)=>void) =>{
 export function renderHelper(props:PropT,options:renderHelperOptionsT){
 
     const className:{[key:string]:Boolean} ={}
-    const styles:{[key:string]:string|undefined} ={}
-    const hoverStyles:{[key:string]:string|undefined} ={}
-    const attributeGrop:(keyof Omit<typeof props,'flex'|'hover'|'grid'>)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','radius']
-    const attributeGropStyle: {[key in typeof attributeGrop[number]]:string} = {
+    const styles = {} as myCSSStyleDeclaration
+    const hoverStyles = {} as myCSSStyleDeclaration
+    const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
+    const attributeGropStyle: Pxs = {
         w:'width',
         h:'height',
         x:'x',
@@ -100,10 +100,6 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         mx:'margin',
         my:'margin',
 
-        c:'color',
-        bg:'background',
-        bc:'background-color',
-        bd:'border'
         
     }
 
@@ -114,30 +110,34 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             
             
             if(props[i][0] ==='$'){
-                styles[attributeGropStyle[i]] = props[i].slice(1)
-            }else if(i === 'c'&&props[i].includes('-')){
-                // console.log(setMixColor(props[i].split('-')));
+                styles[<keyofCSSStyleDeclaration>attributeGropStyle[i]] = props[i].slice(1)
+            }
+            // else if(i === 'c'&&props[i].includes('-')){
+            //     // console.log(setMixColor(props[i].split('-')));
                 
-                styles.color = setMixColor(props[i].split('-'))
+            //     styles.color = setMixColor(props[i].split('-'))
                 
                 
-            }else{
+            // }
+            else{
                 className[`${i}-${props[i]}`] = true
-                delete styles[attributeGropStyle[i]]
+                delete styles[<keyofCSSStyleDeclaration>attributeGropStyle[i]]
             }
         }
     }
 
+    const setClassName:setClassNameT = (name,value=true) =>{
+        className[name]= value
+    }
+    const setStyle:setStyleT = (name,value) =>{
+        styles[name] = value
+    }
     if(props.grid !== void 0){
-        
-        const res = createteGridCss(props.grid)
-        console.log(res);
-        Object.assign(className,res.className)
-        Object.assign(styles,res.style)
+        createteGridCss(props.grid,setClassName,setStyle)
     }
 
     
-    if(props.c!==undefined){
+    if(props.c!== void 0){
         if(props.c.includes('-')){
             styles.color = setMixColor(props.c.split('-'))
         }else if(isValidColor(props.c)){
@@ -327,7 +327,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             className[`bd-c-${direction+i}`] = true
         }
     }
-    const setBorderMixColor = (direction:keyof typeof borderColors,styleName:string)=>{
+    const setBorderMixColor = (direction:keyof typeof borderColors,styleName:keyofCSSStyleDeclaration)=>{
 
 
         className[`bd-c-${direction+borderColors[direction][0]}`] = false
@@ -466,7 +466,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
                             hoverStyles.backgroundImage = `url("${value}")`
                             continue
                         }
-                        if(['fill','contain','cover','cover','none'].includes(value)){
+                        if(['fill','contain','cover','none'].includes(value)){
                             className[`hover-bs-${value}`] = true
                             continue
                         }
@@ -501,10 +501,10 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
                             const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
 
                             const backgroundSizeX = trueValue==='auto'?trueValue:(sizeValue + sizePix) 
-                            const backgroundSizeY = hoverStyles.backgroundSizeY||styles.backgroundSize?.split(' ')[1]||'auto'
+                            const backgroundSizeY = styles.backgroundSize?.split(' ')[1]||'auto'
 
                             hoverStyles.backgroundSize = `${backgroundSizeX} ${backgroundSizeY}`
-                            hoverStyles.backgroundSizeX = backgroundSizeX
+                            // hoverStyles.backgroundSizeX = backgroundSizeX
                             
                             continue
                         }
@@ -515,11 +515,11 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
                             const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
                             const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
 
-                            const backgroundSizeX = hoverStyles.backgroundSizeX||styles.backgroundSize?.split(' ')[0]||'auto'
+                            const backgroundSizeX = styles.backgroundSize?.split(' ')[0]||'auto'
                             const backgroundSizeY = trueValue==='auto'?trueValue:(sizeValue + sizePix) 
 
                             hoverStyles.backgroundSize = `${backgroundSizeX} ${backgroundSizeY}`
-                            hoverStyles.backgroundSizeY = backgroundSizeY
+                            // hoverStyles.backgroundSizeY = backgroundSizeY
                             continue
                         }
                         if((/^x:.*/).test(value)){
