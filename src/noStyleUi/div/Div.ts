@@ -2,13 +2,13 @@
 
 import {  defineComponent , h, ref} from 'vue'
 import { config } from '../config/config'
-import colorValues from '../var/colorValues'
-import {isImage, isValidColor} from '../test/index'
+import { isValidColor } from '../test/index'
 // import   './style/css.scss'
 import createteGridCss from './functions/createGrid.css'
 import createBgCss from './functions/createBg.css'
 import {  createHoverCss } from './functions/createHover.css'
 import { createFontColorCss } from './functions/createFontColor.css'
+import { creatFlexCss } from './functions/createFlex.css'
 
 
 const styleProps = {
@@ -17,61 +17,11 @@ const styleProps = {
 
 type PropT = {[key in keyof typeof styleProps]?:string}
 
-const flexOptionActive = {
-    col:()=>'flex-col',
-    row:()=>'flex-row',
-    'col-r':()=>'flex-col-r',
-    'row-r':()=>'flex-row-r',
-    inh:()=>'flex-inh',
-    ini:()=>'flex-ini',
-    un:()=>'flex-un',
-    g:(value:string)=>`g-${value}`,
-    wrap:()=>`flex-wrap`,
-    nowrap:()=>`flex-nowrap`,
-    center:()=>'flex-center',
-    i:(value:string)=>`items-${value}`,
-    j:(value:string)=>`justify-${value}`,
-    1:()=>'flex-1',
-    undefined:()=>''
-}
 
 
 interface renderHelperOptionsT {
     disabled?:boolean
 }
-//颜色混合
-const setMixColor =(colors:string[])=>{
-    if(!isValidColor(colors[0])&&!colorValues.includes(colors[0])){
-        console.error(colors[0],'不是一个合法颜色')
-        return ''
-    }else{
-        let lastColor = colors[0]
-        let mixColor =''
-        const l = colors.length
-        let e = 0
-        for(let i=1;i<l;i++){
-            if(!isValidColor(colors[i])&&!colorValues.includes(colors[i])){
-                console.warn(colors[i],'不是一个合法颜色')
-                e += 1;
-                continue
-            }
-            mixColor= `color-mix(in lch, ${lastColor}, ${colors[i]})`
-            lastColor=mixColor
-        }
-        // console.log(lastColor,mixColor);
-        
-        return l-e>1?mixColor:lastColor
-    }
-}
-//遍历属性集合
-// const mapProps =(values:string[],call:(value:string)=>void) =>{
-//     let l = values.length
-//     for(let i=0;i<l;i++){
-//         call(values[i])
-//     }
-    
-// }
-
 
 export function renderHelper(props:PropT,options:renderHelperOptionsT){
 
@@ -113,20 +63,11 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         styles[name] = value
     }
     const setHoverStyle:setStyleT = (name,value) =>{
-        // console.log(name,value);
-        
         hoverStyles[name] = value
     }
     const setHoverClassName:setClassNameT = (name,value=true) =>{
-        // console.log('asd',name,value);
-        
         className[`hover-${name}`] = value
     }
-    // console.log(props);
-    // console.log(options);
-    // console.log(className);
-    // console.log(styles);
-    //
     for(const i  of attributeGrop){
         if(props[i] !== void 0){
             if(props[i][0] ==='$'){
@@ -142,49 +83,17 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
     if(props.grid !== void 0){
         createteGridCss(props.grid,setClassName,setStyle)
     }
-
     //字体颜色
     if(props.c!== void 0){
         createFontColorCss(props.c,setClassName,setStyle)
     }
-
-    
-
     //bg属性集
     if(props.bg !== void 0){
         createBgCss(props.bg,setClassName,setStyle)
     }
 
-    if(props.flex!==undefined){
-        // console.log(props.flex);
-        
-        className.flex =  <string|boolean>props.flex !==false
-        if(Array.isArray(props.flex)){
-            for(let i of props.flex){
-                // console.log(i);
-                if(['row-r','col-r'].includes(i)){
-                    className[flexOptionActive[<keyof typeof flexOptionActive>i]?.(i)] = true
-                    continue
-                }
-                
-                const option = i.split('-')
-                // console.log(option);
-                const thisClass = flexOptionActive[<keyof typeof flexOptionActive>option?.[0]]?.(option?.[1])
-                if(thisClass){
-                    className[thisClass] = true
-                }
-            }
-
-        }else{
-
-            const option = props?.flex?.split?.('-') ||''
-            // console.log(option);
-            const thisClass = flexOptionActive[<keyof typeof flexOptionActive>option?.[0]]?.(option?.[1])
-            if(thisClass){
-                className[thisClass] = true
-            }
-            // className['flex-'+<string>props.flex] = flexGrup[<keyof typeof flexGrup>props.flex]!==undefined
-        }
+    if(props.flex!== void 0){
+        creatFlexCss(props.flex,setClassName,setStyle)
         
     }
 
@@ -361,7 +270,7 @@ function createTag(tag:string){
 
         },
         render(){
-            const {className,styles,hoverStyles,hoverClassName} = renderHelper(<PropT>this.$props,{})
+            const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props,{})
             // console.log(this.activeHover);
             
             const styleAll = (()=>{

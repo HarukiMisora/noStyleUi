@@ -45,7 +45,10 @@ export const config:configT = {
         },
         hover:[String,Array],
 
-        flex:[String,Boolean,Array]
+        flex:{
+            type:[String,Array,Boolean],
+            default:undefined
+        },
     },
     buttonProps:{
         type:{

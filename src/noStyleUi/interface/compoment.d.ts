@@ -54,7 +54,10 @@ interface configT{
 
         hover:[StringConstructor,ArrayConstructor]
 
-        flex:(StringConstructor|BooleanConstructor|ArrayConstructor)[]
+        flex:{
+            type:[StringConstructor,ArrayConstructor,BooleanConstructor],
+            default:undefined
+        }
     }
     buttonProps:{
         type:{

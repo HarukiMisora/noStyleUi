@@ -15,15 +15,6 @@
 .flex-row-r{
     flex-direction: row-reverse !important;
 }
-.flex-inh{
-    flex-direction: inherit !important;
-}
-.flex-ini{
-    flex-direction: initial !important;
-}
-.flex-un{
-    flex-direction: unset !important;
-}
 .flex-wrap{
     flex-wrap: wrap !important;
 }
@@ -47,6 +38,13 @@
 .items-end{
     align-items: flex-end;
 }
+.items-stretch{
+    align-items: stretch;
+}
+.items-baseline{
+    align-items: baseline;
+}
+
 .justify-around{
     justify-content: space-around;
 }

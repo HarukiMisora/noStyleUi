@@ -16,11 +16,4 @@ export function createFontColorCss(options:string,setClassName:setClassNameT,set
     lastItem = className
   })
 
-  // if(props.c.includes('-')){
-  //     styles.color = setMixColor(props.c.split('-'))
-  // }else if(isValidColor(props.c)){
-  //     styles.color = props.c
-  // }else{
-  //     className[`c-${props.c}`] = true
-  // }
 }

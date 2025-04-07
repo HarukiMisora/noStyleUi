@@ -6,19 +6,19 @@ let urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
 </script>
 
 <template>
-  <w-div class="test"  w="v100" p="20" grid="col-2 row--200px g-20" >
-    <w-group bg="#e1e1e1"  c="red+blue" hover="bg=red+blue&pink+yellow;" >
-      <!-- <w-div>1</w-div>
+  <w-div class="test"  w="v100" p="20" flex="g-20 row j-evenly i-end wrap" >
+    <w-group bg="#e1e1e1"  c="red+blue" hover="bg=red+blue&pink+yellow;"  w="200">
+      <w-div>1</w-div>
       <w-div>2</w-div>
-      <w-div>3</w-div> -->
-      <w-div c="black+white&pink+black" :bg="`red+blue+green ${urls} r-n size-500 center`" grid="item gcol-1-3 grow-1-2" hover="bg=right c=red+green+black"  >4</w-div>
-      <!-- <w-div :bg="urls+'  h-50 w-500 r-n'">5</w-div>
+      <w-div flex="flex center">3</w-div>
+      <w-div c="black+white&pink+black" :bg="`red+blue+green ${urls}  r-n size-500 center`"  hover="bg=right c=red+green+black"  >4</w-div>
+      <w-div :bg="urls+'  h-50 w-500 r-n'">5</w-div>
       <w-div c="red-blue">5</w-div>
       <w-div>5</w-div>
       <w-div>5</w-div>
       <w-div>5</w-div>
       <w-div>5</w-div>
-      <w-div>5</w-div> -->
+      <w-div>5</w-div>
     </w-group>
   </w-div>
 
