@@ -18,6 +18,7 @@
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@types/node": "^22.14.0",
     "@vicons/ionicons5": "^0.13.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
@@ -26,8 +27,8 @@
     "vue-tsc": "^2.2.0"
   },
   "description": "-",
-  "main": "./dist/my-ui-library.umd.js",    
-  "module": "./dist/my-ui-library.es.js",   
+  "main": "./dist/my-ui-library.umd.js",
+  "module": "./dist/my-ui-library.es.js",
   "types": "./dist/types/interface.d.ts",
   "exports": {
     ".": {
@@ -42,7 +43,7 @@
     },
     "./*": "./dist/*",
     "./style": "./dist/nostyleui.css"
-  },      
+  },
   "keywords": [
     "nostyleui"
   ],

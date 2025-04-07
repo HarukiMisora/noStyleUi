@@ -21,7 +21,7 @@ const actions:{[key:string]:Function} = {
     }
   },
   g:({setClassName,value}:classNameWithValuesT)=>{
-    console.log(setClassName);
+    // console.log(setClassName);
     setClassName(`g-${value[1]}`,true)
   },
   //如果是子元素，则不设置grid属性

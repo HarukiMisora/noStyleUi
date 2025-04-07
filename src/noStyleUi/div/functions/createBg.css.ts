@@ -68,26 +68,20 @@ const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
         return
     }
  
-    
     if(!actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})){
+      // console.log(propAndValue);
+      
       //处理图片位置
-      if(new RegExp('^.*(left|bottom|top|right|center)$').test(propAndValue.toString())){
-        setClassName('bp-x-left',false)
-        setClassName('bp-x-right',false)
-        setClassName('bp-y-top',false)
-        setClassName('bp-y-bottom',false)
-        setClassName('bp-center',false)
-        const options = propAndValue.toString().split(',');
-        for(let d of options){
-            switch(d){
+      if(['left','right','top','bottom','center'].includes(propAndValue[0])){
+            switch(propAndValue[0]){
                 case 'left':setClassName('bp-x-left',true);break;
                 case 'right':setClassName('bp-x-right',true);break;
                 case 'top':setClassName('bp-y-top',true);break;
                 case 'bottom':setClassName('bp-y-bottom',true);break;
                 case 'center':setClassName('bp-center',true);break;
-                default:console.warn(d,'不是一个合法的backgroundPosition option')
+                default:console.warn(propAndValue[0],'不是一个合法的backgroundPosition option')
             }
-        }
+        
         return
       }
 

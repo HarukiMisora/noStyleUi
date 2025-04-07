@@ -30,7 +30,7 @@ export const group = defineComponent({
         
         const vNodes = this.$slots.default?.()
         const cusProps:any = {}
-        this.$props.cusProps?.forEach(value => {
+        this.$props.cusProps?.forEach((value:[string,string]) => {
             cusProps[value[0]] =value[1]
         });
         let TheHover = Array.isArray(this.$props.hover)?this.$props.hover.toString().replace(/,/g,' '):this.$props.hover
@@ -41,6 +41,9 @@ export const group = defineComponent({
                 const bd =  matchArrAttToStr(<string|string[]>this.$props.bd,i.props?.bd)
                 const flex = matchArrAtt(this.$props?.flex,i.props?.flex)?.filter((item)=>{return item!==false&&item!==undefined})
                 const hover = TheHover + ' '+ (Array.isArray(i.props?.hover)?i.props?.hover.toString().replace(/,/g,' '):i.props?.hover)
+                // console.log(hover);
+                
+                
                 
                 i.props = {
                     ...this.$props,

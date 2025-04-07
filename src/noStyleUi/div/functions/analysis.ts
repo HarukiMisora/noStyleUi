@@ -24,7 +24,7 @@ export function analysisPxs(pxNumber:string,defalut:string='0',unit:string='px')
 export function analysisColor(color:string,validColor:Function,cssColor:Function){
   const colors = color.split('&')
   // console.log(colors);
-
+  
   if(colors.length>1||colors[0].includes('+')){
     validColor(setNestedMixColor(colors))
     return true

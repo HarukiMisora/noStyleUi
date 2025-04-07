@@ -7,6 +7,8 @@ import {isImage, isValidColor} from '../test/index'
 // import   './style/css.scss'
 import createteGridCss from './functions/createGrid.css'
 import createBgCss from './functions/createBg.css'
+import {  createHoverCss } from './functions/createHover.css'
+import { createFontColorCss } from './functions/createFontColor.css'
 
 
 const styleProps = {
@@ -74,6 +76,7 @@ const setMixColor =(colors:string[])=>{
 export function renderHelper(props:PropT,options:renderHelperOptionsT){
 
     const className:{[key:string]:Boolean} ={}
+    const hoverClassName:{[key:string]:Boolean} ={}
     const styles = {} as myCSSStyleDeclaration
     const hoverStyles = {} as myCSSStyleDeclaration
     const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
@@ -109,6 +112,20 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
     const setStyle:setStyleT = (name,value) =>{
         styles[name] = value
     }
+    const setHoverStyle:setStyleT = (name,value) =>{
+        // console.log(name,value);
+        
+        hoverStyles[name] = value
+    }
+    const setHoverClassName:setClassNameT = (name,value=true) =>{
+        // console.log('asd',name,value);
+        
+        className[`hover-${name}`] = value
+    }
+    // console.log(props);
+    // console.log(options);
+    // console.log(className);
+    // console.log(styles);
     //
     for(const i  of attributeGrop){
         if(props[i] !== void 0){
@@ -128,13 +145,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
 
     //字体颜色
     if(props.c!== void 0){
-        if(props.c.includes('-')){
-            styles.color = setMixColor(props.c.split('-'))
-        }else if(isValidColor(props.c)){
-            styles.color = props.c
-        }else{
-            className[`c-${props.c}`] = true
-        }
+        createFontColorCss(props.c,setClassName,setStyle)
     }
 
     
@@ -176,6 +187,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         }
         
     }
+
     const borderStyles = ['dashed','dotted','double','groove','hidden','inset','none','outset','ridge','solid']
     let   borderColors = {
         '':new Array(0),
@@ -186,6 +198,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         'x-':new Array(0),
         'y-':new Array(0)
     }
+
     const setBdOptionActive = (value:any)=>{
         const option = value.toString().split('-')
         let direction = <keyof typeof borderColors> (['l','r','t','b','x','y'].includes(option[0])?option[0]+'-':'')
@@ -295,146 +308,9 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         }
     }
 
-    if(props.hover !== undefined&&!options.disabled) {
-        const arr = Array.isArray(props.hover)?props.hover:props.hover.split(' ')
-        let lastColor = null
-        let lastBackgroundColor = null
-        // console.log(arr);
-        for(let com of arr){
-            if(!com)continue
-            // console.log(com);
-            
-            if(isValidColor(com)){
-                if(lastColor !==null){
-                    className[`hover-c-${lastColor}`] = false
-                    hoverStyles.color = `color-mix(in lch, ${lastColor}, ${com})`
-                    lastColor = hoverStyles.color
-                }else{
-                    hoverStyles.color = com
-                    lastColor = com
-                }
-                continue
-            }
-            if(colorValues.includes(com)){
-                if(lastColor !==null){
-                    className[`hover-c-${lastColor}`] = false
-                    hoverStyles.color = `color-mix(in lch, ${lastColor}, ${com})`
-                    lastColor = hoverStyles.color
-                }else{
-                    className[`hover-c-${com}`] = true
-                    lastColor = com
-                }
-                continue
-            }
-            if(isImage(com)){
-                hoverStyles.backgroundImage = `url("${com}")`
-                continue
-            }
-            if(com.indexOf('-')){
-                const prop = com.split('-')
-                const propName = prop[0]
-                const propCount = prop.length - 1
-                // console.log(prop);
-                
-                if(propName === 'bg'){
-                    for(let i =1;i<=propCount;i++){
-                        const value = prop[i]
-                        
-                        if(isImage(value)){
-                            // console.log(value);
-                            hoverStyles.backgroundImage = `url("${value}")`
-                            continue
-                        }
-                        if(['fill','contain','cover','none'].includes(value)){
-                            className[`hover-bs-${value}`] = true
-                            continue
-                        }
-                        if(isValidColor(value)||colorValues.includes(value)){
-                            // console.log(value,lastBackgroundColor);
-                
-                            if(lastBackgroundColor !==null){
-                                className[`hover-bg-${lastBackgroundColor}`] = false
-                                hoverStyles.backgroundColor = `color-mix(in lch, ${lastBackgroundColor}, ${value})`
-                                lastBackgroundColor = hoverStyles.backgroundColor
-                            }else{
-                                className[`hover-bg-${value}`] = false
-                                hoverStyles.backgroundColor = value
-                                lastBackgroundColor = value
-                            }
-                            continue
-                        }
-                        if(['left','bottom','top','right','center'].includes(value)){
-                            switch(value){
-                                case 'left':className['hover-bp-x-left']=true;className['hover-bp-x-right']=false;break;
-                                case 'right':className['hover-bp-x-right']=true;className['hover-bp-x-left']=false;break;
-                                case 'top':className['hover-bp-y-top']=true;className['hover-bp-x-bottom']=false;break;
-                                case 'bottom':className['hover-bp-y-bottom']=true;className['hover-bp-x-top']=false;break;
-                                case 'center':className['hover-bp-center']=true;break;
-                            }
-                            continue
-                        }
-                        if((/^w:.*/).test(value)){
-                            // console.log(value);
-                            let trueValue = value.slice(2)
-                            const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
-                            const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
-
-                            const backgroundSizeX = trueValue==='auto'?trueValue:(sizeValue + sizePix) 
-                            const backgroundSizeY = styles.backgroundSize?.split(' ')[1]||'auto'
-
-                            hoverStyles.backgroundSize = `${backgroundSizeX} ${backgroundSizeY}`
-                            // hoverStyles.backgroundSizeX = backgroundSizeX
-                            
-                            continue
-                        }
-                        if((/^h:.*/).test(value)){
-                            // console.log(value);
-                            let trueValue = value.slice(2)
-
-                            const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
-                            const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
-
-                            const backgroundSizeX = styles.backgroundSize?.split(' ')[0]||'auto'
-                            const backgroundSizeY = trueValue==='auto'?trueValue:(sizeValue + sizePix) 
-
-                            hoverStyles.backgroundSize = `${backgroundSizeX} ${backgroundSizeY}`
-                            // hoverStyles.backgroundSizeY = backgroundSizeY
-                            continue
-                        }
-                        if((/^x:.*/).test(value)){
-                            // console.log(value);
-                            let trueValue = value.slice(2)
-                            const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
-                            const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
-
-                            const backgroundPositionX = (sizeValue + sizePix) 
-                            hoverStyles.backgroundPositionX = backgroundPositionX
-                            
-                            continue
-                        }
-                        if((/^y:.*/).test(value)){
-                            // console.log(value);
-                            let trueValue = value.slice(2)
-                            const sizePix = trueValue?.indexOf('p')?(trueValue?.indexOf('v')?'px':`v${trueValue}`):'%'
-                            const sizeValue = sizePix === 'px'?trueValue:trueValue?.slice(1)
-
-                            const backgroundPositionY = (sizeValue + sizePix) 
-                            hoverStyles.backgroundPositionY = backgroundPositionY
-                            continue
-                        }
-                        
-                        
-                    }
-                    continue
-                }
-
-
-                
-                continue
-            }
-            
-        }
-        // console.log(hoverStyles);
+    if(props.hover !== void 0&&!options.disabled) {
+        createHoverCss(props.hover,setHoverClassName,setHoverStyle)
+        // console.log(hoverStyles,hoverClassName);
         
     }
     
@@ -444,7 +320,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
     // console.log(className,styles,hoverStyles);
 
     
-    return {className,styles,hoverStyles}
+    return {className,styles,hoverStyles,hoverClassName}
 
 
 
@@ -485,12 +361,13 @@ function createTag(tag:string){
 
         },
         render(){
-            const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props,{})
+            const {className,styles,hoverStyles,hoverClassName} = renderHelper(<PropT>this.$props,{})
             // console.log(this.activeHover);
             
             const styleAll = (()=>{
                 return this.activeHover?{...styles,...hoverStyles}:styles
             })
+            
 
             return h(tag,{
                 class:className,
