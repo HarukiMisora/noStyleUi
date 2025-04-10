@@ -4,8 +4,13 @@ import colorValues from "../../var/colorValues"
 
 
 //属性集分析
-export function analysisProps(options:string[]|string,callback:Function){
-  const arr = typeof options === 'string'?options.split(' '):options
+export function analysisProps(options:string[]|string,callback:Function,prefixes:string[]=[]){
+  // console.log(options);
+  
+  const arr = propRepeatRemove((typeof options === 'string'?options.split(' '):options),prefixes)
+  // console.log(arr);
+  
+  
   const arrLength = arr.length
 
   for(let i =0;i<arrLength;i++){
@@ -72,4 +77,21 @@ export const setNestedMixColor = (mixColors:string[])=>{
   return l>2?finalColor:lastMixColor
 
   // let mixColor =''
+}
+
+
+
+export const propRepeatRemove:(words:string[],prefixes:string[])=>string[] = (words,prefixes)=>{
+  // const words = str;
+  // console.log(words,prefixes);
+  const last:{[key:string]:string} = words.reduce((acc, word) => {
+    const prefix = prefixes.find(p => word.startsWith(p));
+    return prefix ? {...acc, [prefix]: word} : acc;
+}, {});
+
+const seen = new Set();
+return words.filter(word => {
+    const prefix = prefixes.find(p => word.startsWith(p));
+    return !prefix || (word === last[prefix] && !seen.has(prefix) && seen.add(prefix));
+});
 }

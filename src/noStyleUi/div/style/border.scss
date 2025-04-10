@@ -4,28 +4,51 @@ $borderStyles:dashed,dotted,double,groove,hidden,inset,none,outset,ridge,solid;
   .bd-s-#{$i}{
     border-style: $i;
   }
+  .hover-bd-s-#{$i}:hover{
+    border-style: $i;
+  }
 }
 @each $i in $borderStyles{
-  .bd-s-x-#{$i}{
+  .bd-s-#{$i}-x{
     border-left-style: $i;
     border-right-style: $i;
   }
-  .bd-s-y-#{$i}{
+  .bd-s-#{$i}-y{
+    border-top-style: $i;
+    border-bottom-style: $i;
+  }
+  .hover-bd-s-#{$i}-x:hover{
+    border-left-style: $i;
+    border-right-style: $i;
+  }
+  .hover-bd-s-#{$i}-y:hover{
     border-top-style: $i;
     border-bottom-style: $i;
   }
 }
 @each $i in $borderStyles{
-  .bd-s-t-#{$i}{
+  .bd-s-#{$i}-t{
     border-top-style: $i;
   }
-  .bd-s-r-#{$i}{
+  .bd-s-#{$i}-r{
     border-right-style: $i;
   }
-  .bd-s-b-#{$i}{
+  .bd-s-#{$i}-b{
     border-bottom-style: $i;
   }
-  .bd-s-l-#{$i}{
+  .bd-s-#{$i}-l{
+    border-left-style: $i;
+  }
+  .hover-bd-s-#{$i}-t:hover{
+    border-top-style: $i;
+  }
+  .hover-bd-s-#{$i}-r:hover{
+    border-right-style: $i;
+  }
+  .hover-bd-s-#{$i}-b:hover{
+    border-bottom-style: $i;
+  }
+  .hover-bd-s-#{$i}-l:hover{
     border-left-style: $i;
   }
 }
@@ -40,15 +63,26 @@ $i:0;
   .bd-w-#{$i}{
     border-width: #{$i}px;
   }
+  .hover-bd-w-#{$i}:hover{
+    border-width: #{$i}px;
+  }
   $i:$i+1;
 }
 $i:0;
 @while $i<=10{
-  .bd-w-x-#{$i}{
+  .bd-w-#{$i}-x{
     border-left-width: #{$i}px;
     border-right-width: #{$i}px;
   }
-  .bd-w-y-#{$i}{
+  .bd-w-#{$i}-y{
+    border-top-width: #{$i}px;
+    border-bottom-width: #{$i}px;
+  }
+  .hover-bd-w-#{$i}-x:hover{
+    border-left-width: #{$i}px;
+    border-right-width: #{$i}px;
+  }
+  .hover-bd-w-#{$i}-y:hover{
     border-top-width: #{$i}px;
     border-bottom-width: #{$i}px;
   }
@@ -56,16 +90,28 @@ $i:0;
 }
 $i:0;
 @while $i<=10{
-  .bd-w-l-#{$i}{
+  .bd-w-#{$i}-l{
     border-left-width: #{$i}px;
   }
-  .bd-w-r-#{$i}{
+  .bd-w-#{$i}-r{
     border-right-width: #{$i}px;
   }
-  .bd-w-t-#{$i}{
+  .bd-w-#{$i}-t{
     border-top-width: #{$i}px;
   }
-  .bd-w-b-#{$i}{
+  .bd-w-#{$i}-b{
+    border-bottom-width: #{$i}px;
+  }
+  .hover-bd-w-#{$i}-l:hover{
+    border-left-width: #{$i}px;
+  }
+  .hover-bd-w-#{$i}-r:hover{
+    border-right-width: #{$i}px;
+  }
+  .hover-bd-w-#{$i}-t:hover{
+    border-top-width: #{$i}px;
+  }
+  .hover-bd-w-#{$i}-b:hover{
     border-bottom-width: #{$i}px;
   }
   $i:$i+1;

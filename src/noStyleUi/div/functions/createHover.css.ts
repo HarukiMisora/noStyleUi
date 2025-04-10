@@ -1,5 +1,6 @@
 
 import { analysisColor } from "./analysis";
+import { createBdCss } from "./createBd.css";
 import createBgCss from "./createBg.css";
 
 
@@ -8,7 +9,6 @@ const actions:{[key:string]:Function} = {
 
   bg:({value,setClassName,setStyle}:{value:string[],setClassName:setClassNameT,setStyle:setStyleT})=>{
     const prop = value[1].split(';')
-    // Debug.log(prop);
     createBgCss(prop,setClassName,setStyle)
   },
   c:({value,setStyle}:styleWithValuesT)=>{
@@ -20,9 +20,12 @@ const actions:{[key:string]:Function} = {
     })
 
   },
-  undefined:()=>{
+  bd:({value,setClassName,setStyle}:{value:string[],setClassName:setClassNameT,setStyle:setStyleT})=>{
     
-  }
+    const prop = value[1].split(';')
+    createBdCss(prop,undefined,setStyle)
+  },
+
 
 }
 

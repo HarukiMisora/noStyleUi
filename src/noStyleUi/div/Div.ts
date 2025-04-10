@@ -9,6 +9,7 @@ import createBgCss from './functions/createBg.css'
 import {  createHoverCss } from './functions/createHover.css'
 import { createFontColorCss } from './functions/createFontColor.css'
 import { creatFlexCss } from './functions/createFlex.css'
+import { createBdCss } from './functions/createBd.css'
 
 
 const styleProps = {
@@ -96,131 +97,12 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         creatFlexCss(props.flex,setClassName,setStyle)
         
     }
-
-    const borderStyles = ['dashed','dotted','double','groove','hidden','inset','none','outset','ridge','solid']
-    let   borderColors = {
-        '':new Array(0),
-        'l-':new Array(0),
-        'r-':new Array(0),
-        't-':new Array(0),
-        'b-':new Array(0),
-        'x-':new Array(0),
-        'y-':new Array(0)
+    if(props.bd!== void 0){
+        createBdCss(props.bd,setClassName,setStyle)
     }
-
-    const setBdOptionActive = (value:any)=>{
-        const option = value.toString().split('-')
-        let direction = <keyof typeof borderColors> (['l','r','t','b','x','y'].includes(option[0])?option[0]+'-':'')
-        value = direction?option[1]:value
-        // console.log(option);
-        
-        for(let i of option){
-            if(direction.includes(i))continue
-            if(borderStyles.includes(i)){
-                 className[`bd-s-${direction+i}`] = true
-                 continue
-            }
-            if(!Number.isNaN(i*1)){
-                className[`bd-w-${direction+i}`] = true
-                continue
-            }
-            borderColors[direction].push(i)
-            className[`bd-c-${direction+i}`] = true
-        }
-    }
-    const setBorderMixColor = (direction:keyof typeof borderColors,styleName:keyofCSSStyleDeclaration)=>{
-
-
-        className[`bd-c-${direction+borderColors[direction][0]}`] = false
-        
-        for(let color of borderColors[direction].slice(1)){
-            
-            className[`bd-c-${direction+color}`] = false
-            const lastColor = styles[styleName]?styles[styleName]:borderColors[direction][0] 
-            // console.log(color,lastColor);
-
-            styles[styleName] = `color-mix(in lch, ${lastColor}, ${color})`
-        }
-    }
-    const setBdOptions = (arr:string[])=>{
-        for(let i of arr){
-            setBdOptionActive(i)
-        }
-        // console.log(borderColors);
-        if(borderColors[''].length>1){
-            setBorderMixColor('','borderColor')
-        }else if(isValidColor(borderColors[''][0])){
-            // console.log(11111);
-            
-            styles.borderColor = borderColors[''][0]
-        }
-        if(borderColors['x-'].length>1){
-            styles.borderLeftColor = ''
-            styles.borderRightColor = ''
-            setBorderMixColor('x-','borderLeftColor')
-            setBorderMixColor('x-','borderRightColor')
-        }
-        else if(isValidColor(borderColors['x-'][0])){
-            styles.borderLeftColor = borderColors['x-'][0]
-            styles.borderRightColor = borderColors['x-'][0]
-        }
-        if(borderColors['y-'].length>1){
-            styles.borderTopColor = ''
-            styles.borderBottomColor = ''
-            setBorderMixColor('y-','borderTopColor')
-            setBorderMixColor('y-','borderBottomColor')
-        }
-        else if(isValidColor(borderColors['y-'][0])){
-            styles.borderTopColor = borderColors['y-'][0]
-            styles.borderBottomColor = borderColors['y-'][0]
-        }
-        if(borderColors['l-'].length>1){
-            styles.borderLeftColor = ''
-            setBorderMixColor('l-','borderLeftColor')
-        }
-        else if(isValidColor(borderColors['l-'][0])){
-            styles.borderLeftColor = borderColors['l-'][0]
-        }
-        if(borderColors['r-'].length>1){
-            styles.borderRightColor = ''
-            setBorderMixColor('r-','borderRightColor')
-        }
-        else if(isValidColor(borderColors['r-'][0])){
-            styles.borderRightColor = borderColors['r-'][0]
-        }
-        if(borderColors['t-'].length>1){
-            styles.borderTopColor = ''
-            setBorderMixColor('t-','borderTopColor')
-        }
-        else if(isValidColor(borderColors['t-'][0])){
-            styles.borderTopColor = borderColors['t-'][0]
-        }
-        if(borderColors['b-'].length>1){
-            styles.borderBottomColor = ''
-            setBorderMixColor('b-','borderBottomColor')
-        }
-        else if(isValidColor(borderColors['b-'][0])){
-            styles.borderBottomColor = borderColors['b-'][0]
-        }
-
-    }
-    if(props.bd!==undefined){
-        
-        if(Array.isArray(props.bd)){
-            setBdOptions(props.bd)
-       
-        }else if(typeof props.bd === 'string'){
-            const arr = props.bd.split(' ')
-            // console.log(arr);
-            setBdOptions(arr)
-            
-        }
-    }
-
     if(props.hover !== void 0&&!options.disabled) {
         createHoverCss(props.hover,setHoverClassName,setHoverStyle)
         // console.log(hoverStyles,hoverClassName);
-        
     }
     
 

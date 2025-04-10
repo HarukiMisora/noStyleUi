@@ -17,6 +17,11 @@ interface classNameWithValuesT{
   setClassName:setClassNameT,
   value:string[]
 }
+interface classNameWithStyleT{
+  setClassName?:setClassNameT,
+  setStyle:setStyleT,
+  value:string[]
+}
 
 
 keyof ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','bc','radius']['number']

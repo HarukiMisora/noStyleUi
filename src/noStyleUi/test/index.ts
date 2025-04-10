@@ -15,3 +15,11 @@ export function isValidColor(color:string) {
 export function isImage(url:string){
     return new RegExp('^.*.(jpg|png|gif|webp|avif|svg)$').test(url)
 }
+export function isIntegerString(str:string) {
+    return Number.isInteger(Number(str)) && str.trim() !== "";
+}
+
+// 检查是否为数字、带单位的数字、百分比或特殊值
+export function isValidPixelValue(value:string) {
+    return /^(auto|inherit|initial|unset|0|[-+]?[0-9]*\.?[0-9]+(px|rem|em|vh|vw|vmin|vmax|%|in|cm|mm|pt|pc)?)$/.test(String(value).trim());
+}
