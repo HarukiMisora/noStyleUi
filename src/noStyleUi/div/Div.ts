@@ -2,9 +2,8 @@
 
 import {  defineComponent , h, ref} from 'vue'
 import { config } from '../config/config'
-import { isValidColor } from '../test/index'
 // import   './style/css.scss'
-import createteGridCss from './functions/createGrid.css'
+import createGridCss from './functions/createGrid.css'
 import createBgCss from './functions/createBg.css'
 import {  createHoverCss } from './functions/createHover.css'
 import { createFontColorCss } from './functions/createFontColor.css'
@@ -88,7 +87,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
         if(prop!== void 0) callback(prop,setClassName,setStyle)
     }
     //grid属性集
-    checkProp(props.grid,createteGridCss)
+    checkProp(props.grid,createGridCss)
     //字体颜色
     checkProp(props.c,createFontColorCss)
     //bg属性集
