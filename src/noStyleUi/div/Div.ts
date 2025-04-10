@@ -19,11 +19,11 @@ type PropT = {[key in keyof typeof styleProps]?:string}
 
 
 
-interface renderHelperOptionsT {
-    disabled?:boolean
-}
+// interface renderHelperOptionsT {
+//     disabled?:boolean
+// }
 
-export function renderHelper(props:PropT,options:renderHelperOptionsT){
+export function renderHelper(props:PropT){
 
     const className:{[key:string]:Boolean} ={}
     const hoverClassName:{[key:string]:Boolean} ={}
@@ -149,7 +149,7 @@ function createTag(tag:string){
 
         },
         render(){
-            const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props,{})
+            const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props)
             // console.log(this.activeHover);
             
             const styleAll = (()=>{

@@ -51,7 +51,7 @@ export const button = defineComponent({
     },
     render(){
         
-        const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props,{disabled:this.$props.disabled})
+        const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props)
 
         if(this.$props.type !=='none'){
             className[buttonS.default] = true 

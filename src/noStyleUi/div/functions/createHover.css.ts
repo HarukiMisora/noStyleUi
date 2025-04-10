@@ -20,7 +20,7 @@ const actions:{[key:string]:Function} = {
     })
 
   },
-  bd:({value,setClassName,setStyle}:{value:string[],setClassName:setClassNameT,setStyle:setStyleT})=>{
+  bd:({value,setStyle}:{value:string[],setClassName:setClassNameT,setStyle:setStyleT})=>{
     
     const prop = value[1].split(';')
     createBdCss(prop,undefined,setStyle)

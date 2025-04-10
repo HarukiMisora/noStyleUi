@@ -20,6 +20,7 @@ let urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
       <w-div>5</w-div>
       <w-div>5</w-div> -->
     </w-group>
+    <w-button type="primary" hover="bg=red; bd=l-red;5;" >按钮</w-button>
   </w-div>
 
 </template>
