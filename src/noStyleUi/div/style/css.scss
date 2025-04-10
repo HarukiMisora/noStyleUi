@@ -136,9 +136,6 @@ $i:0;
     .bd-c-#{meta.inspect($i)}{
         border-color: $i ; 
     }    
-    .hover-bd-c-#{meta.inspect($i)}:hover{
-        border-color: $i ; 
-    }
 }
 @each $i in $colors {
     .bd-c-#{meta.inspect($i)}-x{
@@ -146,14 +143,6 @@ $i:0;
         border-right-color: $i ; 
     }
     .bd-c-#{meta.inspect($i)}-y{
-        border-top-color: $i ; 
-        border-bottom-color: $i ; 
-    }
-    .hover-bd-c-#{meta.inspect($i)}-x:hover{
-        border-left-color: $i ; 
-        border-right-color: $i ; 
-    }
-    .hover-bd-c-#{meta.inspect($i)}-y:hover{
         border-top-color: $i ; 
         border-bottom-color: $i ; 
     }
@@ -169,18 +158,6 @@ $i:0;
         border-right-color: $i ; 
     }
     .bd-c-#{meta.inspect($i)}-b{
-        border-bottom-color: $i ; 
-    }
-    .hover-bd-c-#{meta.inspect($i)}-l:hover{
-        border-left-color: $i ; 
-    }
-    .hover-bd-c-#{meta.inspect($i)}-t:hover{
-        border-top-color: $i ; 
-    }
-    .hover-bd-c-#{meta.inspect($i)}-r:hover{
-        border-right-color: $i ; 
-    }
-    .hover-bd-c-#{meta.inspect($i)}-b:hover{
         border-bottom-color: $i ; 
     }
 }
