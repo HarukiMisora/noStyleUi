@@ -69,6 +69,7 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
     const setHoverClassName:setClassNameT = (name,value=true) =>{
         className[`hover-${name}`] = value
     }
+
     for(const i  of attributeGrop){
         if(props[i] !== void 0){
             if(props[i][0] ==='$'){
@@ -80,30 +81,27 @@ export function renderHelper(props:PropT,options:renderHelperOptionsT){
             }
         }
     }
-    //grid属性集
-    if(props.grid !== void 0){
-        createteGridCss(props.grid,setClassName,setStyle)
-    }
-    //字体颜色
-    if(props.c!== void 0){
-        createFontColorCss(props.c,setClassName,setStyle)
-    }
-    //bg属性集
-    if(props.bg !== void 0){
-        createBgCss(props.bg,setClassName,setStyle)
-    }
 
-    if(props.flex!== void 0){
-        creatFlexCss(props.flex,setClassName,setStyle)
-        
+
+
+    const checkProp = (prop:string|undefined,callback:(prop:string,setClassName:setClassNameT,setStyle:setStyleT) => void)=>{
+        if(prop!== void 0) callback(prop,setClassName,setStyle)
     }
-    if(props.bd!== void 0){
-        createBdCss(props.bd,setClassName,setStyle)
-    }
-    if(props.hover !== void 0&&!options.disabled) {
-        createHoverCss(props.hover,setHoverClassName,setHoverStyle)
-        // console.log(hoverStyles,hoverClassName);
-    }
+    //grid属性集
+    checkProp(props.grid,createteGridCss)
+    //字体颜色
+    checkProp(props.c,createFontColorCss)
+    //bg属性集
+    checkProp(props.bg,createBgCss)
+    //flex属性集
+    checkProp(props.flex,creatFlexCss)
+    //边框属性集
+    checkProp(props.bd,createBdCss)
+    //hover属性集
+    checkProp(props.hover,(prop)=>createHoverCss(prop,setHoverClassName,setHoverStyle))
+
+
+
     
 
     // console.log(styles);
