@@ -7,7 +7,7 @@ let urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
 
 <template>
   <w-div class="test"  w="v100" p="20"  >
-    <w-group bg="#e1e1e1"  c="red+blue" bd="solid #000 10px" hover="bg=red; bd=l-red;5;"  w="200" h="200"      >
+    <w-group bg="#e1e1e1" c="red+blue" bd="solid #000 10px" hover="bg=red; bd=l-red;5;"  w="200" h="200"  :transition="0.3"    >
       <w-div>1</w-div>
       <!-- <w-div>2</w-div>
       <w-div flex="flex center">3</w-div>

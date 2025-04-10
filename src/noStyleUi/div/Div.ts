@@ -2,13 +2,13 @@
 
 import {  defineComponent , h, ref} from 'vue'
 import { config } from '../config/config'
-// import   './style/css.scss'
 import createGridCss from './functions/createGrid.css'
 import createBgCss from './functions/createBg.css'
 import {  createHoverCss } from './functions/createHover.css'
 import { createFontColorCss } from './functions/createFontColor.css'
 import { creatFlexCss } from './functions/createFlex.css'
 import { createBdCss } from './functions/createBd.css'
+import { createTransition } from './functions/createTransition'
 
 
 const styleProps = {
@@ -80,9 +80,6 @@ export function renderHelper(props:PropT){
             }
         }
     }
-
-
-
     const checkProp = (prop:string|undefined,callback:(prop:string,setClassName:setClassNameT,setStyle:setStyleT) => void)=>{
         if(prop!== void 0) callback(prop,setClassName,setStyle)
     }
@@ -96,6 +93,8 @@ export function renderHelper(props:PropT){
     checkProp(props.flex,creatFlexCss)
     //边框属性集
     checkProp(props.bd,createBdCss)
+    //tansition属性集
+    checkProp(props.transition,createTransition)
     //hover属性集
     checkProp(props.hover,(prop)=>createHoverCss(prop,setHoverClassName,setHoverStyle))
 

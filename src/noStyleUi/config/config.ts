@@ -49,6 +49,10 @@ export const config:configT = {
             type:[String,Array,Boolean],
             default:undefined
         },
+        transition:{
+            type:[String,Number,Boolean],
+            default:undefined
+        }
     },
     buttonProps:{
         type:{

@@ -58,6 +58,10 @@ interface configT{
             type:[StringConstructor,ArrayConstructor,BooleanConstructor],
             default:undefined
         }
+        transition:{
+            type:[StringConstructor,NumberConstructor,BooleanConstructor],
+            default:undefined
+        }
     }
     buttonProps:{
         type:{
