@@ -1,13 +1,13 @@
 {
   "name": "nostyleui",
   "private": false,
-  "version": "0.03.0",
+  "version": "0.3.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc vite build",
     "preview": "vite preview",
-    "build:pack": "vite build && tsc -p tsconfig.lib.json",
+    "build:pack": "vite build && tsc -p tsconfig.lib.json && npm publish",
     "build:types": "tsc -p tsconfig.lib.json --emitDeclarationOnly"
   },
   "files": [
@@ -32,14 +32,14 @@
   "types": "./dist/types/interface.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/interface.d.ts",
       "import": "./dist/no-style-ui.es.js",
-      "require": "./dist/no-style-ui.umd.js",
-      "types": "./dist/types/interface.d.ts"
+      "require": "./dist/no-style-ui.umd.js"
     },
     "./index": {
+      "types": "./dist/types/interface.d.ts",
       "import": "./dist/no-style-ui.es.js",
-      "require": "./dist/no-style-ui.umd.js",
-      "types": "./dist/types/interface.d.ts"
+      "require": "./dist/no-style-ui.umd.js"
     },
     "./*": "./dist/*",
     "./style": "./dist/nostyleui.css"
