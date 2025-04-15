@@ -1,4 +1,5 @@
 
+import type { setClassNameT, setStyleT, styleWithValuesT } from "../../interface/css";
 import { analysisColor } from "./analysis";
 import { createBdCss } from "./createBd.css";
 import createBgCss from "./createBg.css";

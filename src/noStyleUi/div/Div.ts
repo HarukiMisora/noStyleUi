@@ -9,6 +9,7 @@ import { createFontColorCss } from './functions/createFontColor.css'
 import { creatFlexCss } from './functions/createFlex.css'
 import { createBdCss } from './functions/createBd.css'
 import { createTransition } from './functions/createTransition'
+import type { keyofCSSStyleDeclaration, myCSSStyleDeclaration, Pxs, setClassNameT, setStyleT } from '../interface/css'
 
 
 const styleProps = {

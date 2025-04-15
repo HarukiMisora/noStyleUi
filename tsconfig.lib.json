@@ -5,7 +5,8 @@
     "declarationDir": "dist/types",
     "outDir": "dist",
     "rootDir": "src",
+    "allowImportingTsExtensions":true
 
   },
-  "include": ["src/**/*", "packages/**/*"]
+  "include": ["src/**/*", "interface/**/*.d.ts" ,"packages/**/*"]
 }

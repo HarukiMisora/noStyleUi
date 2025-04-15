@@ -1,3 +1,4 @@
+import type { setClassNameT, setStyleT } from "../../interface/css"
 
 
 export function createTransition(options:string|number,setClassName:setClassNameT,setStyle:setStyleT){

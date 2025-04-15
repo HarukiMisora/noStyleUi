@@ -1,3 +1,4 @@
+import type { classNameWithStyleT, keyofCSSStyleDeclaration, setClassNameT, setStyleT } from "../../interface/css";
 import { isIntegerString, isValidPixelValue } from "../../test";
 import { analysisColor, analysisProps, analysisPxs } from "./analysis";
 

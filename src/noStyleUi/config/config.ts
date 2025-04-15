@@ -1,5 +1,6 @@
 
 import type {PropType} from 'vue'
+import type { buttonAbstractType, buttonEffectType, buttonSizeType, buttonType, configT, groupCusPropsType } from '../interface/compoment'
 
 
 export const config:configT = {
@@ -80,7 +81,7 @@ export const config:configT = {
             default:false
         },
         size:{
-            type:String,
+            type:String as PropType<buttonSizeType>,
             default:'default'
         },
  
