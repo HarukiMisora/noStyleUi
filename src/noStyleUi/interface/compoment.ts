@@ -4,7 +4,7 @@ export type buttonEffectType = 'box'|'text'|'none'|'biger'|'small'|'rotate'
 // type flexT = string|boolean|string[]
 export type buttonType = 'default'|'primary'|'info'|'success'|'warning'|'error'|'tertiary'|'none'
 export type buttonAbstractType = 'default'|'unseen'|'dash'|'glass'|'round'
-export type buttonSizeType = 'mini'|'small'|'defalut'|'biger'
+export type buttonSizeType = 'mini'|'small'|'default'|'biger'
 export type groupCusPropsType = [string,string][]
 import type {PropType} from 'vue'
 
