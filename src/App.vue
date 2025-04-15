@@ -9,16 +9,16 @@ let urls:string ='https://www.iamwzc.com/Resources/back_class_normal.png'
   <w-div class="test"  w="v100" p="20"  >
     <w-group bg="#e1e1e1" c="red+blue" bd="solid #000 10px" hover="bg=red; bd=l-red;5;"  w="200" h="200"  :transition="0.3"    >
       <w-div>1</w-div>
-      <!-- <w-div>2</w-div>
+      <w-div>2</w-div>
       <w-div flex="flex center">3</w-div>
-      <w-div c="black+white&pink+black" :bg="`red+blue+green ${urls}  r-n size-500 center`"  hover="bg=right c=red+green+black"  >4</w-div>
+      <w-div c="black+white&pink+black" :bg="`red+blue+green ${urls}  r-n size-500 center`"  hover="bg=right c=red+green"  >4</w-div>
       <w-div :bg="urls+'  h-50 w-500 r-n'">5</w-div>
       <w-div c="red-blue">5</w-div>
       <w-div>5</w-div>
       <w-div>5</w-div>
       <w-div>5</w-div>
       <w-div>5</w-div>
-      <w-div>5</w-div> -->
+      <w-div>5</w-div>
     </w-group>
     <w-button type="primary" hover="bg=red; bd=l-red;5;" >按钮</w-button>
   </w-div>
