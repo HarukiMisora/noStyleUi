@@ -1,4 +1,4 @@
-import {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg} from './index'
+import {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index'
 import install from './index'
 declare module 'vue'{
     export interface GlobalComponents{
@@ -6,6 +6,7 @@ declare module 'vue'{
         WSpan:typeof WSpan
         WButton:typeof WButton
         WGroup:typeof WGroup
+        WGhost:typeof WGhost
         WA:typeof WA
         WP:typeof WP
         WH1:typeof WH1

@@ -29,7 +29,7 @@ export {ghost as WGhost} from './noStyleUi/ghost/ghost.ts'
 export default function install(Vue:any){
     // console.log(variables);
     Vue.component('WGroup',WGroup)
-    Vue.component('WButton',WGhost)
+    Vue.component('WGhost',WGhost)
 
 
     Vue.component('WA',WA)
