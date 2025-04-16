@@ -101,6 +101,12 @@ export interface configT{
         cusProps:{
             type:PropType<groupCusPropsType>
         }
+    },
+    ghostProps:{
+        ghost:{
+            type:[BooleanConstructor,StringConstructor],
+            default:false
+        }
     }
 
 }

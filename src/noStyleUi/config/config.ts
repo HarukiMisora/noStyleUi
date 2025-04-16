@@ -94,6 +94,12 @@ export const config:configT = {
         cusProps:{
             type:Array as PropType<groupCusPropsType>
         }
+    },
+    ghostProps:{
+        ghost:{
+            type:[Boolean,String],
+            default:false
+        }
     }
 }
 

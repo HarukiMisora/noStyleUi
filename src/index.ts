@@ -1,5 +1,5 @@
 
-import { WButton, WDiv, WSpan,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg} from './index'
+import { WButton, WDiv, WSpan,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index'
 import './noStyleUi/div/style/css.scss'
 // import variables from './noStyleUi/style/variables.module.scss'
 import {vUpdate} from './noStyleUi/directive/update.ts'
@@ -25,10 +25,12 @@ export{
     button as WButton,
 }from './noStyleUi/button/button.ts'
 export {group as WGroup} from './noStyleUi/group/group.ts'
-
+export {ghost as WGhost} from './noStyleUi/ghost/ghost.ts'
 export default function install(Vue:any){
     // console.log(variables);
     Vue.component('WGroup',WGroup)
+    Vue.component('WButton',WGhost)
+
 
     Vue.component('WA',WA)
     Vue.component('WDiv',WDiv)
