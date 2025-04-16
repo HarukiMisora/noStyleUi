@@ -1,6 +1,7 @@
 
 import { analysisColor } from "./analysis"
 
+import type { setClassNameT, setStyleT } from "../../interface/css.ts"
 
 
 

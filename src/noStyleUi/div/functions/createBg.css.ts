@@ -1,5 +1,6 @@
 import { isImage } from "../../test";
 import { analysisColor, analysisProps, analysisPxs } from "./analysis";
+import type { createCssFuncT, styleWithValuesT, classNameWithValuesT } from "../../interface/css.ts"
 
 
 const actions:{[key:string]:Function} = {

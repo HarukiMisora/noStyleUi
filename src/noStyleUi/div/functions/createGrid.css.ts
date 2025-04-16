@@ -1,5 +1,5 @@
 import { analysisProps } from "./analysis"
-
+import type { setClassNameT, setStyleT, styleWithValuesT, classNameWithValuesT } from "../../interface/css.ts"
 
 
 const actions:{[key:string]:Function} = {

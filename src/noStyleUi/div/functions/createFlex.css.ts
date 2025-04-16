@@ -1,3 +1,4 @@
+import type { setClassNameT, setStyleT, classNameWithValuesT } from "../../interface/css.ts"
 import { analysisProps } from "./analysis"
 
 
