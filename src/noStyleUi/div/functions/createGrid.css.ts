@@ -1,19 +1,22 @@
-import { analysisProps } from "./analysis"
+import { analysisProps, analysisPxs } from "./analysis"
 import type { setClassNameT, setStyleT, styleWithValuesT, classNameWithValuesT } from "../../interface/css.ts"
 
 
 const actions:{[key:string]:Function} = {
   col:({setStyle,value}:styleWithValuesT)=>{
+    // console.log(value);
     
     const col = value[1]&&value[1]!== 'auto'?value[1]:'auto-fit'
-    const w = value[2]?value[2]:'auto'
-    const maxW = value[3]==='w'?value[2]:(value[3]?value[3]:'1fr')
+    const w = analysisPxs(value[2],'auto')
+    const maxW = value[3]==='w'?value[2]:analysisPxs(value[3],'auto')
+    // console.log(col,w,maxW);
+    
     setStyle("gridTemplateColumns",`repeat(${col},minmax(${w},${maxW})`)
   },
   row:({setStyle,value}:styleWithValuesT)=>{
     const row = value[1]&&value[1]!== 'auto'?value[1]:'auto-fit'
-    const h = value[2]?value[2]:'auto'
-    const maxH = value[3]==='h'?value[2]:(value[3]?value[3]:'1fr')
+    const h = analysisPxs(value[2],'auto')
+    const maxH = value[3]==='h'?value[2]:analysisPxs(value[3],'auto')
     if(row === 'auto-fit'){
       setStyle("gridAutoRows",`minmax(${h},${maxH})`)
     }else{

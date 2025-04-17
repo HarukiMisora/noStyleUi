@@ -52,7 +52,7 @@ const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
       setClassName(`bc-${color}`,true)
       lastItem = `bc-${color}`
     })
-    console.log(isColor,propAndValue[0]);
+    // console.log(isColor,propAndValue[0]);
     
     if(isColor){return}
 
@@ -66,7 +66,7 @@ const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
 
     //填充样式
     if(['fill','contain','cover','none'].includes(propAndValue[0])){
-        console.log(lastItem);
+        // console.log(lastItem);
         
         setClassName(lastItem,false)
         setClassName(`bs-${propAndValue[0]}`,true)
