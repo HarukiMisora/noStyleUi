@@ -50,6 +50,7 @@ export const group = defineComponent({
                     ...cusProps,
                     ...i.props,
                     bg,
+                    bd,
                     flex:flex,
                     // flex:flex?.length?flex:undefined,
                     hover
