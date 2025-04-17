@@ -37,8 +37,9 @@ const actions:{[key:string]:Function} = {
 const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
   // console.log(options);
 
-  let lastItem = '' //这个lastItem是记录上一个设置的类名，用来清除上一个设置的类名
   analysisProps(options,(propAndValue:string[])=>{
+  let lastItem = '' //这个lastItem是记录上一个设置的类名，用来清除上一个设置的类名
+
     // console.log(propAndValue);
 
 
@@ -51,6 +52,8 @@ const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
       setClassName(`bc-${color}`,true)
       lastItem = `bc-${color}`
     })
+    console.log(isColor,propAndValue[0]);
+    
     if(isColor){return}
 
     //图片背景
@@ -63,6 +66,8 @@ const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
 
     //填充样式
     if(['fill','contain','cover','none'].includes(propAndValue[0])){
+        console.log(lastItem);
+        
         setClassName(lastItem,false)
         setClassName(`bs-${propAndValue[0]}`,true)
         lastItem = `bs-${propAndValue[0]}`
