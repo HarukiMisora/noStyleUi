@@ -3,7 +3,7 @@
 
 
 export function isValidColor(color:string) {
-    const hexColor = /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
+    const hexColor = /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{8})$/;
     const rgbColor = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
     const rgbaColor = /^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0\.\d+|1\.0)\s*\)$/;
     const hslColor = /^hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*\)$/;
