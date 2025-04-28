@@ -7,48 +7,48 @@ import { analysisColor, analysisProps, analysisPxs } from "./analysis";
 
 const actions:{[key:string]:Function} = {
 
-  solid:({setClassName,setStyle}:classNameWithStyleT)=>{
+  solid:({setClassName}:classNameWithStyleT)=>{
     // console.log(setClassName);
     
-    setClassName?.('bd-s-solid',true)||setStyle('borderStyle','solid')
+    setClassName?.('bd-s-solid',true)
     return true
   },
   dotted:({setClassName,setStyle}:classNameWithStyleT)=>{
-    setClassName?.('bd-s-dotted',true)||setStyle('borderStyle','dotted')
+    setClassName?.('bd-s-dotted',true)
     return true
   },
   dashed:({setClassName,setStyle}:classNameWithStyleT)=>{
     // console.log(setClassName);
 
-    setClassName?.('bd-s-dashed',true)||setStyle('borderStyle','dashed')
+    setClassName?.('bd-s-dashed',true)
     return true
   },
   double:({setClassName,setStyle}:classNameWithStyleT)=>{
-    setClassName?.('bd-s-double',true)||setStyle('borderStyle','double')
+    setClassName?.('bd-s-double',true)
     return true
   },
   groove:({setClassName,setStyle}:classNameWithStyleT)=>{
-    setClassName?.('bd-s-groove',true)||setStyle('borderStyle','groove')
+    setClassName?.('bd-s-groove',true)
     return true
   },
   hidden:({setClassName,setStyle}:classNameWithStyleT)=>{
-    setClassName?.('bd-s-hidden',true)||setStyle('borderStyle','hidden')
+    setClassName?.('bd-s-hidden',true)
     return true
   },
   inset:({setClassName,setStyle}:classNameWithStyleT)=>{
-    setClassName?.('bd-s-inset',true)||setStyle('borderStyle','inset')
+    setClassName?.('bd-s-inset',true)
     return true
   },
   none:({setClassName,setStyle}:classNameWithStyleT)=>{
-    setClassName?.('bd-s-none',true)||setStyle('borderStyle','none')
+    setClassName?.('bd-s-none',true)
     return true
   },
   outset:({setClassName,setStyle}:classNameWithStyleT)=>{
-    setClassName?.('bd-s-outset',true)||setStyle('borderStyle','outset')
+    setClassName?.('bd-s-outset',true)
     return true
   },
   ridge:({setClassName,setStyle}:classNameWithStyleT)=>{
-    setClassName?.('bd-s-ridge',true)||setStyle('borderStyle','ridge')
+    setClassName?.('bd-s-ridge',true)
     return true
   },
   t:(options:classNameWithStyleT)=>{
@@ -86,10 +86,9 @@ const actions:{[key:string]:Function} = {
       let newName =(typeof name ==='string'?name.substring(0, 6) + dirFull + name.substring(6):'name') as keyofCSSStyleDeclaration
       setStyle(newName,value)
       if(dirFull2){
-         newName =(typeof name ==='string'?name.substring(0, 6) + dirFull2 + name.substring(6):'name') as keyofCSSStyleDeclaration
+        newName =(typeof name ==='string'?name.substring(0, 6) + dirFull2 + name.substring(6):'name') as keyofCSSStyleDeclaration
         setStyle(newName,value)
       }
-      
     }
     const newOptions = value.filter(i=>!['t','r','b','l','x','y'].includes(i))
     // console.log(value,newOptions);
@@ -103,12 +102,12 @@ export function createBdCss(options:string[]|string,setClassName:setClassNameT|u
     let lastColor:string = ''
     analysisProps(options,(propAndValue:string[])=>{
       if(isValidPixelValue(propAndValue[0])){
-        const size = analysisPxs(propAndValue[0],'0',setClassName === void 0?'px':'')
-        if(isIntegerString(size)&&setClassName !== void 0){
-          setClassName(`bd-w-${size}`,true)
-        }else{
+        const size = analysisPxs(propAndValue[0],'0','px')
+        // if(isIntegerString(size)&&setClassName !== void 0){
+        //   setClassName(`bd-w-${size}`,true)
+        // }else{
           setStyle("borderWidth",size)
-        }
+        // }
         return
       }
       
