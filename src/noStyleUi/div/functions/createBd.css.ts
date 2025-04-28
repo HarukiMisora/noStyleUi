@@ -1,5 +1,5 @@
 import type { classNameWithStyleT, keyofCSSStyleDeclaration, setClassNameT, setStyleT } from "../../interface/css";
-import { isIntegerString, isValidPixelValue } from "../../test";
+import {  isValidPixelValue } from "../../test";
 import { analysisColor, analysisProps, analysisPxs } from "./analysis";
 
 
@@ -13,41 +13,41 @@ const actions:{[key:string]:Function} = {
     setClassName?.('bd-s-solid',true)
     return true
   },
-  dotted:({setClassName,setStyle}:classNameWithStyleT)=>{
+  dotted:({setClassName}:classNameWithStyleT)=>{
     setClassName?.('bd-s-dotted',true)
     return true
   },
-  dashed:({setClassName,setStyle}:classNameWithStyleT)=>{
+  dashed:({setClassName}:classNameWithStyleT)=>{
     // console.log(setClassName);
 
     setClassName?.('bd-s-dashed',true)
     return true
   },
-  double:({setClassName,setStyle}:classNameWithStyleT)=>{
+  double:({setClassName}:classNameWithStyleT)=>{
     setClassName?.('bd-s-double',true)
     return true
   },
-  groove:({setClassName,setStyle}:classNameWithStyleT)=>{
+  groove:({setClassName}:classNameWithStyleT)=>{
     setClassName?.('bd-s-groove',true)
     return true
   },
-  hidden:({setClassName,setStyle}:classNameWithStyleT)=>{
+  hidden:({setClassName}:classNameWithStyleT)=>{
     setClassName?.('bd-s-hidden',true)
     return true
   },
-  inset:({setClassName,setStyle}:classNameWithStyleT)=>{
+  inset:({setClassName}:classNameWithStyleT)=>{
     setClassName?.('bd-s-inset',true)
     return true
   },
-  none:({setClassName,setStyle}:classNameWithStyleT)=>{
+  none:({setClassName}:classNameWithStyleT)=>{
     setClassName?.('bd-s-none',true)
     return true
   },
-  outset:({setClassName,setStyle}:classNameWithStyleT)=>{
+  outset:({setClassName}:classNameWithStyleT)=>{
     setClassName?.('bd-s-outset',true)
     return true
   },
-  ridge:({setClassName,setStyle}:classNameWithStyleT)=>{
+  ridge:({setClassName}:classNameWithStyleT)=>{
     setClassName?.('bd-s-ridge',true)
     return true
   },
