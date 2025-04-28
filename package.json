@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc vite build",
     "preview": "vite preview",
-    "build:pack": "vite build && tsc -p tsconfig.lib.json && npm publish",
+    "build:pack": "tsc vite build && tsc -p tsconfig.lib.json && npm publish",
     "build:types": "tsc -p tsconfig.lib.json --emitDeclarationOnly"
   },
   "files": [

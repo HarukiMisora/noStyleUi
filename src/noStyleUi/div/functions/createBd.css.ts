@@ -8,6 +8,8 @@ import { analysisColor, analysisProps, analysisPxs } from "./analysis";
 const actions:{[key:string]:Function} = {
 
   solid:({setClassName,setStyle}:classNameWithStyleT)=>{
+    // console.log(setClassName);
+    
     setClassName?.('bd-s-solid',true)||setStyle('borderStyle','solid')
     return true
   },
@@ -16,6 +18,8 @@ const actions:{[key:string]:Function} = {
     return true
   },
   dashed:({setClassName,setStyle}:classNameWithStyleT)=>{
+    // console.log(setClassName);
+
     setClassName?.('bd-s-dashed',true)||setStyle('borderStyle','dashed')
     return true
   },
@@ -89,14 +93,14 @@ const actions:{[key:string]:Function} = {
     }
     const newOptions = value.filter(i=>!['t','r','b','l','x','y'].includes(i))
     // console.log(value,newOptions);
-    createBdCss(newOptions,setTopClassName,setTopStyle)
+    return createBdCss(newOptions,setTopClassName,setTopStyle,dir)
 
   }
   
 }
-export function createBdCss(options:string[]|string,setClassName:setClassNameT|undefined,setStyle:setStyleT){
-    // console.log(options);
-
+export function createBdCss(options:string[]|string,setClassName:setClassNameT|undefined,setStyle:setStyleT,dir:string='n'){
+    // console.log(options,dir);
+    let lastColor:string = ''
     analysisProps(options,(propAndValue:string[])=>{
       if(isValidPixelValue(propAndValue[0])){
         const size = analysisPxs(propAndValue[0],'0',setClassName === void 0?'px':'')
@@ -109,12 +113,19 @@ export function createBdCss(options:string[]|string,setClassName:setClassNameT|u
       }
       
       if(!actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})){
+        // console.log(propAndValue[0]);
+        
         analysisColor(propAndValue[0],(color:string)=>{
-          // console.log(color);
-          
           setStyle("borderColor",color)
         },(color:string)=>{
-          setClassName?.(`bd-c-${color}`,true)||setStyle("borderColor",color)
+          if(setClassName){
+            setClassName?.(`bd-c-${lastColor}`,false)
+            setClassName?.(`bd-c-${color}`,true)
+            lastColor = color
+
+          }else{
+            setStyle("borderColor",color)
+          }
         })
       }
     },['t-','l-','b-', 'r-','x-','y-'])

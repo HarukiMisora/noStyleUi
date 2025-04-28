@@ -21,10 +21,10 @@ const actions:{[key:string]:Function} = {
     })
 
   },
-  bd:({value,setStyle}:{value:string[],setClassName:setClassNameT,setStyle:setStyleT})=>{
+  bd:({value,setClassName,setStyle}:{value:string[],setClassName:setClassNameT,setStyle:setStyleT})=>{
     
     const prop = value[1].split(';')
-    createBdCss(prop,undefined,setStyle)
+    createBdCss(prop,setClassName,setStyle)
   },
 
 

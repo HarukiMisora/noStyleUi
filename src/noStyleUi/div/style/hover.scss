@@ -10,10 +10,10 @@
       background-color:$i;
   }
   .hover-c-#{meta.inspect($i)}:hover{
-      color: $i !important; 
+      color: $i 
   }
   .hover-bd-c-#{meta.inspect($i)}:hover{
-      border-color: $i !important; 
+      border-color: $i 
   }
 }
 
