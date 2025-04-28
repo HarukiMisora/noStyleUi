@@ -98,8 +98,8 @@ const actions:{[key:string]:Function} = {
   }
   
 }
-export function createBdCss(options:string[]|string,setClassName:setClassNameT|undefined,setStyle:setStyleT,dir:string='n'){
-    // console.log(options,dir);
+export function createBdCss(options:string[]|string,setClassName:setClassNameT|undefined,setStyle:setStyleT,_dir:string='n'){
+    // console.log(options,_dir);
     let lastColor:string = ''
     analysisProps(options,(propAndValue:string[])=>{
       if(isValidPixelValue(propAndValue[0])){
