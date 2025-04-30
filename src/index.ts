@@ -1,8 +1,7 @@
 
 import { WButton, WDiv, WSpan,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index'
-import './noStyleUi/div/style/css.scss'
-// import variables from './noStyleUi/style/variables.module.scss'
 import {vUpdate} from './noStyleUi/directive/update.ts'
+import propStyleCompile from './noStyleUi/plugin/vite-plugin-propStyleCompile'
 export {
     div as WDiv,
     span as WSpan,
@@ -53,6 +52,7 @@ export default function install(Vue:any){
     Vue.directive('update',vUpdate)
     
 }
+export {propStyleCompile}
 
 
 

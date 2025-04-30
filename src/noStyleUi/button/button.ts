@@ -3,7 +3,7 @@ import { config } from '../config/config'
 import { renderHelper } from '../div/Div'
 
 
-import buttonS from './style/index.module.scss'
+// import buttonS from './style/index.module.scss'
 // console.log(buttonS);
 
 const buttonProps = {

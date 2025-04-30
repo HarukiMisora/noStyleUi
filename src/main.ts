@@ -5,7 +5,8 @@ import App from './App.vue'
 
 
 import noStyleUi from './index'
-console.log(noStyleUi);
+import './noStyleUi/div/style/css.scss'
+
 
 createApp(App).use(noStyleUi).mount('#app')
 
