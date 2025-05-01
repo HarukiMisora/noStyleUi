@@ -101,6 +101,12 @@ export interface configT{
         cusProps:{
             type:PropType<groupCusPropsType>
         }
+        _class:{
+            type:StringConstructor
+        }
+        _style:{
+            type:StringConstructor
+        }
     },
     ghostProps:{
         ghost:{

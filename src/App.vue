@@ -10,15 +10,17 @@ const as ={
 <template>
 <!-- <w-div class="flex-1" bg="white" p="40" v-for="i in 50" > -->
   <w-div :flex="['g-10','wrap']">
-    <w-group radius="p50" w="100" h="100" flex="center" :bg="[as.head,'fill']" c="green" hover="bd=solid;black;y-solid;10">
-        <!-- <w-div bd="l-solid t-dashed r-double b-dotted"></w-div> -->
-        <w-div :bd="['dashed','y-dashed-red','#0f0','10'] " style="border-color: black;"></w-div>
-        <w-div bd="y-dashed solid y-red blue"></w-div>
-        <!-- <w-div bd="dotted blue y-red"></w-div> -->
-        <!-- <w-div bd="double r-solid-red+#fff"></w-div> -->
+    <w-group radius="p50" w="100" h="100" flex="center" :bg="[as.head,'fill']" c="green" hover="bd=solid;black;y-solid;10" _class="wocao" _style="background-size:cover;background-position:center;" transition>
+        <w-div   bd="l-solid t-dashed r-double b-dotted"   ></w-div>
+        <w-div :bd="['dashed','y-dashed-red','#0f0','10'] " ></w-div>
+        <w-div bd="y-dashed solid y-red blue" radius="p50" ></w-div>
+        <w-div bd="dotted blue y-red" radius="p50" ></w-div>
+        <w-div bd="double r-solid-red+#fff" radius="p50" ></w-div>
     </w-group>
   </w-div>
 
+  
+  <div w="100" h="500" bg="red"></div>
 
 <!-- </w-div> -->
    

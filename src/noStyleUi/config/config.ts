@@ -93,6 +93,12 @@ export const config:configT = {
     groupProps:{
         cusProps:{
             type:Array as PropType<groupCusPropsType>
+        },
+        _class:{
+            type:String
+        },
+        _style:{
+            type:String
         }
     },
     ghostProps:{
