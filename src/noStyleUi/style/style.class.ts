@@ -1,11 +1,10 @@
 
-type keyT = keyof typeof  StyleClass
 class StyleClass {
-    primary:'black'
+    primary:string='black'
 
-    setVar(key:keyT,value:string){
-        this[key] = value
-    }
+    // setVar(key:keyT,value:string){
+    //     this[key] = value
+    // }
 
 }
 export default new StyleClass()

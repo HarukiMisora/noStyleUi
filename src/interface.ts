@@ -1,5 +1,5 @@
-import {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost, propStyleCompile} from './index'
-import install from './index'
+import {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index'
+export {propStyle,propStyleCompile} from './index'
 declare module 'vue'{
     export interface GlobalComponents{
         WDiv:typeof WDiv
@@ -22,6 +22,4 @@ declare module 'vue'{
         WImg:typeof WImg
     }
 }
-export {propStyleCompile}
 
-export default install

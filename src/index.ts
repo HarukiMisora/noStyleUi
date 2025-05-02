@@ -1,6 +1,6 @@
 
-import { WButton, WDiv, WSpan,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index'
-import {vUpdate} from './noStyleUi/directive/update.ts'
+import { WButton, WDiv, WSpan,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index.ts'
+import {vUpdate} from './noStyleUi/directive/update'
 import propStyleCompile from './noStyleUi/plugin/vite-plugin-propStyleCompileDom'
 export {
     div as WDiv,
@@ -19,13 +19,13 @@ export {
     summary as WSummary,
     img as WImg,
 
-} from './noStyleUi/div/Div.ts'
+} from './noStyleUi/div/Div'
 export{
     button as WButton,
-}from './noStyleUi/button/button.ts'
-export {group as WGroup} from './noStyleUi/group/group.ts'
-export {ghost as WGhost} from './noStyleUi/ghost/ghost.ts'
-export default function install(Vue:any){
+}from './noStyleUi/button/button'
+export {group as WGroup} from './noStyleUi/group/group'
+export {ghost as WGhost} from './noStyleUi/ghost/ghost'
+export  function propStyle(Vue:any){
     // console.log(variables);
     Vue.component('WGroup',WGroup)
     Vue.component('WGhost',WGhost)
@@ -53,6 +53,7 @@ export default function install(Vue:any){
     
 }
 export {propStyleCompile}
+
 
 
 

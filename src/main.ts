@@ -4,10 +4,10 @@ import App from './App.vue'
 
 
 
-import noStyleUi from './index'
+import {propStyle} from './index'
 import './noStyleUi/div/style/css.scss'
 
 
 
-createApp(App).use(noStyleUi).mount('#app')
+createApp(App).use(propStyle).mount('#app')
 
