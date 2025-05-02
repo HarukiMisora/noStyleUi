@@ -7,9 +7,10 @@
     "dev": "vite",
     "build": "tsc vite build",
     "preview": "vite preview",
-    "build:pack": "npm run build:types && vite build --emptyOutDir false && npm run build:sass",
-    "build:sass": "sass src/noStyleUi/div/style/css.scss dist/nostyleui.css -s compressed",
-    "build:types": "tsc -p tsconfig.lib.json --emitDeclarationOnly",
+    "build:pack":"npm run build:test && npm publish",
+    "build:test": "npm run clear && npm run build:types && vite build --emptyOutDir false && npm run build:sass",
+    "build:sass": "sass src/noStyleUi/div/style/css.scss dist/nostyleui.css -s compressed --no-source-map",
+    "build:types": "tsc -p tsconfig.lib.json",
     "clear": "node scripts/clear.js"
   },
   "files": [
