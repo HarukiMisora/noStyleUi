@@ -2,10 +2,6 @@ import { defineComponent, h, ref } from 'vue'
 import { config } from '../config/config'
 import { renderHelper } from '../div/Div'
 
-
-// import buttonS from './style/index.module.scss'
-// console.log(buttonS);
-
 const buttonProps = {
     ...config.props,
     ...config.buttonProps
@@ -52,28 +48,30 @@ export const button = defineComponent({
     render(){
         
         const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props)
-
+        console.log(this.$props);
+        
+        className['w-button'] = true 
         if(this.$props.type !=='none'){
-            className[buttonS.default] = true 
+            className['default'] = true 
         }
-        className[buttonS[this.$props.type]] = true 
+        className[`${this.$props.type}`] = true 
         if(this.$props.abstract!=='default'){
-            className[buttonS[this.$props.abstract]] = true 
+            className[`${this.$props.abstract}`] = true 
         }
         if(this.$props.effect!=='box'){
-            className[buttonS[this.$props.effect]] = true 
+            className[`eft-${this.$props.effect}`] = true 
         }
         if(this.$props.disabled||this.$props.loading){
-            className[buttonS.disabled] = true
+            className[`disabled`] = true
         }
         if(this.$props.loading && this.$props.type !=='none'){
-            className[buttonS.loading] = true
+            className[`loading`] = true
         }
         if(this.$props.size !=='default'){
-            className[buttonS[`size-${this.$props.size}`]] = true
+            className[`size-${this.$props.size}`] = true
         }
         if(this.$props.round){
-            className[buttonS.roundRadius] = true 
+            className['round-radius'] = true 
         }
         const loadingIcon = h('svg',{
             xmlns:'http://www.w3.org/2000/svg',

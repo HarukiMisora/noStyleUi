@@ -1,77 +1,81 @@
 
-.unseen{
-    background-color: unset;
-   
-}
-.dash{
-    background-color: unset;
-    border-style:dashed;
-    &:hover{
-        border-style: dashed;
-    }
-}
-.glass{
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(5px);
-}
-.round{
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    padding: 0;
-    .w-button-loading{
-        margin: 0;
-    }
-    &.size-biger{
-        width: 40px;
-    }
-    &.size-small{
-        width: 28px;
-    }
-    &.size-mini{
-        width: 22px;
-    }
-}
-
-
-.unseen,.dash,.glass{
-    &:hover,&.disabled{
+.w-button{
+    &.unseen{
         background-color: unset;
+       
     }
-    &.primary{
-        color: var(--primary);
+    &.dash{
+        background-color: unset;
+        border-style:dashed;
         &:hover{
-            color: var(--primary-hover);
+            border-style: dashed;
         }
     }
-    &.success{
-        color: var(--success);
-        &:hover{
-            color: var(--success-hover);
+    &.glass{
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+    }
+    &.round{
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        padding: 0;
+        .w-button-loading{
+            margin: 0;
+        }
+        &.size-biger{
+            width: 40px;
+        }
+        &.size-small{
+            width: 28px;
+        }
+        &.size-mini{
+            width: 22px;
         }
     }
-    &.info{
-        color: var(--info);
-        &:hover{
-            color: var(--info-hover);
+    
+    
+    &.unseen,&.dash,&.glass{
+        &:hover,&.disabled{
+            background-color: unset;
+        }
+        &.primary{
+            color: var(--primary);
+            &:hover{
+                color: var(--primary-hover);
+            }
+        }
+        &.success{
+            color: var(--success);
+            &:hover{
+                color: var(--success-hover);
+            }
+        }
+        &.info{
+            color: var(--info);
+            &:hover{
+                color: var(--info-hover);
+            }
+        }
+        &.warning{
+            color: var(--warning);
+            &:hover{
+                color: var(--warning-hover);
+            }
+        }
+        &.error{
+            color: var(--error);
+            &:hover{
+                color: var(--error-hover);
+            }
+        }
+        &.tertiary{
+            color: var(--tertiary);
+            &:hover{
+                color: var(--tertiary-hover);
+            }
         }
     }
-    &.warning{
-        color: var(--warning);
-        &:hover{
-            color: var(--warning-hover);
-        }
-    }
-    &.error{
-        color: var(--error);
-        &:hover{
-            color: var(--error-hover);
-        }
-    }
-    &.tertiary{
-        color: var(--tertiary);
-        &:hover{
-            color: var(--tertiary-hover);
-        }
-    }
+
 }
+

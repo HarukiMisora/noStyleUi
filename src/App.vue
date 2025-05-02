@@ -17,10 +17,30 @@ const as ={
         <w-div bd="dotted blue y-red" radius="p50" ></w-div>
         <w-div bd="double r-solid-red+#fff" radius="p50" ></w-div>
     </w-group>
+
   </w-div>
 
+  <w-div :flex="['g-15','wrap']" mb="15">
+  <w-button type="default" size="mini">mini</w-button>
+  <w-button type="primary" size="small">small</w-button>
+  <w-button type="success" size="default">default</w-button>
+  <w-button type="warning" size="biger">biger</w-button>
+</w-div>
+<w-div :flex="['g-15','wrap']" mb="15">
+  <w-button type="default" size="mini" round>mini</w-button>
+  <w-button type="primary" size="small" round>small</w-button>
+  <w-button type="success" size="default" round>default</w-button>
+  <w-button type="warning" size="biger" round>biger</w-button>
+</w-div>
+<w-div :flex="['g-15','wrap']">
+  <w-button type="default" size="mini"    abstract="round">mini</w-button>
+  <w-button type="primary" size="small"   abstract="round">small</w-button>
+  <w-button type="success" size="default" abstract="round">default</w-button>
+  <w-button type="warning" size="biger"   abstract="round">biger</w-button>
+</w-div>
+
   
-  <div w="100" h="500" bg="red"></div>
+  <!-- <div w="100" h="500" bg="red"></div> -->
 
 <!-- </w-div> -->
    

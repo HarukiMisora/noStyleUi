@@ -1,27 +1,31 @@
 
-.roundRadius{
-  border-radius: 32px;
-}
-.size-defalut{
-  height: 16px;
+.w-button{
+  &.round-radius{
+    border-radius: 32px;
+  }
+  &.size-defalut{
+    height: 16px;
+  
+  }
+  &.size-small{
+    height: 28px;
+    &.roundRadius{
+      border-radius: 14px;
+    }
+  }
+  &.size-mini{
+    height: 22px;
+    &.roundRadius{
+      border-radius: 11px;
+    }
+  }
+  &.size-biger{
+    height: 40px;
+    &.roundRadius{
+      border-radius: 20px;
+    }
+  }
 
 }
-.size-small{
-  height: 28px;
-  &.roundRadius{
-    border-radius: 14px;
-  }
-}
-.size-mini{
-  height: 22px;
-  &.roundRadius{
-    border-radius: 11px;
-  }
-}
-.size-biger{
-  height: 40px;
-  &.roundRadius{
-    border-radius: 20px;
-  }
-}
+
 

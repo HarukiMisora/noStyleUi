@@ -7,6 +7,12 @@
 @use './border.scss';
 @use './hover.scss';
 @use './grid.scss';
+
+
+@use '../../button/style/index.scss';
+
+
+
 $i:0;
 @while $i<=1920{
    

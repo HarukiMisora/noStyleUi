@@ -1,11 +1,14 @@
 
 
-.none{
+
+.w-button {
+
+&.eft-none{
     &:active{
         transform: translate(0,0);
     }
 }
-.text{
+&.eft-text{
     &.disabeld{
         color: red !important;
     }
@@ -17,7 +20,7 @@
         padding-right: 9px;
     }
 }
-.rotate{
+&.eft-rotate{
     transition: transform 1.5s ease;
     &:active:not(.disabled){
         transition: transform 10s ease;
@@ -26,14 +29,17 @@
     
     }
 }
-.biger{
+&.eft-biger{
     &:active:not(.disabled){
         transform: translate(0,0) scale(1.25);
     
     }
 }
-.small{
+&.eft-small{
     &:active:not(.disabled){
         transform: translate(0,0) scale(0.75);
     }
+}
+
+
 }
