@@ -12,18 +12,31 @@ import { createTransition } from '../div/functions/createTransition';
 import { config } from '../config/config';
 import { camelToHyphen } from '../untils';
 
+interface PluginOptions {
+  justForBuild?: boolean; // 仅在构建时生效
+  wGroupSpecialName?: string[]; // WGroup用到过的别名
+  debug?: boolean; // 调试模式
+  log?:(...args:any[])=>void // 日志函数
+}
 
 
-export default function propStyleCompile():Plugin{
+
+
+export default function propStyleCompile(options:PluginOptions={}):Plugin{
+  const justForBuild = options.justForBuild || false;
+  const logOut = options.debug? (options.log || console.log):()=>{}
+  const WGroupNames = [...(options.wGroupSpecialName || []),'w-group','WGroup','wGroup'];
+
   return {
     name: 'prop-style-compile',
     enforce: 'pre',
 
     transform(code, id) {
-      if (id.endsWith('.vue')) {
+      if (id.endsWith('.vue')&&!justForBuild) {
+   
  
         const newCode = transformTemplate(code,(match)=>{
-          // console.log({match,attrs,content}); 
+          // logOut({match,attrs,content}); 
           const ast:RootNode = parse(match)
           eachTree(ast,(node)=>{
             const styles = {} as myCSSStyleDeclaration
@@ -36,14 +49,14 @@ export default function propStyleCompile():Plugin{
             }
             let classIndex = -1
             let styleIndex = -1
-            const nodeClassName = ['w-group','WGroup','wGroup'].includes(node.tag)? '_class':'class'
-            const nodeStyleName = ['w-group','WGroup','wGroup'].includes(node.tag)? '_style':'style'
-            console.log({node,nodeClassName,nodeStyleName});
+            const nodeClassName = WGroupNames.includes(node.tag)? '_class':'class'
+            const nodeStyleName = WGroupNames.includes(node.tag)? '_style':'style'
+            logOut({node,nodeClassName,nodeStyleName});
             
             for(let i=0;i<node.props.length;i++){  
               const prop = node.props[i]
               if(prop.name !== 'bind'){
-                console.log('prop=>'+i,prop.type,{[prop.name]:prop.value?.content});  
+                logOut('prop=>'+i,prop.type,{[prop.name]:prop.value?.content});  
                 classIndex = prop.name === nodeClassName? i:classIndex
                 styleIndex = prop.name === nodeStyleName? i:styleIndex
                 if(allProps.includes(prop.name)){
@@ -70,7 +83,7 @@ export default function propStyleCompile():Plugin{
               }
  
             }
-            // console.log(node.props.map((item:any)=>item.name));
+            // logOut(node.props.map((item:any)=>item.name));
             const classString = Object.keys(className).filter(item=>className[item]).join(' ')
             const styleString = Object.keys(styles).map((item:string)=>`${camelToHyphen(item)}:${styles[<keyofCSSStyleDeclaration>item]}`).join(';')
             if(classString.length>0){
@@ -84,10 +97,10 @@ export default function propStyleCompile():Plugin{
                   },
                   
                 })
-                console.log(node.props[node.props.length-1].value.content);
+                logOut(node.props[node.props.length-1].value.content);
               }else{
                 node.props[classIndex].value.content +=' '+classString 
-                console.log(node.props[classIndex].value.content);
+                logOut(node.props[classIndex].value.content);
               }
             }
             if(styleString.length>0){
@@ -102,27 +115,27 @@ export default function propStyleCompile():Plugin{
                   },
                   
                 })
-                console.log(node.props[node.props.length-1].value.content);
+                logOut(node.props[node.props.length-1].value.content);
               }else{
                 node.props[styleIndex].value.content +=';'+styleString 
-                console.log(node.props[styleIndex].value.content);
+                logOut(node.props[styleIndex].value.content);
               }
             }
-            console.log({styles,className});
+            logOut({styles,className});
             
             
              
 
-          })
+          },logOut)
           const newTmeplate = generateTemplate(ast)
-          console.log({newTmeplate},'--------------------------------------');
+          logOut({newTmeplate},'--------------------------------------');
 
           return newTmeplate
         })
 
       
         return {
-          code:newCode
+          code:newCode,
         };
       }
     }
@@ -140,14 +153,14 @@ function transformTemplate(html: string,after:(match:string)=>string){//,attrs:s
     }
   )
 }
-function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void){
+function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,logOut:any){
   if(node.children){
     for(let i=0;i<node.children.length;i++){
       if(node.children[i].type === 1){
-        console.log('\nnode=>'+i,node.children[i].tag);
+        logOut('\nnode=>'+i,node.children[i].tag);
         
         callback(node.children[i],i,node)
-        eachTree(node.children[i],callback)
+        eachTree(node.children[i],callback,logOut)
       }
     } 
   }

@@ -8,7 +8,10 @@ const pathResolve = (dir: string) => resolve(__dirname, dir)
 export default defineConfig({
   plugins: [
     vue(),
-    propStyleCompile()
+    propStyleCompile({
+      debug: true,
+      justForBuild: false,
+    })
   ],
   resolve: {
     alias: {
