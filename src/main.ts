@@ -8,5 +8,6 @@ import noStyleUi from './index'
 import './noStyleUi/div/style/css.scss'
 
 
+
 createApp(App).use(noStyleUi).mount('#app')
 

@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     vue(),
     propStyleCompile({
-      debug: true,
+      debug: false,
       justForBuild: false,
     })
   ],
@@ -18,7 +18,6 @@ export default defineConfig({
       '@': pathResolve('./src')  // 确保别名配置正确
     }
   },
-
   server:{
     port:8088
   },

@@ -1,8 +1,8 @@
 
 @use  './colors.scss' as *;
-@use './theme.scss' as *;
-@use './flex.scss' as *;
-@use './background.scss' as *;
+@use './theme.scss';
+@use './flex.scss';
+@use './background.scss';
 @use 'sass:meta';
 @use './border.scss';
 @use './hover.scss';
