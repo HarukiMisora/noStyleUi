@@ -10,12 +10,9 @@ const color = ref('#000')
 </script>
 
 <template>
-  <w-div class="flex-1" bg="white" p="40">
-    <w-button>
-      <template></template>
-      asd
-    </w-button>
-
+  <w-div class="flex-1 test" bg="red" p="40"   >
+    <template></template>
+     {{color}}
   </w-div>
   
 </template>
