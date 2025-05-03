@@ -11,12 +11,13 @@ import { createBdCss } from '../div/functions/createBd.css';
 import { createTransition } from '../div/functions/createTransition';
 import { config } from '../config/config';
 import { camelToHyphen } from '../untils';
-
+type entityType = 'nbsp'|'lt'|'gt'|'quot'|'#39'|'amp'|'copy'|'reg'|'trade'|'times'|'divide'
 interface PluginOptions {
   justForBuild?: boolean; // 仅在构建时生效
   wGroupSpecialName?: string[]; // WGroup用到过的别名
   debug?: boolean; // 调试模式
-  log?:(...args:any[])=>void // 日志函数
+  log?:(...args:any[])=>void // 日志函数 
+  entity?:'all'|entityType[] //实体字符
 }
 
 
@@ -26,6 +27,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
   const justForBuild = options.justForBuild || false;
   const logOut = options.debug? (options.log || console.log):()=>{}
   const WGroupNames = [...(options.wGroupSpecialName || []),'w-group','WGroup','wGroup'];
+  const entitys = (options.entity === 'all'? <entityType[]>['nbsp','lt','gt','quot','#39','amp','copy','reg','trade','times','divide']:options.entity) || []
 
   return {
     name: 'prop-style-compile',
@@ -34,14 +36,14 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
     transform(code, id) {
       // console.log(justForBuild,id);
       
-      if (id.endsWith('.vue')&&!justForBuild) {
-        // console.log('transform=>',id); 
+      if (id.endsWith('.vue')&&!justForBuild) { 
+        // console.log('transform=>',{id,code})
         
    
  
         const newCode = transformTemplate(code,(match)=>{
           // logOut({match,attrs,content}); 
-          const ast:RootNode = parse(match)
+          const ast:RootNode = parse(replaceHtmlEntities(match,entitys))
           eachTree(ast,(node)=>{
             const styles = {} as myCSSStyleDeclaration
             const className:{[key:string]:Boolean} ={}
@@ -169,6 +171,7 @@ function transformTemplate(html: string,after:(match:string)=>string){//,attrs:s
     }
   )
 }
+//遍历ast树
 function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,logOut:any){
   if(node.children){
     for(let i=0;i<node.children.length;i++){
@@ -183,8 +186,9 @@ function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,log
 }
 
 
-
+//获取要解析的属性
 const allProps = Object.keys(config.props).filter(item=>item!=='hover')
+//生成样式函数
 const createStyles:{[key:string]:Function} = {
   grid:createGridCss,
   bg:createBgCss,
@@ -194,7 +198,6 @@ const createStyles:{[key:string]:Function} = {
   transition:createTransition
 }
 const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
-
 const attributeGropStyle: Pxs = {
   w:'width',
   h:'height',
@@ -344,8 +347,37 @@ function generateTemplate(ast: any): string {
   return result;
 }
 
-
+//下划线(node环境下)
 function underline(text: string): string {
   return `\x1b[4m${text}\x1b[0m`;
+}
+
+//处理HTML实体字符,(因为我将 @vue/compiler-dom 的代码一并打包进到主文件里面去了，而 @vue/compiler-dom 在经过代码压缩之后，会无法正确处理HTML实体字符，导致我的插件在其它项目里无法正常工作，所以这里需要我自己手动去处理一下)
+function replaceHtmlEntities(str:string,entities:entityType[] = []) {
+  const entityMap:{[key in entityType]:string} = {
+    'nbsp': '\u00A0', // 不间断空格
+    'lt': '<',
+    '#39': "'", 
+    "amp":"&",
+    "gt": ">",
+    "quot": '"',
+    "copy": "\u00A9",
+    "reg": "\u00AE",
+    "trade": "\u2122",
+    "times": "\u00D7",
+    "divide": "\u00F7"
+  };
+
+  // 只处理 entities 数组中存在的实体
+  const filteredEntities = entities.filter(entity => entity in entityMap);
+  if (filteredEntities.length === 0) return str; // 如果没有有效实体，直接返回原字符串
+
+  // 动态构建正则表达式，匹配 &实体; 或 &实体
+  const regex = new RegExp(`&(${filteredEntities.join('|')});?`, 'g');
+  
+  
+  return str.replace(regex, (match, entity:entityType) => {
+    return entityMap[entity] || match;
+  });
 }
 
