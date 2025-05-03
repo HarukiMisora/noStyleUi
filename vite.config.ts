@@ -11,7 +11,7 @@ export default defineConfig({
     propStyleCompile({    
       debug: false,  
       justForBuild: false, 
-      entity:['nbsp','lt']
+      entity:'all'
     })
   ],
   resolve: { 
@@ -24,7 +24,7 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: pathResolve('./src/index.ts'), 
+      entry: pathResolve('./src/index.ts'),  
       name: 'noStyleUi',
       fileName: (format) => `no-style-ui.${format}.js` 
     },

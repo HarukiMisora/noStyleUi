@@ -144,7 +144,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
              
 
           },logOut)
-          const newTmeplate = generateTemplate(ast)
+          const newTmeplate = generateTemplate(ast).replace(/@→_→_a_m_p_amp_AMP_←_←_0_0_X_X@/g,'&')
           logOut({newTmeplate},'--------------------------------------');
 
           return newTmeplate
@@ -378,6 +378,6 @@ function replaceHtmlEntities(str:string,entities:entityType[] = []) {
   
   return str.replace(regex, (match, entity:entityType) => {
     return entityMap[entity] || match;
-  });
+  }).replace(/&/g,'@→_→_a_m_p_amp_AMP_←_←_0_0_X_X@');
 }
 
