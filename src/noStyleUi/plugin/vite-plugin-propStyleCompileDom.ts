@@ -12,13 +12,13 @@ import { createTransition } from '../div/functions/createTransition';
 import { config } from '../config/config';
 import { camelToHyphen } from '../untils';
 import createPixCss from '../div/functions/createPix.css';
-type entityType = 'nbsp'|'lt'|'gt'|'quot'|'#39'|'amp'|'copy'|'reg'|'trade'|'times'|'divide'
+// type entityType = 'nbsp'|'lt'|'gt'|'quot'|'#39'|'amp'|'copy'|'reg'|'trade'|'times'|'divide'
 interface PluginOptions {
   justForBuild?: boolean; // 仅在构建时生效
   wGroupSpecialName?: string[]; // WGroup用到过的别名
   debug?: boolean; // 调试模式
   log?:(...args:any[])=>void // 日志函数 
-  entity?:'all'|entityType[] //实体字符
+  // entity?:'all'|entityType[] //实体字符
 }
 
 
@@ -28,7 +28,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
   const justForBuild = options.justForBuild || false;
   const logOut = options.debug? (options.log || console.log):()=>{}
   const WGroupNames = [...(options.wGroupSpecialName || []),'w-group','WGroup','wGroup'];
-  const entitys = (options.entity === 'all'? <entityType[]>['nbsp','lt','gt','quot','#39','amp','copy','reg','trade','times','divide']:options.entity) || []
+  // const entitys = (options.entity === 'all'? <entityType[]>['nbsp','lt','gt','quot','#39','amp','copy','reg','trade','times','divide']:options.entity) || []
 
   return {
     name: 'prop-style-compile',
@@ -45,7 +45,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
         const newCode = transformTemplate(code,(match)=>{  
           logOut({match}); 
           // console.log('match=>',match);  
-          const ast:RootNode = parse(replaceHtmlEntities(match,entitys))
+          const ast:RootNode = parse(replaceHtmlEntities(match))
           eachTree(ast,(node)=>{
             const styles = {} as myCSSStyleDeclaration
             const className:{[key:string]:Boolean} ={}
@@ -180,39 +180,18 @@ function setEscape(text:string,target:string,escapeChar:string){
 }
 //还原转义
 function restoreEscape(text: string){
-
   for(let key in usedEscape){
     const escapeChar = usedEscape[key]
     text = text.replace(new RegExp(`@→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X@`,'g'),key)
   }
   return text
 }
-//处理HTML实体字符,(因为我将 @vue/compiler-dom 的代码一并打包进到主文件里面去了，而 @vue/compiler-dom 在经过代码压缩之后，会无法正确处理HTML实体字符，导致我的插件在其它项目里无法正常工作，所以这里需要我自己手动去处理一下)
-function replaceHtmlEntities(str:string,entities:entityType[] = []) {
-  const entityMap:{[key in entityType]:string} = {
-    'nbsp': '\u00A0', // 不间断空格
-    'lt': '<',
-    '#39': "'", 
-    "amp":"&",
-    "gt": ">",
-    "quot": '"',
-    "copy": "\u00A9",
-    "reg": "\u00AE",
-    "trade": "\u2122",
-    "times": "\u00D7",
-    "divide": "\u00F7"
-  };
 
-  // 只处理 entities 数组中存在的实体
-  const filteredEntities = entities.filter(entity => entity in entityMap);
-  if (filteredEntities.length === 0) return str; // 如果没有有效实体，直接返回原字符串
-
-  // 动态构建正则表达式，匹配 &实体; 或 &实体
-  const regex = new RegExp(`&(${filteredEntities.join('|')});?`, 'g');
-  
-  return setEscape(str.replace(regex, (match, entity:entityType) => {
-    return entityMap[entity] || match;
-  }),'&','amp')
+/*处理HTML实体字符,(经过打包代码压缩之后，导致我的插件在其它项目用到实体字符的地方无法正常工作，所以这里需要我自己手动去处理一下)
+  我这里不能去处理实体字符，不然会有更严重的问题，所以我将实体字符的关键符号 & 换成了自己的转义符。
+*/
+function replaceHtmlEntities(str:string) {
+  return setEscape(str,'&','amp')
 }
 
 

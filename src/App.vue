@@ -1,8 +1,50 @@
 
 <template>
-  <w-div p="40" bg="red" :flex="['col','1','g-20']" h="500vh" transition > 
-    {{ color }}
-  </w-div>   
+<w-li>
+                        &lt;w-div&gt;&lt;/w-div&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-span&gt;&lt;/w-span&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-p&gt;&lt;/w-p&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-a&gt;&lt;/w-a&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-h1&gt;&lt;/w-h1&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-img&gt;&lt;/w-img&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-ul&gt;&lt;/w-ul&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-ol&gt;&lt;/w-ol&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-li&gt;&lt;/w-li&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-canvas&gt;&lt;/w-canvas&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-video&gt;&lt;/w-video&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-tarck&gt;&lt;/w-tarck&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-meter&gt;&lt;/w-meter&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-details&gt;&lt;/w-details&gt;
+                    </w-li>
+                    <w-li>
+                        &lt;w-summary&gt;&lt;/w-summary&gt;
+                    </w-li>
 
 </template> 
 

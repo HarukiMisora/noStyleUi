@@ -11,7 +11,7 @@ export default defineConfig({
     propStyleCompile({    
       debug: false,  
       justForBuild: false, 
-      entity:'all'
+      // entity:'all'
     })
   ],
   resolve: { 
