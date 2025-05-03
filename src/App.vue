@@ -1,6 +1,6 @@
 
 <template>
-  <w-div p="40" bg="red" :flex="['col','1','g-20']" h="50" > 
+  <w-div p="40" bg="red" :flex="['col','1','g-20']" h="500vh" transition > 
     {{ color }}
   </w-div>   
 

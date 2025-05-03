@@ -66,7 +66,7 @@ export function renderHelper(props:PropT){
     //边框属性集
     checkProp(<string|string[]>props.bd,createBdCss)
     //tansition属性集
-    checkProp(<string|number>props.transition,createTransition)
+    checkProp(<string|boolean|number>props.transition,createTransition,(prop)=>prop !== false)
     //hover属性集
     checkProp(<string|string[]>props.hover,(prop)=>createHoverCss(prop,setHoverClassName,setHoverStyle))
 
