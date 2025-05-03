@@ -21,8 +21,8 @@ export function analysisProps(options:string[]|string,callback:Function,prefixes
 }
 
 //像素值分析
-export function analysisPxs(pxNumber:string|number,defalut:string='0',unit:string='px'){
-  return !pxNumber?defalut:!Number.isNaN(Number(pxNumber))?pxNumber+unit:pxNumber
+export function analysisPxs(pxNumber:string|number,defalut:string='0',unit:string='px'):string{
+  return !pxNumber?defalut:!Number.isNaN(Number(pxNumber))?pxNumber+unit:pxNumber.toString()
 }
 
 //颜色分析
