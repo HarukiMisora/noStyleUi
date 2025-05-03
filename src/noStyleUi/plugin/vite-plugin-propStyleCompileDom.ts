@@ -42,7 +42,8 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
    
  
         const newCode = transformTemplate(code,(match)=>{
-          // logOut({match,attrs,content}); 
+          logOut({match}); 
+          console.log('match=>',match);
           const ast:RootNode = parse(replaceHtmlEntities(match,entitys))
           eachTree(ast,(node)=>{
             const styles = {} as myCSSStyleDeclaration
@@ -161,15 +162,45 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
 }
 
 
-//匹配template标签
-function transformTemplate(html: string,after:(match:string)=>string){//,attrs:string,content:string)=>string) {
-  return html.replace(
-    /<template(\b[^>]*)>([\s\S]*?)<\/template>/,
-    (_match) => { 
+// //匹配template标签
+// function transformTemplate(html: string,after:(match:string)=>string){//,attrs:string,content:string)=>string) {
+//   return html.replace(
+//     /<template(\b[^>]*)>([\s\S]*?)<\/template>/,
+//     (_match) => { 
 
-      return after(_match)//, attrs, content) 
+//       return after(_match)//, attrs, content) 
+//     }
+//   )
+// }
+
+
+function transformTemplate(html: string, after: (match: string) => string) {
+  let depth = 0;
+  let result = '';
+  let startIndex = -1;
+  // console.log({html});
+  
+  for (let i = 0; i < html.length; i++) {
+    
+    if (html.substr(i, 9) === '<template') {
+      if (depth === 0) {
+        startIndex = i; // 记录最外层 <template 的开始位置
+      }
+      depth++;
+    } else if (html.substr(i, 11) === '</template>') {
+      depth--;
+      if (depth === 0 && startIndex !== -1) {
+        // 找到匹配的最外层 </template>
+        const endIndex = i + 11; // `</template>` 的结束位置
+        const templateContent = html.slice(startIndex, endIndex);
+        result += after(templateContent);
+        startIndex = -1; 
+      }
     }
-  )
+  }
+  
+
+  return after(result);
 }
 //遍历ast树
 function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,logOut:any){
