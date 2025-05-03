@@ -9,7 +9,8 @@ import { createFontColorCss } from './functions/createFontColor.css'
 import { creatFlexCss } from './functions/createFlex.css'
 import { createBdCss } from './functions/createBd.css'
 import { createTransition } from './functions/createTransition'
-import type { keyofCSSStyleDeclaration, myCSSStyleDeclaration, Pxs, setClassNameT, setStyleT } from '../interface/css'
+import type {  myCSSStyleDeclaration, Pxs, setClassNameT, setStyleT } from '../interface/css'
+import createPixCss from './functions/createPix.css'
 
 
 const styleProps = {
@@ -31,32 +32,6 @@ export function renderHelper(props:PropT){
     const styles = {} as myCSSStyleDeclaration
     const hoverStyles = {} as myCSSStyleDeclaration
     const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
-    const attributeGropStyle: Pxs = {
-        w:'width',
-        h:'height',
-        x:'x',
-        y:'y',
-        f:'font-size',
-        fw:'font-weight',
-        radius:'border-radius',
-        p:'padding',
-        pt:'padding-top',
-        pb:'padding-bottom',
-        pl:'padding-left',
-        pr:'padding-right',
-        px:'padding',
-        py:'padding',
-        
-        m:'margin',
-        mt:'margin-top',
-        mb:'margin-bottom',
-        ml:'margin-left',
-        mr:'margin-right',
-        mx:'margin',
-        my:'margin',
-
-        
-    }
     const setClassName:setClassNameT = (name,value=true) =>{
         className[name]= value
     }
@@ -72,13 +47,7 @@ export function renderHelper(props:PropT){
 
     for(const i  of attributeGrop){
         if(props[i] !== void 0){
-            if(props[i][0] ==='$'){
-                styles[<keyofCSSStyleDeclaration>attributeGropStyle[i]] = props[i].slice(1)
-            }
-            else{
-                className[`${i}-${props[i]}`] = true
-                delete styles[<keyofCSSStyleDeclaration>attributeGropStyle[i]]
-            }
+           createPixCss(i,props[i],setClassName,setStyle)
         }
     }
     // console.log(props);

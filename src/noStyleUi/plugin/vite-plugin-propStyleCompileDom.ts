@@ -11,6 +11,7 @@ import { createBdCss } from '../div/functions/createBd.css';
 import { createTransition } from '../div/functions/createTransition';
 import { config } from '../config/config';
 import { camelToHyphen } from '../untils';
+import createPixCss from '../div/functions/createPix.css';
 type entityType = 'nbsp'|'lt'|'gt'|'quot'|'#39'|'amp'|'copy'|'reg'|'trade'|'times'|'divide'
 interface PluginOptions {
   justForBuild?: boolean; // 仅在构建时生效
@@ -43,7 +44,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
  
         const newCode = transformTemplate(code,(match)=>{  
           logOut({match}); 
-          console.log('match=>',match);  
+          // console.log('match=>',match);  
           const ast:RootNode = parse(replaceHtmlEntities(match,entitys))
           eachTree(ast,(node)=>{
             const styles = {} as myCSSStyleDeclaration
@@ -52,7 +53,11 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
               className[name]= value
             }
             const setStyle:setStyleT = (name,value) =>{
-              styles[name] = value
+              if(value === void 0 ){
+                delete styles[name]
+              }else{
+                styles[name] = value
+              }
             }
             let classIndex = -1
             let styleIndex = -1
@@ -65,25 +70,17 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
               if(prop.name !== 'bind'){
                 logOut('prop=>'+i,prop.type,{[prop.name]:prop.value?.content});  
                 classIndex = prop.name === nodeClassName? i:classIndex
-                styleIndex = prop.name === nodeStyleName? i:styleIndex
-                if(allProps.includes(prop.name)){
+                styleIndex = prop.name === nodeStyleName? i:styleIndex 
+                if(allProps.includes(prop.name)){ 
                   
                   if(attributeGrop.includes(prop.name)){
-                    if(prop.name[0] ==='$'){ 
-                      styles[<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop.name]] = prop.value?.content
-                    }
-                    else{
-                        className[`${prop.name}-${prop.value?.content}`] = true
-                        delete styles[<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop.name]]
-                    }
-
+                    createPixCss(prop.name,prop.value?.content,setClassName,setStyle)
                   }
                   else{
                     try{
                       createStyles[prop.name]?.(prop.value?.content||'',setClassName,setStyle) 
 
                     }catch(e){
-                      // console.log({node,prop,e});
                       const sourceLine = node.loc.source.split('\n')[0]
                       const start = prop.loc.start.column-prop.name.length
                       const end = prop.loc.end.column-prop.name.length
@@ -373,32 +370,7 @@ const createStyles:{[key:string]:Function} = {
 
 
 const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
-const attributeGropStyle: Pxs = {
-  w:'width',
-  h:'height',
-  x:'x',
-  y:'y',
-  f:'font-size',
-  fw:'font-weight',
-  radius:'border-radius',
-  p:'padding',
-  pt:'padding-top',
-  pb:'padding-bottom',
-  pl:'padding-left',
-  pr:'padding-right',
-  px:'padding',
-  py:'padding',
-  
-  m:'margin',
-  mt:'margin-top',
-  mb:'margin-bottom',
-  ml:'margin-left',
-  mr:'margin-right',
-  mx:'margin',
-  my:'margin',
 
-  
-}
 
 //下划线(node环境下)
 function underline(text: string): string {
