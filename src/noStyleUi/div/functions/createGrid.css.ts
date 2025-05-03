@@ -44,10 +44,12 @@ const actions:{[key:string]:Function} = {
   },
 }
 
-export default function (options:string[]|string,setClassName:setClassNameT,setStyle:setStyleT){
+export default function (options:string[]|string|boolean,setClassName:setClassNameT,setStyle:setStyleT){
   setClassName('grid',true)
-  analysisProps(options,(propAndValue:string[])=>{
-    actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})
-  })
+  if(typeof options !== 'boolean'){
+    analysisProps(options,(propAndValue:string[])=>{
+      actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})
+    })
+  }
 
 }

@@ -81,23 +81,25 @@ export function renderHelper(props:PropT){
             }
         }
     }
-    const checkProp = (prop:string|undefined,callback:(prop:string,setClassName:setClassNameT,setStyle:setStyleT) => void)=>{
-        if(prop!== void 0) callback(prop,setClassName,setStyle)
+    // console.log(props);
+    
+    const checkProp = <T>(prop:T,callback:(prop:T,setClassName:setClassNameT,setStyle:setStyleT) => void,checkFun:(prop:T)=>boolean=(prop)=>prop!== void 0)=>{
+        if(checkFun(prop)) callback(prop,setClassName,setStyle)
     }
     //grid属性集
-    checkProp(props.grid,createGridCss)
+    checkProp(<string|boolean|string[]>props.grid,createGridCss,(prop)=>prop !== false)
     //字体颜色
-    checkProp(props.c,createFontColorCss)
+    checkProp(<string>props.c,createFontColorCss)
     //bg属性集
-    checkProp(props.bg,createBgCss)
+    checkProp(<string|string[]>props.bg,createBgCss)
     //flex属性集
-    checkProp(props.flex,creatFlexCss)
+    checkProp(<string|boolean|string[]>props.flex,creatFlexCss,(prop)=>prop !== false)
     //边框属性集
-    checkProp(props.bd,createBdCss)
+    checkProp(<string|string[]>props.bd,createBdCss)
     //tansition属性集
-    checkProp(props.transition,createTransition)
+    checkProp(<string|number>props.transition,createTransition)
     //hover属性集
-    checkProp(props.hover,(prop)=>createHoverCss(prop,setHoverClassName,setHoverStyle))
+    checkProp(<string|string[]>props.hover,(prop)=>createHoverCss(prop,setHoverClassName,setHoverStyle))
 
 
 

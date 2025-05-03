@@ -22,7 +22,7 @@ interface PluginOptions {
 
 
 
-export default function propStyleCompile(options:PluginOptions={}):Plugin{
+export default function propStyleCompile(options:PluginOptions={}):Plugin{ 
   const justForBuild = options.justForBuild || false;
   const logOut = options.debug? (options.log || console.log):()=>{}
   const WGroupNames = [...(options.wGroupSpecialName || []),'w-group','WGroup','wGroup'];
@@ -32,7 +32,11 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
     enforce: 'pre',
 
     transform(code, id) {
+      // console.log(justForBuild,id);
+      
       if (id.endsWith('.vue')&&!justForBuild) {
+        // console.log('transform=>',id); 
+        
    
  
         const newCode = transformTemplate(code,(match)=>{
@@ -70,14 +74,25 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
                         delete styles[<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop.name]]
                     }
 
-                  }else{
-                    createStyles[prop.name]?.(prop.value?.content,setClassName,setStyle)
+                  }
+                  else{
+                    try{
+                      createStyles[prop.name]?.(prop.value?.content||'',setClassName,setStyle) 
+
+                    }catch(e){
+                      // console.log({node,prop,e});
+                      const sourceLine = node.loc.source.split('\n')[0]
+                      const start = prop.loc.start.column-prop.name.length
+                      const end = prop.loc.end.column-prop.name.length
+                      throw new Error(
+                        `${prop.name} 得到了一个错误的值：${prop.value?.content}\n`+
+                        `at line ${prop.loc.start.line} column ${prop.loc.start.column}\n  `+
+                        sourceLine.slice(0,start)+underline(sourceLine.slice(start,end))+sourceLine.slice(end)+'\n'
+                      )
+                    }
                   }
 
-
-
-
-                  createStyles[prop.name]?.(prop.value?.content,setClassName,setStyle) 
+                  // createStyles[prop.name]?.(prop.value?.content,setClassName,setStyle) 
                   node.props.splice(i--,1)
                 } 
               }
@@ -133,7 +148,8 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
           return newTmeplate
         })
 
-      
+        // console.log({[id]:newCode},'------------------------------------------------------------');
+        
         return {
           code:newCode,
         };
@@ -329,5 +345,7 @@ function generateTemplate(ast: any): string {
 }
 
 
-
+function underline(text: string): string {
+  return `\x1b[4m${text}\x1b[0m`;
+}
 

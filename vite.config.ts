@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
 import {propStyleCompile} from './src/interface'
-
 const pathResolve = (dir: string) => resolve(__dirname, dir)
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,12 +9,12 @@ export default defineConfig({
     vue(),
     propStyleCompile({
       debug: false,
-      justForBuild: false,
+      justForBuild: false, 
     })
   ],
   resolve: {
     alias: {
-      '@': pathResolve('./src')  // 确保别名配置正确
+      '@': pathResolve('./src')  // 确保别名配置正确 
     }
   },
   server:{

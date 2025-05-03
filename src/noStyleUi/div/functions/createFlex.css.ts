@@ -62,10 +62,12 @@ const actions:{[key:string]:Function} = {
 
 
 
-export function creatFlexCss(options:string,setClassName:setClassNameT,setStyle:setStyleT){
+export function creatFlexCss(options:string|string[]|boolean,setClassName:setClassNameT,setStyle:setStyleT){
     setClassName('flex',true)
-    
-    analysisProps(options,(propAndValue:string[])=>{
-      actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})
-    })
+    if(typeof options !== 'boolean'){
+      analysisProps(options,(propAndValue:string[])=>{
+        actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})
+      })
+    }
+
 }

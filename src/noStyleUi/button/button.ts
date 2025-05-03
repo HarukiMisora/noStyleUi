@@ -48,7 +48,7 @@ export const button = defineComponent({
     render(){
         
         const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props)
-        console.log(this.$props);
+        // console.log(this.$props);
         
         className['w-button'] = true 
         if(this.$props.type !=='none'){

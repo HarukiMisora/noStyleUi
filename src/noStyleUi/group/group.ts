@@ -43,7 +43,7 @@ export const group = defineComponent({
                 const flex =  matchArrAttToStr(<string|string[]>this.$props.flex,i.props?.flex)
                 const hover = TheHover + ' '+ (Array.isArray(i.props?.hover)?i.props?.hover.toString().replace(/,/g,' '):i.props?.hover)
                 // console.log(hover);
-                console.log(i.props);
+                // console.log(i.props);
                 
                 const styleString = Object.keys(i.props?.style||{}).map((item:string)=>`${camelToHyphen(item)}:${i.props?.style[item]}`).join(';')
 

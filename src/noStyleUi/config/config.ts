@@ -42,17 +42,17 @@ export const config:configT = {
         },
         grid:{
             type:[String,Array,Boolean],
-            default:undefined
+            default:false
         },
         hover:[String,Array],
 
         flex:{
             type:[String,Array,Boolean],
-            default:undefined
+            default:false
         },
         transition:{
             type:[String,Number,Boolean],
-            default:undefined
+            default:false
         }
     },
     buttonProps:{

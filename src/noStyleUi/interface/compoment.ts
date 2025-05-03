@@ -49,18 +49,18 @@ export interface configT{
         }
         grid:{
             type:[StringConstructor,ArrayConstructor,BooleanConstructor],
-            default:undefined
+            default:boolean
         }
 
         hover:[StringConstructor,ArrayConstructor]
 
         flex:{
             type:[StringConstructor,ArrayConstructor,BooleanConstructor],
-            default:undefined
+            default:boolean
         }
         transition:{
             type:[StringConstructor,NumberConstructor,BooleanConstructor],
-            default:undefined
+            default:boolean
         }
     }
     buttonProps:{
