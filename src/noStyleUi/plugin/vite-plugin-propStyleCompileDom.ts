@@ -43,7 +43,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
  
         const newCode = transformTemplate(code,(match)=>{
           logOut({match}); 
-          console.log('match=>',match);
+          // console.log('match=>',match);
           const ast:RootNode = parse(replaceHtmlEntities(match,entitys))
           eachTree(ast,(node)=>{
             const styles = {} as myCSSStyleDeclaration
