@@ -123,7 +123,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
                 
                 node.props.push({
                   type: 6,
-                  name:'style',
+                  name: nodeStyleName,
                   value: {
                     type: 2,
                     content: styleString, 
