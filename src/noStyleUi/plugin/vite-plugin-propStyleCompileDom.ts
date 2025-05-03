@@ -74,10 +74,13 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
                 if(allProps.includes(prop.name)){ 
                   
                   if(attributeGrop.includes(prop.name)){
+
                     createPixCss(prop.name,prop.value?.content,setClassName,setStyle)
                   }
                   else{
+
                     try{
+                      
                       createStyles[prop.name]?.(prop.value?.content||'',setClassName,setStyle) 
 
                     }catch(e){

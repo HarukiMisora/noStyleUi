@@ -16,9 +16,14 @@ const groupProps = {
 // }
 
 
-const matchArrAttToStr =(prop1?:string|string[],prop2?:string|string[])=>{
+const matchArrAttToStr =<T = string|string[],U = undefined>(prop1:T,prop2:T):U|string=>{
+    // console.log(prop1,prop2);
+    
     if(prop1==void 0&&prop2==void 0){
-        return void 0
+        return void 0 as U
+    }
+    if(prop1===false&&prop2===false){
+        return false as U
     }
     return (Array.isArray(prop1)?prop1.toString().replace(/,/g,' '):prop1!==void 0?prop1:'') + ' '
           +(Array.isArray(prop2)?prop2.toString().replace(/,/g,' '):prop2!==void 0?prop2:'')
@@ -40,22 +45,24 @@ export const group = defineComponent({
             for(let i of vNodes){
                 const bg =  matchArrAttToStr(<string|string[]>this.$props.bg,i.props?.bg)
                 const bd =  matchArrAttToStr(<string|string[]>this.$props.bd,i.props?.bd)
-                const flex =  matchArrAttToStr(<string|string[]>this.$props.flex,i.props?.flex)
+                const flex =  matchArrAttToStr(<string|string[]>this.$props.flex,i.props?.flex||false)
                 const hover = TheHover + ' '+ (Array.isArray(i.props?.hover)?i.props?.hover.toString().replace(/,/g,' '):i.props?.hover)
                 // console.log(hover);
                 // console.log(i.props);
+                // console.log(i.props?.style);
                 
                 const styleString = Object.keys(i.props?.style||{}).map((item:string)=>`${camelToHyphen(item)}:${i.props?.style[item]}`).join(';')
 
+                // console.log(this.$props.flex,i.props?.flex);
                 
                 i.props = {
                     ...this.$props,
                     ...cusProps,
                     ...i.props,
-                    bg,
+                    bg, 
                     bd,
                     flex:flex,
-                    class:i.props?.class + ' '+this.$props?._class,
+                    class:(i.props?.class||'') + ' '+(this.$props?._class||''),
                     style:styleString+';'+this.$props?._style,
                     hover,
                 }

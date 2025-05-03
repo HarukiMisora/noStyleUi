@@ -1,6 +1,8 @@
 
 <template>
-<w-li>
+<w-ul px="20">
+                <w-group pt="10">
+                    <w-li>
                         &lt;w-div&gt;&lt;/w-div&gt;
                     </w-li>
                     <w-li>
@@ -45,6 +47,9 @@
                     <w-li>
                         &lt;w-summary&gt;&lt;/w-summary&gt;
                     </w-li>
+                    <w-div>asd</w-div>
+                </w-group>
+            </w-ul>
 
 </template> 
 
