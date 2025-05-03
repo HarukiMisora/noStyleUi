@@ -1,55 +1,18 @@
 
 <template>
-<w-ul px="20">
-                <w-group pt="10">
-                    <w-li>
-                        &lt;w-div&gt;&lt;/w-div&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-span&gt;&lt;/w-span&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-p&gt;&lt;/w-p&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-a&gt;&lt;/w-a&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-h1&gt;&lt;/w-h1&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-img&gt;&lt;/w-img&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-ul&gt;&lt;/w-ul&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-ol&gt;&lt;/w-ol&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-li&gt;&lt;/w-li&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-canvas&gt;&lt;/w-canvas&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-video&gt;&lt;/w-video&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-tarck&gt;&lt;/w-tarck&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-meter&gt;&lt;/w-meter&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-details&gt;&lt;/w-details&gt;
-                    </w-li>
-                    <w-li>
-                        &lt;w-summary&gt;&lt;/w-summary&gt;
-                    </w-li>
-                    <w-div>asd</w-div>
-                </w-group>
-            </w-ul>
+                         <w-group radius="50%" w="100" h="100" flex="center" :bg="`${as.head} fill`" c="red">
+                          <div></div>
+                          <w-div>沉</w-div>
+
+                            <w-group>
+                                <w-div>沉</w-div>
+                                <w-div>鱼</w-div>
+                            </w-group>
+                            <w-group radius="25%"  :bg="['p-50']">
+                                <w-div>落</w-div>
+                                <w-div>雁</w-div>
+                            </w-group>
+                        </w-group>
 
 </template> 
 

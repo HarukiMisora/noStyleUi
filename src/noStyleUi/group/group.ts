@@ -30,6 +30,7 @@ const matchArrAttToStr =<T = string|string[],U = undefined>(prop1:T,prop2:T):U|s
 }
 
 export const group = defineComponent({
+    name: 'WGroup',
     props:groupProps,
     render(){
         // console.log(this.$props);
@@ -48,11 +49,12 @@ export const group = defineComponent({
                 const flex =  matchArrAttToStr(<string|string[]>this.$props.flex,i.props?.flex||false)
                 const hover = TheHover + ' '+ (Array.isArray(i.props?.hover)?i.props?.hover.toString().replace(/,/g,' '):i.props?.hover)
                 // console.log(hover);
-                // console.log(i.props);
+                // console.log(i.props,i,i.type.name);
                 // console.log(i.props?.style);
-                
-                const styleString = Object.keys(i.props?.style||{}).map((item:string)=>`${camelToHyphen(item)}:${i.props?.style[item]}`).join(';')
-
+                //ts-ignore
+                const isGroup = (i.type as { name?: string })?.name === 'WGroup'
+                const styleString = this.$props?._style+';'+(isGroup?i.props?._style:Object.keys(i.props?.style||{}).map((item:string)=>`${camelToHyphen(item)}:${i.props?.style[item]}`).join(';'))
+                const classString = ((isGroup?i.props?._class:i.props?.class)||'') + ' '+(this.$props?._class||'')
                 // console.log(this.$props.flex,i.props?.flex);
                 
                 i.props = {
@@ -61,14 +63,25 @@ export const group = defineComponent({
                     ...i.props,
                     bg, 
                     bd,
-                    flex:flex,
-                    class:(i.props?.class||'') + ' '+(this.$props?._class||''),
-                    style:styleString+';'+this.$props?._style,
+                    flex:flex||void 0,
+                    class:classString,
+                    _class:classString,
+                    style:styleString,
+                    _style:styleString,
                     hover,
                 }
                 delete i.props?.cusProps
-                delete i.props?._class
-                delete i.props?._style
+                if(!isGroup){
+                    delete i.props?._class
+                    delete i.props?._style
+                }else{
+                    delete i.props?.class
+                    delete i.props?.style
+                    // console.log(i.props,'卧槽');
+
+                }
+                
+  
             }
         }
 
