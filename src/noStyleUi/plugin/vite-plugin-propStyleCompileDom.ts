@@ -41,9 +41,9 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
         
    
  
-        const newCode = transformTemplate(code,(match)=>{
+        const newCode = transformTemplate(code,(match)=>{  
           logOut({match}); 
-          // console.log('match=>',match);
+          console.log('match=>',match);  
           const ast:RootNode = parse(replaceHtmlEntities(match,entitys))
           eachTree(ast,(node)=>{
             const styles = {} as myCSSStyleDeclaration
@@ -145,7 +145,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
              
 
           },logOut)
-          const newTmeplate = generateTemplate(ast).replace(/@→_→_a_m_p_amp_AMP_←_←_0_0_X_X@/g,'&')
+          const newTmeplate = generateTemplate(ast)
           logOut({newTmeplate},'--------------------------------------');
 
           return newTmeplate
@@ -154,7 +154,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
         // console.log({[id]:newCode},'------------------------------------------------------------');
         
         return {
-          code:newCode,
+          code:restoreEscape(newCode),
           // map:id
         };
       }
@@ -162,47 +162,63 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
   }
 }
 
-
 //匹配template标签
 function transformTemplate(html: string,after:(match:string)=>string){//,attrs:string,content:string)=>string) {
-  return html.replace(
-    /<template>[\s\S]*<\/template>/,
+  // 对script标签里面的template标签进行转义
+  return html.replace(/<script[\s\S]*<\/script>/g,(match)=>{
+    return setEscape(setEscape(match,'<template','template'),'</template','templateEnd')
+  }).replace(
+    /<template[\s\S]*<\/template>/g,
     (_match) => { 
-
       return after(_match)//, attrs, content) 
     } 
   )
 }
+//用到的转义
+const usedEscape: {[key:string]:string} = {}
+//设置转义
+function setEscape(text:string,target:string,escapeChar:string){
+  usedEscape[target] = escapeChar
+  return text.replace(new RegExp(target,'g'),`@→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X@`)
+}
+//还原转义
+function restoreEscape(text: string){
 
+  for(let key in usedEscape){
+    const escapeChar = usedEscape[key]
+    text = text.replace(new RegExp(`@→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X@`,'g'),key)
+  }
+  return text
+}
+//处理HTML实体字符,(因为我将 @vue/compiler-dom 的代码一并打包进到主文件里面去了，而 @vue/compiler-dom 在经过代码压缩之后，会无法正确处理HTML实体字符，导致我的插件在其它项目里无法正常工作，所以这里需要我自己手动去处理一下)
+function replaceHtmlEntities(str:string,entities:entityType[] = []) {
+  const entityMap:{[key in entityType]:string} = {
+    'nbsp': '\u00A0', // 不间断空格
+    'lt': '<',
+    '#39': "'", 
+    "amp":"&",
+    "gt": ">",
+    "quot": '"',
+    "copy": "\u00A9",
+    "reg": "\u00AE",
+    "trade": "\u2122",
+    "times": "\u00D7",
+    "divide": "\u00F7"
+  };
 
-// function transformTemplate(html: string, after: (match: string) => string) {
-//   let depth = 0;
-//   let result = '';
-//   let startIndex = -1;
-//   // console.log({html});
+  // 只处理 entities 数组中存在的实体
+  const filteredEntities = entities.filter(entity => entity in entityMap);
+  if (filteredEntities.length === 0) return str; // 如果没有有效实体，直接返回原字符串
+
+  // 动态构建正则表达式，匹配 &实体; 或 &实体
+  const regex = new RegExp(`&(${filteredEntities.join('|')});?`, 'g');
   
-//   for (let i = 0; i < html.length; i++) {
-    
-//     if (html.substr(i, 9) === '<template') {
-//       if (depth === 0) {
-//         startIndex = i; // 记录最外层 <template 的开始位置
-//       }
-//       depth++;
-//     } else if (html.substr(i, 11) === '</template>') {
-//       depth--;
-//       if (depth === 0 && startIndex !== -1) {
-//         // 找到匹配的最外层 </template>
-//         const endIndex = i + 11; // `</template>` 的结束位置
-//         const templateContent = html.slice(startIndex, endIndex);
-//         result += after(templateContent);
-//         startIndex = -1; 
-//       }
-//     }
-//   }
-  
+  return setEscape(str.replace(regex, (match, entity:entityType) => {
+    return entityMap[entity] || match;
+  }),'&','amp')
+}
 
-//   return after(result);
-// }
+
 //遍历ast树
 function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,logOut:any){
   if(node.children){
@@ -217,45 +233,6 @@ function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,log
   }
 }
 
-
-//获取要解析的属性
-const allProps = Object.keys(config.props).filter(item=>item!=='hover')
-//生成样式函数
-const createStyles:{[key:string]:Function} = {
-  grid:createGridCss,
-  bg:createBgCss,
-  c:createFontColorCss,
-  flex:creatFlexCss,
-  bd:createBdCss,
-  transition:createTransition
-}
-const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
-const attributeGropStyle: Pxs = {
-  w:'width',
-  h:'height',
-  x:'x',
-  y:'y',
-  f:'font-size',
-  fw:'font-weight',
-  radius:'border-radius',
-  p:'padding',
-  pt:'padding-top',
-  pb:'padding-bottom',
-  pl:'padding-left',
-  pr:'padding-right',
-  px:'padding',
-  py:'padding',
-  
-  m:'margin',
-  mt:'margin-top',
-  mb:'margin-bottom',
-  ml:'margin-left',
-  mr:'margin-right',
-  mx:'margin',
-  my:'margin',
-
-  
-}
 // 重建模板字符串
 function generateTemplate(ast: any): string {
   if (!ast || !ast.children) return '';
@@ -379,37 +356,51 @@ function generateTemplate(ast: any): string {
   return result;
 }
 
+
+//获取要解析的属性
+const allProps = Object.keys(config.props).filter(item=>item!=='hover')
+//生成样式函数
+const createStyles:{[key:string]:Function} = {
+  grid:createGridCss,
+  bg:createBgCss,
+  c:createFontColorCss,
+  flex:creatFlexCss,
+  bd:createBdCss,
+  transition:createTransition
+}
+
+
+
+
+const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
+const attributeGropStyle: Pxs = {
+  w:'width',
+  h:'height',
+  x:'x',
+  y:'y',
+  f:'font-size',
+  fw:'font-weight',
+  radius:'border-radius',
+  p:'padding',
+  pt:'padding-top',
+  pb:'padding-bottom',
+  pl:'padding-left',
+  pr:'padding-right',
+  px:'padding',
+  py:'padding',
+  
+  m:'margin',
+  mt:'margin-top',
+  mb:'margin-bottom',
+  ml:'margin-left',
+  mr:'margin-right',
+  mx:'margin',
+  my:'margin',
+
+  
+}
+
 //下划线(node环境下)
 function underline(text: string): string {
   return `\x1b[4m${text}\x1b[0m`;
 }
-
-//处理HTML实体字符,(因为我将 @vue/compiler-dom 的代码一并打包进到主文件里面去了，而 @vue/compiler-dom 在经过代码压缩之后，会无法正确处理HTML实体字符，导致我的插件在其它项目里无法正常工作，所以这里需要我自己手动去处理一下)
-function replaceHtmlEntities(str:string,entities:entityType[] = []) {
-  const entityMap:{[key in entityType]:string} = {
-    'nbsp': '\u00A0', // 不间断空格
-    'lt': '<',
-    '#39': "'", 
-    "amp":"&",
-    "gt": ">",
-    "quot": '"',
-    "copy": "\u00A9",
-    "reg": "\u00AE",
-    "trade": "\u2122",
-    "times": "\u00D7",
-    "divide": "\u00F7"
-  };
-
-  // 只处理 entities 数组中存在的实体
-  const filteredEntities = entities.filter(entity => entity in entityMap);
-  if (filteredEntities.length === 0) return str; // 如果没有有效实体，直接返回原字符串
-
-  // 动态构建正则表达式，匹配 &实体; 或 &实体
-  const regex = new RegExp(`&(${filteredEntities.join('|')});?`, 'g');
-  
-  
-  return str.replace(regex, (match, entity:entityType) => {
-    return entityMap[entity] || match;
-  }).replace(/&/g,'@→_→_a_m_p_amp_AMP_←_←_0_0_X_X@');
-}
-
