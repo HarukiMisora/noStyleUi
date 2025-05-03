@@ -47,7 +47,8 @@ export const group = defineComponent({
                 const bg =  matchArrAttToStr(<string|string[]>this.$props.bg,i.props?.bg)
                 const bd =  matchArrAttToStr(<string|string[]>this.$props.bd,i.props?.bd)
                 const flex =  matchArrAttToStr(<string|string[]>this.$props.flex,i.props?.flex||false)
-                const hover = TheHover + ' '+ (Array.isArray(i.props?.hover)?i.props?.hover.toString().replace(/,/g,' '):i.props?.hover)
+                const grid =  matchArrAttToStr(<string|string[]>this.$props.grid,i.props?.grid||false)
+                const hover = (TheHover||'') + ' '+ ((Array.isArray(i.props?.hover)?i.props?.hover.toString().replace(/,/g,' '):i.props?.hover)||'')
                 // console.log(hover);
                 // console.log(i.props,i,i.type.name);
                 // console.log(i.props?.style);
@@ -64,11 +65,15 @@ export const group = defineComponent({
                     bg, 
                     bd,
                     flex:flex||void 0,
+                    grid:grid||void 0,
                     class:classString,
                     _class:classString,
                     style:styleString,
                     _style:styleString,
-                    hover,
+                    hover:hover === ' '?void 0:hover,
+                }
+                if(!i.transition){
+                    delete i.props?.transition
                 }
                 delete i.props?.cusProps
                 if(!isGroup){
@@ -78,7 +83,6 @@ export const group = defineComponent({
                     delete i.props?.class
                     delete i.props?.style
                     // console.log(i.props,'卧槽');
-
                 }
                 
   
