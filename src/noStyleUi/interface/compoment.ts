@@ -62,6 +62,10 @@ export interface configT{
             type:[StringConstructor,NumberConstructor,BooleanConstructor],
             default:boolean
         }
+        position:{
+            type:[StringConstructor,ArrayConstructor]
+            default:undefined
+        }
     }
     buttonProps:{
         type:{

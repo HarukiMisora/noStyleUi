@@ -1,7 +1,7 @@
 
 
 export type keyofCSSStyleDeclaration =keyof Omit<CSSStyleDeclaration, 'length'|'parentRule'>
-export type valueOfCSSStyleDeclaration = string|undefined
+export type valueOfCSSStyleDeclaration = string|undefined|number
 export type myCSSStyleDeclaration = {
     [key in keyofCSSStyleDeclaration]: valueOfCSSStyleDeclaration
 }
@@ -47,3 +47,6 @@ export interface Pxs {
   mb:string,
   radius:string
 }
+
+
+export type CreateCssFunT = (prop:string|string[],setClassName:setClassNameT,stetStyle:setStyleT)=>void 

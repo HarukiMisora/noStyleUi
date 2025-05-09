@@ -72,9 +72,11 @@ export const group = defineComponent({
                     _style:styleString,
                     hover:hover === ' '?void 0:hover,
                 }
-                if(!i.transition){
-                    delete i.props?.transition
-                }
+                // console.log(i.transition);
+                
+                // if(!i.transition){
+                //     delete i.props?.transition
+                // }
                 delete i.props?.cusProps
                 if(!isGroup){
                     delete i.props?._class

@@ -1,19 +1,18 @@
 
 <template>
-                         <w-group radius="50%" w="100" h="100" flex="center" :bg="`${as.head} fill`" c="red">
-                          <div></div>
-                          <w-div>沉</w-div>
+<w-group radius="50%" w="100" h="100" flex="center" :bg="`${as.head} fill`" c="red">
+    
+  <w-div>沉</w-div>
 
-                            <w-group>
-                                <w-div>沉</w-div>
-                                <w-div>鱼</w-div>
-                            </w-group>
-                            <w-group radius="25%"  :bg="['p-50']">
-                                <w-div>落</w-div>
-                                <w-div>雁</w-div>
-                            </w-group>
-                        </w-group>
-
+    <w-group>
+        <w-div>沉</w-div>
+        <w-div>鱼</w-div>
+    </w-group>
+    <w-group radius="25%"  :bg="['p-50']" transition="all 0.5s ease-in-out">
+        <w-div position="rel l-50">落</w-div>
+        <w-div  transition="all .5s ease" :position="`abs r-100 b-${bottom}`">雁</w-div>
+    </w-group>  
+</w-group>
 </template> 
 
 
@@ -21,7 +20,7 @@
 import {Accessibility} from '@vicons/ionicons5'
 import { ref } from 'vue'
 let urls:string ='https://www.iamwzc.com/TMXK/noStyleUiDoc/head.png'
-
+const bottom = ref(100)
 const as ={
   head:urls
 }

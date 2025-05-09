@@ -26,10 +26,11 @@ interface PluginOptions {
 
 export default function propStyleCompile(options:PluginOptions={}):Plugin{ 
   const justForBuild = options.justForBuild || false;
+  if(justForBuild)return {name:'prop-style-compile'}
   const logOut = options.debug? (options.log || console.log):()=>{}
   const WGroupNames = [...(options.wGroupSpecialName || []),'w-group','WGroup','wGroup'];
   // const entitys = (options.entity === 'all'? <entityType[]>['nbsp','lt','gt','quot','#39','amp','copy','reg','trade','times','divide']:options.entity) || []
-
+  
   return {
     name: 'prop-style-compile',
     enforce: 'pre',
@@ -345,7 +346,7 @@ const createStyles:{[key:string]:Function} = {
   c:createFontColorCss,
   flex:creatFlexCss,
   bd:createBdCss,
-  transition:createTransition
+  transition:createTransition,
 }
 
 

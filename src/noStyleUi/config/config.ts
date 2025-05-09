@@ -53,6 +53,10 @@ export const config:configT = {
         transition:{
             type:[String,Number,Boolean],
             default:false
+        },
+        position:{
+            type:[String,Array],
+            default:undefined
         }
     },
     buttonProps:{

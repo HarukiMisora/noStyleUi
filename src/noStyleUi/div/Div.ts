@@ -11,6 +11,7 @@ import { createBdCss } from './functions/createBd.css'
 import { createTransition } from './functions/createTransition'
 import type {  myCSSStyleDeclaration, Pxs, setClassNameT, setStyleT } from '../interface/css'
 import createPixCss from './functions/createPix.css'
+import createPositionCss from './functions/createPosition.css'
 
 
 const styleProps = {
@@ -69,6 +70,10 @@ export function renderHelper(props:PropT){
     checkProp(<string|boolean|number>props.transition,createTransition,(prop)=>prop !== false)
     //hover属性集
     checkProp(<string|string[]>props.hover,(prop)=>createHoverCss(prop,setHoverClassName,setHoverStyle))
+    //position属性集
+    console.log(props.transition);
+    
+    checkProp(<string>props.position,createPositionCss)
 
 
 

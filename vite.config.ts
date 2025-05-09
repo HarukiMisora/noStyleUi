@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     propStyleCompile({    
       debug: false,  
-      justForBuild: false, 
+      justForBuild: true, 
       // entity:'all'
     })
   ],
