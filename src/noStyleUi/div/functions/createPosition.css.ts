@@ -29,6 +29,9 @@ const actions:{[key:string]:Function} = {
   abs:({setStyle}:{setStyle:setStyleT})=>{
     setStyle('position','absolute')
   },
+  fixed:({setStyle}:{setStyle:setStyleT})=>{
+    setStyle('position','fixed')
+  }
 }
 
 export { createPositionCss as default }

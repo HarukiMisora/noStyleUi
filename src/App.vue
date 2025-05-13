@@ -9,9 +9,9 @@
         <w-div>鱼</w-div>
     </w-group>
     <w-group radius="25%"  :bg="['p-50']" transition="all 0.5s ease-in-out">
-        <w-div position="rel l-50">落</w-div>
-        <w-div  transition="all .5s ease" :position="`abs r-100 b-${bottom}`">雁</w-div>
-    </w-group>  
+        <w-div position="rel l-50 t-150">落</w-div>
+        <w-div  transition="all .5s ease" :position="`fixed r-100 b-${bottom}`">雁</w-div>
+    </w-group>
 </w-group>
 </template> 
 
