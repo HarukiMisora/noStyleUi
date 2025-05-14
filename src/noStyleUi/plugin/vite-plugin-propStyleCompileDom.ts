@@ -186,10 +186,10 @@ function transformTemplate(html: string,after:(match:string)=>string){//,attrs:s
 //用到的转义
 const usedEscape: {[key:string]:string} = {}
 //设置转义
-function setEscape(text:string,target:string,escapeChar:string){
-  usedEscape[target] = escapeChar
-  return text.replace(new RegExp(target,'g'),`{→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X}`)
-}
+// function setEscape(text:string,target:string,escapeChar:string){
+//   usedEscape[target] = escapeChar
+//   return text.replace(new RegExp(target,'g'),`{→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X}`)
+// }
 //批量设置转义
 function setEscapeArr(text:string,target:{key:string,escapeChart:string}[]){
   // const temp:{[key:string]:string} = {}
@@ -215,9 +215,9 @@ function restoreEscape(text: string){
 /*处理HTML实体字符,(经过打包代码压缩之后，导致我的插件在其它项目用到实体字符的地方无法正常工作，所以这里需要我自己手动去处理一下)
   我这里不能去处理实体字符，不然会有更严重的问题，所以我将实体字符的关键符号 & 换成了自己的转义符。
 */
-function replaceHtmlEntities(str:string) {
-  return setEscape(str,'&','amp')
-}
+// function replaceHtmlEntities(str:string) {
+//   return setEscape(str,'&','amp')
+// }
 
 
 //遍历ast树
