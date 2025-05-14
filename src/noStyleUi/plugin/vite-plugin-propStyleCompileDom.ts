@@ -12,6 +12,7 @@ import { createTransition } from '../div/functions/createTransition';
 import { config } from '../config/config';
 import { camelToHyphen } from '../untils';
 import createPixCss from '../div/functions/createPix.css';
+import createPositionCss from '../div/functions/createPosition.css';
 // type entityType = 'nbsp'|'lt'|'gt'|'quot'|'#39'|'amp'|'copy'|'reg'|'trade'|'times'|'divide'
 interface PluginOptions {
   justForBuild?: boolean; // 仅在构建时生效
@@ -44,9 +45,9 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
    
  
         const newCode = transformTemplate(code,(match)=>{  
-          logOut({match}); 
+          logOut({match},'卧槽'); 
           // console.log('match=>',match);  
-          const ast:RootNode = parse(replaceHtmlEntities(match))
+          const ast:RootNode = parse(match)
           eachTree(ast,(node)=>{
             const styles = {} as myCSSStyleDeclaration
             const className:{[key:string]:Boolean} ={}
@@ -167,11 +168,18 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
 function transformTemplate(html: string,after:(match:string)=>string){//,attrs:string,content:string)=>string) {
   // 对script标签里面的template标签进行转义
   return html.replace(/<script[\s\S]*<\/script>/g,(match)=>{
-    return setEscape(setEscape(match,'<template','template'),'</template','templateEnd')
+    return setEscapeArr(match,[
+      {key:'<template',escapeChart:'template'},
+      {key:'</template',escapeChart:'templateEnd'},
+    ])
+    // return setEscape(setEscape(match,'<template','template'),'</template','templateEnd')
   }).replace(
     /<template[\s\S]*<\/template>/g,
-    (_match) => { 
-      return after(_match)//, attrs, content) 
+    (match) => { 
+      return after(setEscapeArr(match,[
+        {key:'&',escapeChart:'AMT'},
+        {key:'@',escapeChart:'AT'}
+      ]))//, attrs, content) 
     } 
   )
 }
@@ -180,13 +188,26 @@ const usedEscape: {[key:string]:string} = {}
 //设置转义
 function setEscape(text:string,target:string,escapeChar:string){
   usedEscape[target] = escapeChar
-  return text.replace(new RegExp(target,'g'),`@→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X@`)
+  return text.replace(new RegExp(target,'g'),`{→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X}`)
+}
+//批量设置转义
+function setEscapeArr(text:string,target:{key:string,escapeChart:string}[]){
+  // const temp:{[key:string]:string} = {}
+  const test = new RegExp(target.map((item)=>{
+    // temp[item.key] = item.escapeChart
+    usedEscape[item.key] = item.escapeChart
+    return item.key
+  }).join('|'),'g')
+  return text.replace(test,(match)=>{
+    const escapeChar = usedEscape[match]
+    return `{→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X}`
+  })
 }
 //还原转义
 function restoreEscape(text: string){
   for(let key in usedEscape){
     const escapeChar = usedEscape[key]
-    text = text.replace(new RegExp(`@→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X@`,'g'),key)
+    text = text.replace(new RegExp(`{→_→_PropStyle_${escapeChar.toLowerCase()}_${escapeChar.toUpperCase()}_←_←_0_0_X_X}`,'g'),key)
   }
   return text
 }
@@ -347,6 +368,7 @@ const createStyles:{[key:string]:Function} = {
   flex:creatFlexCss,
   bd:createBdCss,
   transition:createTransition,
+  position:createPositionCss
 }
 
 
