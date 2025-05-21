@@ -71,7 +71,7 @@ export function renderHelper(props:PropT){
     //hover属性集
     checkProp(<string|string[]>props.hover,(prop)=>createHoverCss(prop,setHoverClassName,setHoverStyle))
     //position属性集
-    console.log(props.transition);
+    // console.log(props.transition);
     
     checkProp(<string>props.position,createPositionCss)
 

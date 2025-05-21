@@ -31,6 +31,21 @@ const actions:{[key:string]:Function} = {
   },
   fixed:({setStyle}:{setStyle:setStyleT})=>{
     setStyle('position','fixed')
+  },
+  sty:({setStyle}:{setStyle:setStyleT})=>{
+    setStyle('position','sticky')
+  },
+  stc:({setStyle}:{setStyle:setStyleT})=>{
+    setStyle('position','static')
+  },
+  sticky:({setStyle}:{setStyle:setStyleT})=>{
+    setStyle('position','sticky')
+  },
+  static:({setStyle}:{setStyle:setStyleT})=>{
+    setStyle('position','static')
+  },
+  z:({setStyle,value}:styleWithValuesT)=>{
+    setStyle('zIndex',value[1])
   }
 }
 
