@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [ 
     vue(),
     propStyleCompile({    
-      debug: true,  
+      debug: false,  
       justForBuild: false, 
       // entity:'all'
     })

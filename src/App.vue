@@ -1,34 +1,41 @@
 
 <template>
-<w-group radius="50%" w="100" h="100" flex="center" :bg="`${as.head} fill`" c="red">
-    
-  <w-div>沉</w-div>
 
-    <w-group>
-        <w-div>沉</w-div>
-        <w-div>鱼</w-div>
-    </w-group>
-    <w-group radius="25%"  :bg="['p-50']" transition="all 0.5s ease-in-out">
-        <w-div @click="asd"  position="rel l-50 t-150">落&nbsp;& </w-div>
-        <w-div  transition="all .5s ease" :position="`fixed r-100 b-${bottom}`">雁</w-div>
-    </w-group>
-</w-group>
+<w-div :flex="test">
+  <w-group w="100" h="100" c="red" bg="center" >
+    <w-div :bg="`${as.img}`" >引入public目录下的图片</w-div>
+    <w-div :bg="`${as.img}`">引入组件相对路径的图片</w-div>
+    <w-div :bg="img" transition>
+      变量名动态引入
+      <w-div  :flex="['j-around']" pt="20">
+        <w-button type="success" @click="img=as.img">图1</w-button>
+        <w-button type="success" @click="img=as.head">图2</w-button>
+      </w-div>
+    </w-div>
+  </w-group>
+</w-div>
 </template> 
 
 
 <script setup lang="ts">
 import {Accessibility} from '@vicons/ionicons5'
 import { ref } from 'vue'
+const test = ref('center')
 let urls:string ='https://www.iamwzc.com/TMXK/noStyleUiDoc/head.png'
+const img = ref(urls)
 const bottom = ref(100)
 const as ={
-  head:urls
+  head:urls,
+  img:'https://www.iamwzc.com/TMXK/noStyleUiDoc/img.png'
 }
 const asd = ()=>{
   console.log('卧槽？');
   
 }
 const color = ref('<template>123</template>')
+
+const min = ref('10')
+const max = ref('')
 </script>
 
 
@@ -52,5 +59,10 @@ const color = ref('<template>123</template>')
   //   width: 0;
   // }
 }
+
+</style>
+
+
+<style lang="scss">
 
 </style>

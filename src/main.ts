@@ -5,7 +5,7 @@ import App from './App.vue'
 
 
 import {propStyle} from './index'
-import './noStyleUi/div/style/css.scss'
+// import '/dist/noStyleUi.css'
 
 
 
