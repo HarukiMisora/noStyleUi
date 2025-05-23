@@ -11,7 +11,7 @@ const actions:{[key:string]:Function} = {
     const maxW = value[3]==='w'?value[2]:analysisPxs(value[3],'1fr')
     // console.log(col,w,maxW);
     
-    setStyle("gridTemplateColumns",`repeat(${col},minmax(${w},${maxW})`)
+    setStyle("gridTemplateColumns",`repeat(${col},minmax(${w},${maxW}))`)
   },
   row:({setStyle,value}:styleWithValuesT)=>{
     const row = value[1]&&value[1]!== 'auto'?value[1]:'auto-fit'
@@ -20,7 +20,7 @@ const actions:{[key:string]:Function} = {
     if(row === 'auto-fit'){
       setStyle("gridAutoRows",`minmax(${h},${maxH})`)
     }else{
-      setStyle("gridTemplateRows",`repeat(${row},minmax(${h},${maxH})`)
+      setStyle("gridTemplateRows",`repeat(${row},minmax(${h},${maxH}))`)
     }
   },
   g:({setClassName,value}:classNameWithValuesT)=>{
