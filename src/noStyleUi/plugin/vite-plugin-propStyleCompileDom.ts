@@ -67,11 +67,15 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
               if (cssModule) {
                 // 清除模块缓存
                 server.moduleGraph.invalidateModule(cssModule);
-                // 触发浏览器更新
+
+                // 触发浏览器热更新
                 server.ws.send({
-                  type: 'full-reload',
-                  path: '*'
+                  type: 'custom',
+                  path: VIRTUAL_CSS_ID,
+                  event: 'css-update',
+                  data: { timestamp: Date.now() }
                 });
+
               }
             }
             // processedFiles.add(id); 

@@ -2,6 +2,7 @@
 import { WButton, WDiv, WSpan,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index.ts'
 import {vUpdate} from './noStyleUi/directive/update'
 import propStyleCompile from './noStyleUi/plugin/vite-plugin-propStyleCompileDom'
+export {useClass} from './noStyleUi/plugin/use'
 export {
     div as WDiv,
     span as WSpan,

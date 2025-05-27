@@ -1,14 +1,14 @@
 
 <template>
 
-<w-div :flex="test">
+<w-div :flex="test" :bg="'#000'" hover="bg=#fff" @click="test='right'"    >
   <w-group w="100" h="100" c="red" bg="center" >
     <w-div :bg="`${as.img}`" >引入public目录下的图片</w-div>
     <w-div :bg="`${as.img}`">引入组件相对路径的图片</w-div>
     <w-div :bg="img" transition>
       变量名动态引入
       <w-div  :flex="['j-around']" pt="20">
-        <w-button type="success" @click="img=as.img">图1</w-button>
+        <w-button type="success" @click="img=as.img">图1</w-button> 
         <w-button type="success" @click="img=as.head">图2</w-button>
       </w-div>
     </w-div>
@@ -20,7 +20,14 @@
 <script setup lang="ts">
 import {Accessibility} from '@vicons/ionicons5'
 import { ref } from 'vue'
-const test = ref('center')
+import { useClass } from './interface'
+
+
+
+const test = ref(useClass('flex','center')) 
+
+
+
 let urls:string ='https://www.iamwzc.com/TMXK/noStyleUiDoc/head.png'
 const img = ref(urls)
 const bottom = ref(100)
@@ -43,7 +50,7 @@ const max = ref('')
 <style scoped lang="scss">
 .test{
   // width: 100vw;
-  height: 100vh;
+  height: 10vh;
   overflow: scroll;
   // display: grid;
   // grid-gap: 20px;

@@ -1,5 +1,5 @@
 import {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index'
-export {propStyle,propStyleCompile} from './index'
+export {propStyle,propStyleCompile,useClass} from './index'
 declare module 'vue'{
     export interface GlobalComponents{
         WDiv:typeof WDiv
