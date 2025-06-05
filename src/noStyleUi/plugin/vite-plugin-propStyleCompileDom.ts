@@ -1,10 +1,11 @@
 
 
 import type { Plugin } from 'vite';
+import fs from 'fs';
 import type { myCSSStyleDeclaration } from '../interface/css';
 import { compieCore } from './compieCore';
 import compileCss from './cpmpieCss';
-
+import compiePre from './compiePre';
 // type entityType = 'nbsp'|'lt'|'gt'|'quot'|'#39'|'amp'|'copy'|'reg'|'trade'|'times'|'divide'
 interface PluginOptions {
   justForBuild?: boolean; // 仅在构建时生效
@@ -12,8 +13,9 @@ interface PluginOptions {
   debug?: boolean; // 调试模式
   log?:(...args:any[])=>void // 日志函数 
   indexFile?:(url:string)=>boolean // 入口文件
+  includePath?:string[] // 包含的目录
+  excludePath?:string[] // 排除的目录
 }
-
 
 
 export default function propStyleCompile(options:PluginOptions={}):Plugin{ 
@@ -23,23 +25,26 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
   const WGroupNames = [...(options.wGroupSpecialName || []),'w-group','WGroup','wGroup'];
   const indexFile = options.indexFile || function (url){return url.includes('src/main.')};
   const injectedCSS = [] as {key:string,value:myCSSStyleDeclaration}[]
-
-  const VIRTUAL_CSS_ID = 'virtual:prop-style-compile-css';
-  const RESOLVED_VIRTUAL_CSS_ID = '\0' + VIRTUAL_CSS_ID; 
-  let globalCSS = '';
+  const includePath = options.includePath || ['src/'];
+  const excludePath = options.excludePath || [];
+  const VIRTUAL_CSS_ID = 'virtual:prop-style-compile-css'
+  let RESOLVED_VIRTUAL_CSS_ID = '\0' + VIRTUAL_CSS_ID; 
+  //扫描.vue文件，收集所有组件的style，并返回style和新的code
+  let {globalCSS,newCodes} = compiePre(includePath,excludePath,WGroupNames); 
   let server = null as any; // 保存 ViteDevServer 实例
   return {
     name: 'prop-style-compile',
     enforce: 'pre',
+ 
     configureServer(ser) {
+      
       server = ser; // 保存 ViteDevServer 实例
     },
     resolveId(id) {
       if (id === VIRTUAL_CSS_ID || id === RESOLVED_VIRTUAL_CSS_ID) return RESOLVED_VIRTUAL_CSS_ID+'.css';
     },
     load(id) {
-      if (id.startsWith(RESOLVED_VIRTUAL_CSS_ID)) {
-        // console.log('[CSS CONTENT]', globalCSS); 
+      if (id.startsWith(RESOLVED_VIRTUAL_CSS_ID)) { 
         return {
           code: globalCSS,  
           map: null,
@@ -47,58 +52,54 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
           meta: { vite: { isCSS: true } }
         };
       }
-    },
-    async transform(code, id) {
-      // console.log('正在处理',id);
-      if(indexFile(id)){
-        // console.log('indexFile\n',code.split('\r\n'));
-        return `import '${VIRTUAL_CSS_ID}';\r\n${code}`;
+    }, 
+    transform(code, id) {
+      // 入口文件处理
+      if (indexFile(id)) {
+        return `import '${VIRTUAL_CSS_ID}';\n${code}`;
       }
-      if (id.endsWith('.vue')&&!justForBuild) { 
-          const newCode = compieCore({code,WGroupNames,injectedCSS});
-          const css = compileCss(injectedCSS);
-          console.log(injectedCSS,css);
-          if (css) {
-            globalCSS += css + '\n'; 
-            // 更新样式
-            const module = await this.resolve(VIRTUAL_CSS_ID);
-            if (module) {
-              const cssModule = await server.moduleGraph.getModuleById(module.id);
-              if (cssModule) {
-                // 清除模块缓存
-                server.moduleGraph.invalidateModule(cssModule);
-
-                // 触发浏览器热更新
-                server.ws.send({
-                  type: 'custom',
-                  path: VIRTUAL_CSS_ID,
-                  event: 'css-update',
-                  data: { timestamp: Date.now() }
-                });
-
-              }
-            }
-            // processedFiles.add(id); 
-          } 
-          
-        return {
-          code:newCode,
-          // map:id
-        };
+      
+      // Vue 文件处理
+      if (id.endsWith('.vue')) {
+        const normalizedId = id.replace(/\\/g, '/');
+        if (newCodes[normalizedId]) {
+          return { code: newCodes[normalizedId], map: null };
+        }
       }
+      
+      return code;
     },
-    handleHotUpdate(ctx) {
-      globalCSS = '';
-      injectedCSS.length = 0;
-      if (ctx.file.endsWith('.vue')) {
-        ctx.server.ws.send({
-          type: 'custom',
-          event: 'css-update',
-          data: { timestamp: Date.now() }
+    
+    handleHotUpdate({ file, server }) {
+      if (!file.endsWith('.vue')) return;
+      globalCSS = ''
+      console.log(`[prop-style-compile] File changed: ${file}`);
+      
+      // 重新编译
+      const result = compiePre(includePath, excludePath, WGroupNames);
+      globalCSS = result.globalCSS;
+      newCodes = result.newCodes;
+      
+      // 处理虚拟模块更新
+      const virtualModule = server.moduleGraph.getModuleById(RESOLVED_VIRTUAL_CSS_ID+'.css'); 
+      const modulesToUpdate = [];
+      console.log({virtualModule,globalCSS});
+      
+      if (virtualModule) {
+        server.moduleGraph.invalidateModule(virtualModule);
+        modulesToUpdate.push(virtualModule);
+      }
+      
+      // 使所有依赖虚拟模块的模块失效
+      if (virtualModule) {
+        virtualModule.importers.forEach(importer => {
+          server.moduleGraph.invalidateModule(importer);
+          modulesToUpdate.push(importer);
         });
       }
+      
+      return modulesToUpdate;
     }
-
   }
 }
 

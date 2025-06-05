@@ -58,7 +58,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
             styleIndex = prop.name === nodeStyleName? i:styleIndex 
             if(allProps.includes(prop.name)){ 
               const setStyle:setStyleT = (name,value) =>{
-                console.log({name,value},'style');
+                // console.log({name,value},'style');
                 // const item = {key:name,value:{
                 //   [name]:value
                 // }} as myCSSStyleDeclaration
@@ -96,7 +96,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
                   createStyles[prop.name]?.(prop.value?.content||'',setClassName,setStyle) 
 
                 }catch(e){
-                  console.log(e);
+                  // console.log(e);
                   
                   const sourceLine = node.loc.source.split('\n')[0]
                   const start = prop.loc.start.column-prop.name.length
@@ -158,7 +158,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         
           
 
-      },console.log)
+      },()=>{})
       const newTmeplate = generateTemplate(ast)
       // logOut({newTmeplate},'--------------------------------------');
 
@@ -186,13 +186,13 @@ function transformTemplate(html: string,after:(match:string)=>string){//,attrs:s
     } 
   )
 }
-
+ 
 //遍历ast树
 function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,logOut:any){
   if(node.children){
     for(let i=0;i<node.children.length;i++){
       if(node.children[i].type === 1){
-        logOut('\nnode=>'+i,node.children[i].tag);
+        // logOut('\nnode=>'+i,node.children[i].tag);
         
         callback(node.children[i],i,node)
         eachTree(node.children[i],callback,logOut)

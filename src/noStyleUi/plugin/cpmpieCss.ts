@@ -1,7 +1,5 @@
-import type { myCSSStyleDeclaration,keyofCSSStyleDeclaration } from "../interface/css";
 import { camelToHyphen } from "../untils";
-
-
+import type { myCSSStyleDeclaration,keyofCSSStyleDeclaration } from "../interface/css";
 //css编译
 export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration}[]):string{
   let css = '';
