@@ -1,10 +1,6 @@
 
 
 import type { Plugin } from 'vite';
-import fs from 'fs';
-import type { myCSSStyleDeclaration } from '../interface/css';
-import { compieCore } from './compieCore';
-import compileCss from './cpmpieCss';
 import compiePre from './compiePre';
 // type entityType = 'nbsp'|'lt'|'gt'|'quot'|'#39'|'amp'|'copy'|'reg'|'trade'|'times'|'divide'
 interface PluginOptions {
@@ -21,24 +17,24 @@ interface PluginOptions {
 export default function propStyleCompile(options:PluginOptions={}):Plugin{ 
   const justForBuild = options.justForBuild || false;
   if(justForBuild)return {name:'prop-style-compile'} //什么都不做
-  const logOut = options.debug? (options.log || console.log):()=>{}
+  // const logOut = options.debug? (options.log || console.log):()=>{}
   const WGroupNames = [...(options.wGroupSpecialName || []),'w-group','WGroup','wGroup'];
   const indexFile = options.indexFile || function (url){return url.includes('src/main.')};
-  const injectedCSS = [] as {key:string,value:myCSSStyleDeclaration}[]
+  // const injectedCSS = [] as {key:string,value:myCSSStyleDeclaration}[]
   const includePath = options.includePath || ['src/'];
   const excludePath = options.excludePath || [];
   const VIRTUAL_CSS_ID = 'virtual:prop-style-compile-css'
   let RESOLVED_VIRTUAL_CSS_ID = '\0' + VIRTUAL_CSS_ID+'.css'; 
   //扫描.vue文件，收集所有组件的style，并返回style和新的code
   let {globalCSS,newCodes} = compiePre(includePath,excludePath,WGroupNames); 
-  let server = null as any; // 保存 ViteDevServer 实例
+  // let server = null as any; // 保存 ViteDevServer 实例
   return {
     name: 'prop-style-compile',
     enforce: 'pre',
  
-    configureServer(ser) {
+    configureServer() {
       
-      server = ser; // 保存 ViteDevServer 实例
+      // server = ser; // 保存 ViteDevServer 实例
     },
     resolveId(id) {
       if (id === VIRTUAL_CSS_ID || id === RESOLVED_VIRTUAL_CSS_ID) return RESOLVED_VIRTUAL_CSS_ID;
@@ -106,7 +102,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
       return code;
     },
     
-    handleHotUpdate({ file, server,timestamp }) {
+    handleHotUpdate({ file, server }) {
       if (file.endsWith('.vue')){
         globalCSS = ''
         console.log(`[prop-style-compile] File changed: ${file}`);
