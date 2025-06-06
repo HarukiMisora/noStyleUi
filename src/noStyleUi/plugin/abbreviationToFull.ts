@@ -49,7 +49,7 @@ const displayValues = {
 
 export default function (short:string):[string|undefined,string|Object|undefined]{
   const [prop,value] =short.split('-')
-  console.log({prop,value},'class');
+  // console.log({prop,value},'class');
 
   const group = getGroup(prop,value)
   if(group !== void 0){

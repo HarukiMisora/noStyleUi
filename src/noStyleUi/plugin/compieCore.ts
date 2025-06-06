@@ -28,6 +28,8 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
       // console.log('match=>',match);  
       const ast:RootNode = parse(match)
       eachTree(ast,(node)=>{
+        //如果是WGroup组件，则将自有属性添加到子组件
+
         const styles = {} as myCSSStyleDeclaration
         const className:{[key:string]:Boolean} ={}
         const setClassName:setClassNameT = (name,value=true) =>{
@@ -43,78 +45,38 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
             })
           }
         }
-
-        let classIndex = -1
-        let styleIndex = -1
-        const nodeClassName = WGroupNames.includes(node.tag)? '_class':'class'
-        const nodeStyleName = WGroupNames.includes(node.tag)? '_style':'style'
-        // logOut({node,nodeClassName,nodeStyleName});
-        
-        for(let i=0;i<node.props.length;i++){  
-          const prop = node.props[i]
-          if(prop.name !== 'bind'){
-            // logOut('prop=>'+i,prop.type,{[prop.name]:prop.value?.content});  
-            classIndex = prop.name === nodeClassName? i:classIndex
-            styleIndex = prop.name === nodeStyleName? i:styleIndex 
-            if(allProps.includes(prop.name)){ 
-              const setStyle:setStyleT = (name,value) =>{
-                // console.log({name,value},'style');
-                // const item = {key:name,value:{
-                //   [name]:value
-                // }} as myCSSStyleDeclaration
-                // if(value === void 0 ){
-                //   delete styles[name] 
-                // }else{
-                //   styles[name] = value
-                // }
-                const key = `${<string>prop.name}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
-                if(value !== void 0){
-                  className[key] = true
-                  if(!checkClassWrited(injectedCSS,'.'+key)){
-                    injectedCSS.push({
-                      key:'.'+key,
-                      value:<myCSSStyleDeclaration>{
-                        [name]:value
-                      }
-                    })
-                  }
-
-                }
-      
-                
-         
+        if(WGroupNames.includes(node.tag)){
+          generateCSS(Object.assign(node),className,injectedCSS,setClassName)
+          // console.log({node},{props:node.props[0]});
+          for(let prop of node.props){
+            for( let child of node.children){ 
+            // console.log({child});
+            //自有属性?
+            let isSelft:boolean = false
+            for(let childProp of child.props){
+              const propName = prop.name === 'bind'? prop.rawName.replace(':','') : prop.name
+              const childPropName = childProp.name === 'bind'? childProp.rawName.replace(':','') : childProp.name
+              if(propName === childPropName){
+                isSelft = true
               }
-              
-              if(attributeGrop.includes(prop.name)){
-
-                createPixCss(prop.name,prop.value?.content,setClassName,setStyle)
-              }
-              else{
-
-                try{
-                  
-                  createStyles[prop.name]?.(prop.value?.content||'',setClassName,setStyle) 
-
-                }catch(e){
-                  // console.log(e);
-                  
-                  const sourceLine = node.loc.source.split('\n')[0]
-                  const start = prop.loc.start.column-prop.name.length
-                  const end = prop.loc.end.column-prop.name.length
-                  throw new Error(
-                    `${prop.name} 得到了一个错误的值：${prop.value?.content}\n`+
-                    `at line ${prop.loc.start.line} column ${prop.loc.start.column}\n  `+
-                    sourceLine.slice(0,start)+underline(sourceLine.slice(start,end))+sourceLine.slice(end)+'\n'
-                  )
-                }
-              }
-
-              // createStyles[prop.name]?.(prop.value?.content,setClassName,setStyle) 
-              node.props.splice(i--,1)
+            }
+            if(!isSelft){
+              child.props.push(prop)
             } 
+            console.log(isSelft,prop);
+            
+            }
           }
-
+          node.props.length = 0
         }
+
+
+        
+        const nodeClassName = 'class'
+        const nodeStyleName = 'style'
+        let {classIndex,styleIndex} = generateCSS(node,className,injectedCSS,setClassName)
+        console.log({classIndex,styleIndex});
+        
         // logOut(node.props.map((item:any)=>item.name));
         const classString = Object.keys(className).filter(item=>className[item]).join(' ')
         const styleString = Object.keys(styles).map((item:string)=>`${camelToHyphen(item)}:${styles[<keyofCSSStyleDeclaration>item]}`).join(';')
@@ -200,6 +162,91 @@ function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,log
     } 
   }
 }
+
+
+
+//生成css样式
+function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:injectedCSST =[],setClassName:setClassNameT,deleteProp:boolean=true){
+        // logOut({node,nodeClassName,nodeStyleName});
+  let classIndex = -1
+  let styleIndex = -1
+  const nodeClassName = 'class'
+  const nodeStyleName ='style'
+        
+  for(let i=0;i<node.props.length;i++){  
+    const prop = node.props[i]
+    //排除bind属性
+    if(prop.name !== 'bind'){
+      // logOut('prop=>'+i,prop.type,{[prop.name]:prop.value?.content});  
+      classIndex = prop.name === nodeClassName? i:classIndex
+      styleIndex = prop.name === nodeStyleName? i:styleIndex 
+      if(allProps.includes(prop.name)){ 
+        const setStyle:setStyleT = (name,value) =>{
+          // console.log({name,value},'style');
+          // const item = {key:name,value:{
+          //   [name]:value
+          // }} as myCSSStyleDeclaration
+          // if(value === void 0 ){
+          //   delete styles[name] 
+          // }else{
+          //   styles[name] = value
+          // }
+          const key = `${<string>prop.name}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
+          if(value !== void 0){
+            className[key] = true
+            if(!checkClassWrited(injectedCSS,'.'+key)){
+              injectedCSS.push({
+                key:'.'+key,
+                value:<myCSSStyleDeclaration>{
+                  [name]:value
+                }
+              })
+            }
+
+          }
+
+          
+    
+        }
+        
+        if(attributeGrop.includes(prop.name)){
+
+          createPixCss(prop.name,prop.value?.content,setClassName,setStyle)
+        }
+        else{
+
+          try{
+            
+            createStyles[prop.name]?.(prop.value?.content||'',setClassName,setStyle) 
+
+          }catch(e){
+            // console.log(e);
+            
+            const sourceLine = node.loc.source.split('\n')[0]
+            const start = prop.loc.start.column-prop.name.length
+            const end = prop.loc.end.column-prop.name.length
+            throw new Error(
+              `${prop.name} 得到了一个错误的值：${prop.value?.content}\n`+
+              `at line ${prop.loc.start.line} column ${prop.loc.start.column}\n  `+
+              sourceLine.slice(0,start)+underline(sourceLine.slice(start,end))+sourceLine.slice(end)+'\n'
+            )
+          }
+        }
+        console.log({classIndex,styleIndex},i);
+        
+
+        // createStyles[prop.name]?.(prop.value?.content,setClassName,setStyle) 
+        if(deleteProp){
+          node.props.splice(i--,1)
+        }
+      } 
+    }
+
+  }
+  return {classIndex,styleIndex}
+}
+
+
 
 // 重建模板字符串
 function generateTemplate(ast: any): string {

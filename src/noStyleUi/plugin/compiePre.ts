@@ -18,7 +18,7 @@ export default function compiePre(includes:string[],excludes:string[],WGroupName
   
   const runPath = process.cwd();
 
-  console.log("runPath",runPath);
+  // console.log("runPath",runPath);
 
   function eachTree(includes:string[],excludes:string[]){
  for(let i of includes){
@@ -28,7 +28,7 @@ export default function compiePre(includes:string[],excludes:string[],WGroupName
     for(let file of files){
       if(file.endsWith(".vue")){
       let filePath = i +  file;
-      console.log({file,i});
+      // console.log({file,i});
       
       if(fs.statSync(filePath).isFile()){
         //排除文件

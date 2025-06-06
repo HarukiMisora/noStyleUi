@@ -56,7 +56,7 @@ export const group = defineComponent({
                 const isGroup = (i.type as { name?: string })?.name === 'WGroup'
                 const styleString = this.$props?._style+';'+(isGroup?i.props?._style:Object.keys(i.props?.style||{}).map((item:string)=>`${camelToHyphen(item)}:${i.props?.style[item]}`).join(';'))
                 const classString = ((isGroup?i.props?._class:i.props?.class)||'') + ' '+(this.$props?._class||'')
-                // console.log(this.$props.flex,i.props?.flex);
+                // console.log(this.$props,i.props);
                 
                 i.props = {
                     ...this.$props,
@@ -84,7 +84,7 @@ export const group = defineComponent({
                 }else{
                     delete i.props?.class
                     delete i.props?.style
-                    // console.log(i.props,'卧槽');
+                    console.log(i.props,'卧槽');
                 }
                 
   

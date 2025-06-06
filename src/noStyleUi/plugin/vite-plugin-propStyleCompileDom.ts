@@ -93,7 +93,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
         // console.log(newCodes,{normalizedId});
         
         if (newCodes[normalizedId]) {
-          // console.log({new:newCodes[normalizedId]});
+          console.log({new:newCodes[normalizedId]});
           
           return { code: newCodes[normalizedId], map: null };
         }

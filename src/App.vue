@@ -14,21 +14,14 @@ const as = {
 }
 const img = ref(as.img)
 
-const asd = ()=>{
-  console.log('卧槽？');  
-}
-const color = ref('<template>123</template>')
-
-const min = ref('10010')
-const max = ref('')
-</script> 
+</script>  
 <template> 
 
-<w-div :flex="test" :bg="'#000'" hover="bg=#ff0" @click="test='right'"    >
-  <w-group w="10000" h="100" c="red" bg="center" >
-    <w-div w="100" :bg="`${as.img}`" @click="bottom=1000"  >{{bottom}}</w-div>    
-    <w-div :bg="`${as.img}`">引入组件相对路径的图片</w-div> 
-    <w-div :bg="img" transition> 
+<w-div :flex="test" :bg="'#000'" hover="bg=#f00" @click="test='right'"    >
+  <w-group w="1000" h="100" c="red" bg="center" transition >
+    <w-div :w="bottom" :bg="`${img}`" @click="bottom=1000"  >{{bottom}}</w-div>    
+    <w-div :bg="`${img}`">引入组件相对路径的图片</w-div> 
+    <w-div :bg="img" > 
       变量名动态引入
       <w-div  :flex="['j-around']" pt="20">  
         <w-button type="success" @click="img=as.img">图1</w-button>   

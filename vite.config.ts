@@ -11,7 +11,7 @@ export default defineConfig(({mode})=>{
   const env = loadEnv(mode, process.cwd());
   let buildWhat:string|'pack'|'test' = 'pack'
 
-  console.log({mode});
+  // console.log({mode});
   
 
   return { 
