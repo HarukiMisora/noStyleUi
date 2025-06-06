@@ -28,7 +28,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
   const includePath = options.includePath || ['src/'];
   const excludePath = options.excludePath || [];
   const VIRTUAL_CSS_ID = 'virtual:prop-style-compile-css'
-  let RESOLVED_VIRTUAL_CSS_ID = '\0' + VIRTUAL_CSS_ID; 
+  let RESOLVED_VIRTUAL_CSS_ID = '\0' + VIRTUAL_CSS_ID+'.css'; 
   //扫描.vue文件，收集所有组件的style，并返回style和新的code
   let {globalCSS,newCodes} = compiePre(includePath,excludePath,WGroupNames); 
   let server = null as any; // 保存 ViteDevServer 实例
@@ -41,7 +41,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
       server = ser; // 保存 ViteDevServer 实例
     },
     resolveId(id) {
-      if (id === VIRTUAL_CSS_ID || id === RESOLVED_VIRTUAL_CSS_ID) return RESOLVED_VIRTUAL_CSS_ID+'.css';
+      if (id === VIRTUAL_CSS_ID || id === RESOLVED_VIRTUAL_CSS_ID) return RESOLVED_VIRTUAL_CSS_ID;
     },
     load(id) {
       if (id.startsWith(RESOLVED_VIRTUAL_CSS_ID)) { 
@@ -49,20 +49,56 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
           code: globalCSS,  
           map: null,
           // 标记为 CSS 资源
-          meta: { vite: { isCSS: true } }
+          meta: { vite: { isCSS: true,lang:'css' },id:'asd' }
         };
       }
     }, 
     transform(code, id) {
       // 入口文件处理
       if (indexFile(id)) {
-        return `import '${VIRTUAL_CSS_ID}';\n${code}`;
+        const injectImortJs = `
+          import '${VIRTUAL_CSS_ID}';
+        `
+        const injectHRM = `
+          if (import.meta.hot) {
+            import.meta.hot.on('special-update', (data:{globalCSS:string}) => {
+              // 执行自定义更新
+              console.log('[prop-style] hot update', data.changeFile);
+              const styles= document.getElementsByTagName('style')
+              let propStyle:any = null
+              for (let i = 0; i < styles.length; i++) {
+                const style = styles[i]
+                
+                if (style.textContent?.startsWith(\`/* propStyleCompie */\`)) {
+                  propStyle = style
+                  propStyle.textContent = data.globalCSS
+
+                }
+              }
+              // console.log(propStyle,data.globalCSS);
+            })
+          }
+        `
+        return `${injectImortJs}\n${code}\n${injectHRM}`
+
+
+        // return code.replace(/<script?[^>]*>/, (match, p1) => {
+        //   console.log({match,p1});
+        //   return match + `
+        //     import '${VIRTUAL_CSS_ID}'
+          
+        //   `
+        // })
       }
       
       // Vue 文件处理
       if (id.endsWith('.vue')) {
-        const normalizedId = id.replace(/\\/g, '/');
+        const normalizedId = id.replace(/\//g, '\\');
+        // console.log(newCodes,{normalizedId});
+        
         if (newCodes[normalizedId]) {
+          // console.log({new:newCodes[normalizedId]});
+          
           return { code: newCodes[normalizedId], map: null };
         }
       }
@@ -70,35 +106,39 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
       return code;
     },
     
-    handleHotUpdate({ file, server }) {
-      if (!file.endsWith('.vue')) return;
-      globalCSS = ''
-      console.log(`[prop-style-compile] File changed: ${file}`);
-      
-      // 重新编译
-      const result = compiePre(includePath, excludePath, WGroupNames);
-      globalCSS = result.globalCSS;
-      newCodes = result.newCodes;
-      
-      // 处理虚拟模块更新
-      const virtualModule = server.moduleGraph.getModuleById(RESOLVED_VIRTUAL_CSS_ID+'.css'); 
-      const modulesToUpdate = [];
-      console.log({virtualModule,globalCSS});
-      
-      if (virtualModule) {
-        server.moduleGraph.invalidateModule(virtualModule);
-        modulesToUpdate.push(virtualModule);
+    handleHotUpdate({ file, server,timestamp }) {
+      if (file.endsWith('.vue')){
+        globalCSS = ''
+        console.log(`[prop-style-compile] File changed: ${file}`);
+        // 重新编译
+        const result = compiePre(includePath, excludePath, WGroupNames);
+        globalCSS = result.globalCSS;
+        newCodes = result.newCodes;
+        
+        // 处理虚拟模块更新
+        const virtualModule = server.moduleGraph.getModuleById(RESOLVED_VIRTUAL_CSS_ID); 
+        if (virtualModule) {
+            server.ws.send({
+            type: 'custom',
+            event: 'special-update',
+            data: {
+              globalCSS,
+              changeFile: file,
+            }
+          })
+          
+        }
+
+        const vuewModule =    server.moduleGraph.getModuleById(file); 
+        const updates = []
+        if (vuewModule) {
+          server.moduleGraph.invalidateModule(vuewModule);
+          updates.push(vuewModule)
+        }
+
+        return updates;
       }
       
-      // 使所有依赖虚拟模块的模块失效
-      if (virtualModule) {
-        virtualModule.importers.forEach(importer => {
-          server.moduleGraph.invalidateModule(importer);
-          modulesToUpdate.push(importer);
-        });
-      }
-      
-      return modulesToUpdate;
     }
   }
 }

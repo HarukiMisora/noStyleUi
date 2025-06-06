@@ -20,6 +20,7 @@ export default defineConfig(({mode})=>{
       propStyleCompile({    
         debug: false,  
         justForBuild: false, 
+        // indexFile: (url) => url.includes('src/App.vue'),
         // entity:'all'
       })
     ],

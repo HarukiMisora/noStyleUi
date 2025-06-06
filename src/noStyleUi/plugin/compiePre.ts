@@ -69,12 +69,12 @@ export default function compiePre(includes:string[],excludes:string[],WGroupName
   eachTree(includes.map(item=>runPath + (item.startsWith("/")? item : "/" + item).replace(/\//g,"\\")),excludes);
 
   const css = compileCss(injectedCSS);
-  console.log({injectedCSS});
+  // console.log({injectedCSS});
   if (css) {
     globalCSS += css + '\n'; 
   } 
  
-  return {globalCSS,newCodes};
+  return {globalCSS:`/* propStyleCompie */\n${globalCSS}`,newCodes};
 
 }
 
