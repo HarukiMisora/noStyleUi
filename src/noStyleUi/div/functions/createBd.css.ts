@@ -8,8 +8,8 @@ import { analysisColor, analysisProps, analysisPxs } from "./analysis";
 const actions:{[key:string]:Function} = {
 
   solid:({setClassName}:classNameWithStyleT)=>{
-    // console.log(setClassName);
-    
+    // console.log({setClassName,},'---------------------------',setClassName);
+     
     setClassName?.('bd-s-solid',true)
     return true
   },

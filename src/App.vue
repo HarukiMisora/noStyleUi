@@ -18,12 +18,12 @@ const img = ref(as.img)
 <template> 
 
 <w-div :flex="test" :bg="'#000'" hover="bg=#f00" @click="test='right'"    >
-  <w-group w="1000" h="100" c="red" bg="center" transition >
-    <w-div :w="bottom" :bg="`${img}`" @click="bottom=1000"  >{{bottom}}</w-div>    
+  <w-group w="1000" h="100" c="#ff0" :bg="img" bd="dashed #fff 10px" transition > 
+    <w-div :w="bottom" bg="center" @click="bottom=1000"  >{{bottom}}</w-div>     
     <w-div :bg="`${img}`">引入组件相对路径的图片</w-div> 
-    <w-div :bg="img" > 
-      变量名动态引入
-      <w-div  :flex="['j-around']" pt="20">  
+    <w-div :bg="img" > ``
+      变量名动态引入   
+      <w-div  :flex="['j-around']" pt="20" bd="solid red">  
         <w-button type="success" @click="img=as.img">图1</w-button>   
         <w-button type="success" @click="img=as.head">图2</w-button> 
       </w-div>

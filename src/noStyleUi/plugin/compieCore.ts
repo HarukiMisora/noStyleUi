@@ -21,6 +21,14 @@ interface optionsT{
   injectedCSS:injectedCSST
 }
 
+const mergeProps = [
+  "flex",
+  "grid",
+  "bd",
+  "bg",
+  "position"
+]
+
 
 export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
   return  restoreEscape(transformTemplate(code,(match)=>{  
@@ -45,8 +53,22 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
             })
           }
         }
+        const setClassWihoutName:setClassNameT = (name) =>{
+          
+          const [full,relValue] = abbreviationToFull(name)
+          const key = '.'+name
+          console.log({name,full,relValue});  
+          
+          if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
+            const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
+            injectedCSS.push({
+              key,
+              value
+            }) 
+          }
+        }
         if(WGroupNames.includes(node.tag)){
-          generateCSS(Object.assign(node),className,injectedCSS,setClassName)
+          generateCSS(Object.assign(node),className,injectedCSS,setClassWihoutName,false)
           // console.log({node},{props:node.props[0]});
           for(let prop of node.props){
             for( let child of node.children){ 
@@ -56,18 +78,59 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
             for(let childProp of child.props){
               const propName = prop.name === 'bind'? prop.rawName.replace(':','') : prop.name
               const childPropName = childProp.name === 'bind'? childProp.rawName.replace(':','') : childProp.name
+              
+              const stateProp = prop.name === 'bind'? 0 : 1
+              const steteChildProp = childProp.name === 'bind'? 2 : 4
+              const stateGroup = stateProp + steteChildProp
+              const acition:{[key:number]:Function} = { 
+                2:()=>{//两个都是Bind属性  
+                  childProp.exp.content = childProp.exp.content.replace(/"/g,'') +"+ ' ' +"+prop.exp.content.replace(/"/g,'')
+                },
+                3:()=>{//父不为bind，子为bind
+                  childProp.exp.content = childProp.exp.content.replace(/"/g,'') +" + ' "+prop.value.content.replace(/'/g,'\\\'')+"'"
+                },
+                4:()=>{//子不为bind，父为bind
+                  const temp = JSON.parse(JSON.stringify(childProp))
+                  injectedCSSAnly(temp.name,temp.value.content,injectedCSS)
+                  childProp.name = prop.name 
+                  childProp.exp = prop.exp
+                  childProp.type = prop.type 
+                  childProp.rawName = prop.rawName
+                  childProp.arg = prop.arg
+                  delete childProp.value
+                  prop = temp 
+                  acition[3]()  
+                },
+                5:()=>{//两个都是普通属性
+                  childProp.value.content = childProp.value.content + " " + prop.value.content
+                },
+              }
+              // if() 
+
               if(propName === childPropName){
+                // console.log(propName,childPropName);
+                
                 isSelft = true
+                if(mergeProps.includes(propName)){
+                  // console.log({child,prop},'--------------');
+                  acition?.[stateGroup]?.() 
+                  
+                }
               }
             }
             if(!isSelft){
-              child.props.push(prop)
+              child.props.push(prop) 
             } 
-            console.log(isSelft,prop);
+            // console.log(isSelft,prop);
             
             }
           }
           node.props.length = 0
+          // console.log(node.children[0].props,'卧槽');    
+          
+          node.tag = 'will-be-replace'
+          // console.log(node); 
+          
         }
 
 
@@ -75,7 +138,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         const nodeClassName = 'class'
         const nodeStyleName = 'style'
         let {classIndex,styleIndex} = generateCSS(node,className,injectedCSS,setClassName)
-        console.log({classIndex,styleIndex});
+        // console.log({classIndex,styleIndex});
         
         // logOut(node.props.map((item:any)=>item.name));
         const classString = Object.keys(className).filter(item=>className[item]).join(' ')
@@ -125,7 +188,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
       // logOut({newTmeplate},'--------------------------------------');
 
       return newTmeplate
-    }))
+  })).replace(/<will-be-replace>|<\/will-be-replace>/g,'')
 }
 
 
@@ -157,6 +220,7 @@ function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,log
         // logOut('\nnode=>'+i,node.children[i].tag);
         
         callback(node.children[i],i,node)
+
         eachTree(node.children[i],callback,logOut)
       }
     } 
@@ -165,8 +229,8 @@ function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,log
 
 
 
-//生成css样式
-function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:injectedCSST =[],setClassName:setClassNameT,deleteProp:boolean=true){
+//接收一个node节点并生成css样式
+function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:injectedCSST =[],setClassName:setClassNameT,wGroupProp:boolean=true){
         // logOut({node,nodeClassName,nodeStyleName});
   let classIndex = -1
   let styleIndex = -1
@@ -193,7 +257,7 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
           // }
           const key = `${<string>prop.name}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
           if(value !== void 0){
-            className[key] = true
+            if(wGroupProp)className[key] = true;
             if(!checkClassWrited(injectedCSS,'.'+key)){
               injectedCSS.push({
                 key:'.'+key,
@@ -231,12 +295,12 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
               sourceLine.slice(0,start)+underline(sourceLine.slice(start,end))+sourceLine.slice(end)+'\n'
             )
           }
-        }
-        console.log({classIndex,styleIndex},i);
+        } 
+        // console.log({classIndex,styleIndex},i);
         
 
         // createStyles[prop.name]?.(prop.value?.content,setClassName,setStyle) 
-        if(deleteProp){
+        if(wGroupProp){
           node.props.splice(i--,1)
         }
       } 
@@ -244,6 +308,38 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
 
   }
   return {classIndex,styleIndex}
+}
+//只注入css样式,不用考虑类名的注入
+function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[]){
+  const setStyle = (name:string,value:string) => {
+    const key = `${prop}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
+    if(value !== void 0){
+      if(!checkClassWrited(injectedCSS,'.'+key)){
+        injectedCSS.push({
+          key:'.'+key,
+          value:<myCSSStyleDeclaration>{
+            [name]:value
+          }
+        })
+      }
+
+    }
+  
+  }
+  const setClassName:setClassNameT = (name,_value=true) =>{
+    const [full,relValue] = abbreviationToFull(name)
+    const key = '.'+name
+    
+    if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
+      const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
+      injectedCSS.push({
+        key,
+        value
+      })
+    }
+  }
+  createStyles[prop](content,setClassName,setStyle) 
+
 }
 
 
@@ -410,7 +506,8 @@ const createStyles:{[key:string]:Function} = {
   flex:creatFlexCss,
   bd:createBdCss,
   transition:createTransition,
-  position:createPositionCss
+  position:createPositionCss,
+  attributeGrop:createPixCss
 }
 //检查这个样式有没有被书写过
 function checkClassWrited(css:injectedCSST,name:string){

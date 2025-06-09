@@ -14,7 +14,7 @@ export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration}
     }
     css += `}`;
   }
-  // console.log(css,arr); 
+  console.log(css,{injected:arr}); 
   return css;
 }
 
