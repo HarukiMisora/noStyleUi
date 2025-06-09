@@ -25,8 +25,9 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
   const excludePath = options.excludePath || [];
   const VIRTUAL_CSS_ID = 'virtual:prop-style-compile-css'
   let RESOLVED_VIRTUAL_CSS_ID = '\0' + VIRTUAL_CSS_ID+'.css'; 
-  //扫描.vue文件，收集所有组件的style，并返回style和新的code
   let {globalCSS,newCodes} = compiePre(includePath,excludePath,WGroupNames); 
+
+  //扫描.vue文件，收集所有组件的style，并返回style和新的code
   // let server = null as any; // 保存 ViteDevServer 实例
   return {
     name: 'prop-style-compile',
@@ -40,6 +41,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
       if (id === VIRTUAL_CSS_ID || id === RESOLVED_VIRTUAL_CSS_ID) return RESOLVED_VIRTUAL_CSS_ID;
     },
     load(id) {
+      
       if (id.startsWith(RESOLVED_VIRTUAL_CSS_ID)) { 
         return {
           code: globalCSS,  
@@ -114,6 +116,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
         // 处理虚拟模块更新
         const virtualModule = server.moduleGraph.getModuleById(RESOLVED_VIRTUAL_CSS_ID); 
         if (virtualModule) {
+            server.moduleGraph.invalidateModule(virtualModule);
             server.ws.send({
             type: 'custom',
             event: 'special-update',
