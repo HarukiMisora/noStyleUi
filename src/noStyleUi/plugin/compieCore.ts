@@ -72,7 +72,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
           // console.log({node},{props:node.props[0]});
           for(let prop of node.props){
             for( let child of node.children){ 
-            // console.log({child});
+            console.log('child=>',prop.name,{child});  
             //自有属性?
             let isSelft:boolean = false
             for(let childProp of child.props){
@@ -86,8 +86,8 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
                 2:()=>{//两个都是Bind属性  
                   childProp.exp.content = childProp.exp.content.replace(/"/g,'') +"+ ' ' +"+prop.exp.content.replace(/"/g,'')
                 },
-                3:()=>{//父不为bind，子为bind
-                  childProp.exp.content = childProp.exp.content.replace(/"/g,'') +" + ' "+prop.value.content.replace(/'/g,'\\\'')+"'"
+                3:(child=childProp,parent=prop)=>{//父不为bind，子为bind
+                  child.exp.content = child.exp.content.replace(/"/g,'') +" + ' "+parent.value.content.replace(/'/g,'\\\'')+"'"
                 },
                 4:()=>{//子不为bind，父为bind
                   const temp = JSON.parse(JSON.stringify(childProp))
@@ -98,8 +98,12 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
                   childProp.rawName = prop.rawName
                   childProp.arg = prop.arg
                   delete childProp.value
-                  prop = temp 
-                  acition[3]()  
+                  // prop = temp 
+                  console.log(4,{prop,childProp});  
+                  
+                  acition[3](childProp,temp)  
+                  console.log(4,'acitive',{prop,childProp});   
+
                 },
                 5:()=>{//两个都是普通属性
                   childProp.value.content = childProp.value.content + " " + prop.value.content
