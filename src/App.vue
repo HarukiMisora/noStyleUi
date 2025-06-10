@@ -13,21 +13,25 @@ const as = {
   img:'https://www.iamwzc.com/TMXK/noStyleUiDoc/img.png'  
 }
 const img = ref(as.img)
-  
+   
 </script>  
 <template> 
-
-<w-div :flex="test" :bg="'#000'" hover="bg=#3f3" @click="test='right'"  transition=""  > 
-  <w-group w="1000" h="250" c="#fff" :bg="img+' center'" bd="dashed #ff0 10px" transition > 
-    <w-div :w="500" bg="r-n center cover" @click="bottom=1000"  >{{bottom}}</w-div>     
-    <w-div bg="size-75  r-n bottom right">引入组件相对路径的图片</w-div>  
-    <w-div bg="size-125 r-n bottom" h="300">
-      变量名动态引入    
-      <w-div  :flex="['j-around']" pt="20" bd="solid red">  
-        <w-button type="success" @click="img=as.img">图1</w-button>   
-        <w-button type="success" @click="img=as.head">图2</w-button> 
-      </w-div>
-    </w-div> 
+ 
+<w-div mb="5">直接输入1-solid-red默认是应用到4个方向。现在我们可以用前缀t、r、b、l、x、y去告诉它我要指定方向的样式</w-div>
+<w-div :flex="['g-10','wrap']" c="green" bd="solid">
+  <w-group radius="50%" w="100" h="100" flex="center" :bg="as.head+' fill'" >
+    <w-div bd="l-solid t-dashed r-double b-dotted" bg="fill"></w-div>
+    <w-div bd="dashed-red x-solid"></w-div>
+    <w-div bd="dotted blue y-red"></w-div>
+    <w-div bd="double r-solid-red+#fff"></w-div>
+  </w-group>
+</w-div>
+<w-div :flex="['g-10','wrap']">
+  <w-group radius="50%" w="100" h="100" flex="center" :bg="as.head+' fill'" c="green">
+    <w-div bd="t-groove"></w-div>
+    <w-div bd="r-outset-red"></w-div>
+    <w-div bd="b-inset blue"></w-div>
+    <w-div bd="l-ridge"></w-div>
   </w-group>
 </w-div>
 </template> 

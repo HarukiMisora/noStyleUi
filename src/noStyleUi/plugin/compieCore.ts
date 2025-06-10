@@ -241,7 +241,22 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
           // }else{
           //   styles[name] = value
           // }
-          const key = `${<string>prop.name}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
+          const match:{[key:string]:string} = {
+            'px':'',
+            '#':'c',
+            '%':'p', 
+            '(':'_',
+            ')':'_',  
+            ' ':'',
+            '+':'_',
+            '-':'__',
+            '*':'___',
+            '\/':'____',
+          }
+          const key = `${<string>prop.name}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/)/g,(_match,index,str)=>{
+            // console.log(_match,index,str,'?');    
+            return match[_match]||'' 
+          })}`
           if(value !== void 0){
             if(wGroupProp)className[key] = true;
             if(!checkClassWrited(injectedCSS,'.'+key)){
