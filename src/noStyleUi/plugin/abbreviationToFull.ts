@@ -110,14 +110,14 @@ function getGroup(prop:string,value:string,childValue:string|undefined):resT|und
   const displays = displayValues[prop as keyof typeof displayValues]
     if(displays!==void 0&&value in displays){
       const displayValue = displays[value as keyof typeof displays]
-      const resValue = childValue?displayValue[childValue as keyof typeof displayValue]||{}:displayValue
+      const resValue = {...(childValue?displayValue[childValue as keyof typeof displayValue]||{}:displayValue)}
       console.log({resValue,displays,prop,value,childValue},'resValue');
        
       const sort = resValue?.sort||0
-      // if(sort!==void 0){
-      //   delete resValue.sort 
-      // }
-      return [prop+'-'+value,{...resValue,sort:void 0},sort] 
+      if(sort!==void 0){
+        delete resValue.sort 
+      }
+      return [prop+'-'+value,resValue,sort] 
     }
     return undefined
 }
