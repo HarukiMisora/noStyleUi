@@ -1,5 +1,5 @@
 
-
+type resT = [string|undefined,string|Object|undefined,number]
 
 
  const pxs = {
@@ -26,7 +26,7 @@ const colors = {
 }
 const displays = ['flex','grid']
 
-const displayValues = {
+const displayValues:any = {
   flex:{
     center:{
       alignItems:'center',
@@ -42,6 +42,27 @@ const displayValues = {
   bp:{
     center:{
       backgroundPosition: `50% 50%`,
+    },
+    x:{
+      left:{
+        backgroundPositionX: '0%',
+        sort:1
+      },
+      right:{
+        backgroundPositionX: '100%',
+        sort:1
+      }
+    },
+    r:{
+      n:{
+        backgroundRepeat: 'no-repeat',
+      },
+      x:{
+        backgroundRepeat: 'repeat-x',
+      },
+      y:{
+        backgroundRepeat: 'repeat-y',
+      }
     }
   },
 }
@@ -52,16 +73,16 @@ const childValues = {
     c:'border-color',
     r:'border-radius',
     b:'border',
-  }
+  },
 }
 
 
-export default function (short:string):[string|undefined,string|Object|undefined]{
+export default function (short:string):resT{
   const [prop,value,childValue] =short.split('-')
   
-  console.log({prop,value,childValue},'class'); 
+  console.log({prop,value,childValue,short},'class');  
 
-  const group = getGroup(prop,value)
+  const group = getGroup(prop,value,childValue)
   if(group !== void 0){
     return group
   }
@@ -73,33 +94,41 @@ export default function (short:string):[string|undefined,string|Object|undefined
 
 
   if(prop in pxs){
-    return [pxs[prop as keyof typeof pxs],value+'px'] 
+    return [pxs[prop as keyof typeof pxs],value+'px',0] 
   }
   if(prop in colors){
-    return [colors[prop as keyof typeof colors],value]
+    return [colors[prop as keyof typeof colors],value,0]
   }
   if(displays.includes(prop)){ 
 
-    return ['display',prop]  
+    return ['display',prop,0]  
   }
-  return [undefined,undefined] 
+  return [undefined,undefined,0] 
   
 }
-function getGroup(prop:string,value:string):[string|undefined,string|Object|undefined]|undefined{
+function getGroup(prop:string,value:string,childValue:string|undefined):resT|undefined{
   const displays = displayValues[prop as keyof typeof displayValues]
     if(displays!==void 0&&value in displays){
-      return [prop+'-'+value,displays[value as keyof typeof displays]]
+      const displayValue = displays[value as keyof typeof displays]
+      const resValue = childValue?displayValue[childValue as keyof typeof displayValue]||{}:displayValue
+      console.log({resValue,displays,prop,value,childValue},'resValue');
+       
+      const sort = resValue?.sort||0
+      if(sort!==void 0){
+        delete resValue.sort 
+      }
+      return [prop+'-'+value,resValue,sort] 
     }
     return undefined
 }
-function getClass(prop:string,value:string,childValue:string|undefined):[string|undefined,string|Object|undefined]|undefined{
+function getClass(prop:string,value:string,childValue:string|undefined):resT|undefined{
   const styleName = childValues[prop as keyof typeof childValues]
   if(styleName !== void 0){
-    console.log(94,{styleName},value in styleName);  
+    // console.log(94,{styleName},value in styleName);   
   }
   
   if(styleName!==void 0&&value in styleName){
-    return [styleName[value as keyof typeof styleName],childValue]
+    return [styleName[value as keyof typeof styleName],childValue,0]
   }
   return undefined
 }

@@ -13,7 +13,7 @@ import createPositionCss from '../div/functions/createPosition.css';
 import { camelToHyphen } from '../untils';
 import abbreviationToFull from './abbreviationToFull';
 
-type injectedCSST = {key:string,value:myCSSStyleDeclaration}[]
+type injectedCSST = {key:string,value:myCSSStyleDeclaration,sort:number}[]
 
 interface optionsT{
   code:string
@@ -42,20 +42,21 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         const className:{[key:string]:Boolean} ={}
         const setClassName:setClassNameT = (name,value=true) =>{
           className[name]= value 
-          const [full,relValue] = abbreviationToFull(name)
+          const [full,relValue,sort] = abbreviationToFull(name)
           const key = '.'+name
           
           if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
             const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
             injectedCSS.push({
               key,
-              value
+              value,
+              sort
             })
           }
         }
         const setClassWihoutName:setClassNameT = (name) =>{
           
-          const [full,relValue] = abbreviationToFull(name)
+          const [full,relValue,sort] = abbreviationToFull(name)
           const key = '.'+name
           console.log({name,full,relValue});  
           
@@ -63,7 +64,8 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
             const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
             injectedCSS.push({
               key,
-              value
+              value,
+              sort
             }) 
           }
         }
@@ -72,7 +74,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
           // console.log({node},{props:node.props[0]});
           for(let prop of node.props){
             for( let child of node.children){ 
-            console.log('child=>',prop.name,{child});  
+            // console.log('child=>',prop.name,{child});    
             //自有属性?
             let isSelft:boolean = false
             for(let childProp of child.props){
@@ -100,10 +102,10 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
                   childProp.arg = temp2.arg
                   delete childProp.value
                   // prop = temp 
-                  console.log(4,{temp2,childProp});  
+                  // console.log(4,{temp2,childProp});   
                   
                   acition[3](childProp,temp)  
-                  console.log(4,'acitive',{temp2,childProp});    
+                  // console.log(4,'acitive',{temp2,childProp});    
 
                 },
                 5:()=>{//两个都是普通属性
@@ -268,7 +270,8 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
                 key:'.'+key,
                 value:<myCSSStyleDeclaration>{
                   [name]:value
-                }
+                },
+                sort:0
               })
             }
 
@@ -316,30 +319,37 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
 }
 //只注入css样式,不用考虑类名的注入
 function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[]){
+  console.log('injectedCSSAnly\n'); 
+  
   const setStyle = (name:string,value:string) => {
     const key = `${prop}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
     if(value !== void 0){
       if(!checkClassWrited(injectedCSS,'.'+key)){
-        injectedCSS.push({
+        const injectedCSSItem = {
           key:'.'+key,
           value:<myCSSStyleDeclaration>{
             [name]:value
-          }
-        })
+          },
+          sort:0
+        }
+        injectedCSS.push(injectedCSSItem)
+        console.log({injectedCSSItem});
       }
 
     }
   
   }
   const setClassName:setClassNameT = (name,_value=true) =>{
-    const [full,relValue] = abbreviationToFull(name)
+    const [full,relValue,sort] = abbreviationToFull(name) 
+    
     const key = '.'+name
     
     if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
       const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
       injectedCSS.push({
         key,
-        value
+        value,
+        sort
       })
     }
   }

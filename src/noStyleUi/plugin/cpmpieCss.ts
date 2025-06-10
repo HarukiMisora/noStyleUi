@@ -1,8 +1,9 @@
 import { camelToHyphen } from "../untils";
 import type { myCSSStyleDeclaration,keyofCSSStyleDeclaration } from "../interface/css";
 //css编译
-export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration}[]):string{
+export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration,sort:number}[]):string{
   let css = '';
+  arr.sort((a,b)=>a.sort-b.sort);
   for(let i=0;i<arr.length;i++){
     const {key,value} = arr[i];
     const values = Object.keys(value);
