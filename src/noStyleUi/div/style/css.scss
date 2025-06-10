@@ -8,23 +8,16 @@
 @use './hover.scss';
 @use './grid.scss';
 
-
 @use '../../button/style/index.scss';
-
-
 
 $i:0;
 @while $i<=1920{
-   
     .w-#{$i}{
         width: #{$i}px ;
     }
     .h-#{$i}{
         height: #{$i}px ;
     }
-
-
-
     $i:$i+1
 }
 $i:0;

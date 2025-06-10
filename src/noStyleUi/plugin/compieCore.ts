@@ -36,7 +36,6 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
       // console.log('match=>',match);  
       const ast:RootNode = parse(match)
       eachTree(ast,(node)=>{
-        //如果是WGroup组件，则将自有属性添加到子组件
 
         const styles = {} as myCSSStyleDeclaration
         const className:{[key:string]:Boolean} ={}
@@ -47,6 +46,8 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         const setClassWihoutName:setClassNameT = (name) =>{
           injectCssByClassName(name,injectedCSS)
         }
+        //如果是WGroup组件，则将自有属性添加到子组件
+
         if(WGroupNames.includes(node.tag)){
           generateCSS(Object.assign(node),className,injectedCSS,setClassWihoutName,false)
           // console.log({node},{props:node.props[0]});
@@ -230,8 +231,8 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
       classIndex = prop.name === nodeClassName? i:classIndex
       styleIndex = prop.name === nodeStyleName? i:styleIndex 
       if(allProps.includes(prop.name)){ 
-        const setStyle:setStyleT = (name,value) =>{
-          // console.log({name,value},'style');
+        const setStyle:setStyleT = (name,value) =>{ 
+          console.log({name,value},'style');
           // const item = {key:name,value:{
           //   [name]:value
           // }} as myCSSStyleDeclaration

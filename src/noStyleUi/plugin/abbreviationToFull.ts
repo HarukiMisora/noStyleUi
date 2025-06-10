@@ -51,6 +51,16 @@ const displayValues:any = {
       right:{
         backgroundPositionX: '100%',
         sort:1
+      },
+    },
+    y:{
+      top:{
+        backgroundPositionY: '0%',
+        sort:1
+      },
+      bottom:{
+        backgroundPositionY: '100%',
+        sort:1
       }
     },
     r:{
@@ -65,6 +75,23 @@ const displayValues:any = {
       }
     }
   },
+  bs:{
+    fill:{
+      backgroundSize: '100% 100%',  
+    },
+    contain:{
+      backgroundSize: 'auto 100%',
+      backgroundPosition: '50% 50%'
+    },
+    cover:{
+      backgroundSize: '100% auto',
+      backgroundPosition: '50% 50%'
+    },
+    none:{
+      backgroundPosition: '50% 50%'
+    }
+
+  }
 }
 const childValues = {
   bd:{
