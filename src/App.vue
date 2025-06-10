@@ -8,19 +8,19 @@ import { useClass } from './interface'
 const test = ref(useClass('flex','center')) 
 
 const bottom = ref(100)
-const as = {
+const as = { 
   head:'https://www.iamwzc.com/TMXK/noStyleUiDoc/head.png',
-  img:'https://www.iamwzc.com/TMXK/noStyleUiDoc/img.png' 
+  img:'https://www.iamwzc.com/TMXK/noStyleUiDoc/img.png'  
 }
 const img = ref(as.img)
  
 </script>  
 <template> 
 
-<w-div :flex="test" :bg="'#000'" hover="bg=#f00" @click="test='right'"    >
+<w-div :flex="test" :bg="'#000'" hover="bg=#f00" @click="test='right'"  transition=""  > 
   <w-group w="1000" h="250" c="#fff" :bg="img+' center'" bd="dashed #ff0 10px" transition > 
     <w-div :w="500" bg="size-100 r-n left center " @click="bottom=1000"  >{{bottom}}</w-div>     
-    <w-div bg="size-75 r-n">引入组件相对路径的图片</w-div>  
+    <w-div bg="size-75 r-n right">引入组件相对路径的图片</w-div>  
     <w-div bg="size-125 r-x" h="300"> `` 
       变量名动态引入    
       <w-div  :flex="['j-around']" pt="20" bd="solid red">  

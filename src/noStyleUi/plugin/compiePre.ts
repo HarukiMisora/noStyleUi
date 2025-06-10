@@ -11,7 +11,7 @@ import type { myCSSStyleDeclaration } from '../interface/css';
 
 
 export default function compiePre(includes:string[],excludes:string[],WGroupNames:string[]=[]):{globalCSS:string,newCodes:{[key:string]:string}}{
-  const injectedCSS = [] as {key:string,value:myCSSStyleDeclaration}[]
+  const injectedCSS = [] as {key:string,value:myCSSStyleDeclaration,sort:number}[]
   let globalCSS = ''
   const newCodes:{[key:string]:string} = {}
   

@@ -114,10 +114,10 @@ function getGroup(prop:string,value:string,childValue:string|undefined):resT|und
       console.log({resValue,displays,prop,value,childValue},'resValue');
        
       const sort = resValue?.sort||0
-      if(sort!==void 0){
-        delete resValue.sort 
-      }
-      return [prop+'-'+value,resValue,sort] 
+      // if(sort!==void 0){
+      //   delete resValue.sort 
+      // }
+      return [prop+'-'+value,{...resValue,sort:void 0},sort] 
     }
     return undefined
 }
