@@ -91,18 +91,19 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
                 },
                 4:()=>{//子不为bind，父为bind
                   const temp = JSON.parse(JSON.stringify(childProp))
+                  const temp2 = JSON.parse(JSON.stringify(prop))
                   injectedCSSAnly(temp.name,temp.value.content,injectedCSS)
-                  childProp.name = prop.name 
-                  childProp.exp = prop.exp
-                  childProp.type = prop.type 
-                  childProp.rawName = prop.rawName
-                  childProp.arg = prop.arg
+                  childProp.name = temp2.name 
+                  childProp.exp = temp2.exp
+                  childProp.type = temp2.type 
+                  childProp.rawName = temp2.rawName
+                  childProp.arg = temp2.arg
                   delete childProp.value
                   // prop = temp 
-                  console.log(4,{prop,childProp});  
+                  console.log(4,{temp2,childProp});  
                   
                   acition[3](childProp,temp)  
-                  console.log(4,'acitive',{prop,childProp});   
+                  console.log(4,'acitive',{temp2,childProp});    
 
                 },
                 5:()=>{//两个都是普通属性
