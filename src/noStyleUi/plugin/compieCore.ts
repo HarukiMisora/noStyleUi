@@ -42,32 +42,10 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         const className:{[key:string]:Boolean} ={}
         const setClassName:setClassNameT = (name,value=true) =>{
           className[name]= value 
-          const [full,relValue,sort] = abbreviationToFull(name)
-          const key = '.'+name
-          
-          if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
-            const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
-            injectedCSS.push({
-              key,
-              value,
-              sort
-            })
-          }
+          if(value) injectCssByClassName(name,injectedCSS)
         }
         const setClassWihoutName:setClassNameT = (name) =>{
-          
-          const [full,relValue,sort] = abbreviationToFull(name)
-          const key = '.'+name
-          console.log({name,full,relValue});  
-          
-          if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
-            const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
-            injectedCSS.push({
-              key,
-              value,
-              sort
-            }) 
-          }
+          injectCssByClassName(name,injectedCSS)
         }
         if(WGroupNames.includes(node.tag)){
           generateCSS(Object.assign(node),className,injectedCSS,setClassWihoutName,false)
@@ -339,22 +317,26 @@ function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[]
     }
   
   }
-  const setClassName:setClassNameT = (name,_value=true) =>{
-    const [full,relValue,sort] = abbreviationToFull(name) 
-    
-    const key = '.'+name
-    
-    if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
-      const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
-      injectedCSS.push({
-        key,
-        value,
-        sort
-      })
-    }
+  const setClassName:setClassNameT = (name,value=true) =>{
+    if(!value)return
+    injectCssByClassName(name,injectedCSS)
   }
   createStyles[prop](content,setClassName,setStyle) 
 
+}
+
+function injectCssByClassName(className:string,injectedCSS:injectedCSST =[]){
+  const [full,relValue,sort] = abbreviationToFull(className)
+  const key = '.'+className
+  
+  if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
+    const value = (typeof relValue === 'object'? relValue : {[full]:relValue}) as myCSSStyleDeclaration
+    injectedCSS.push({
+      key,
+      value,
+      sort
+    })
+  }
 }
 
 
