@@ -1,8 +1,8 @@
 import { defineConfig ,loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
-// import {propStyleCompile} from './src/interface'
-import {propStyleCompile} from './dist/no-style-ui.es.js'
+import {propStyleCompile} from './src/interface'
+// import {propStyleCompile} from './dist/no-style-ui.es.js'
 const pathResolve = (dir: string) => resolve(__dirname, dir)
 
 

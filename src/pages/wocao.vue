@@ -1,8 +1,11 @@
 
+
+
+
+
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useClass } from './interface'  
-import Wocao from './pages/wocao.vue'
+import { useClass } from '../interface'  
  
     
 
@@ -17,7 +20,10 @@ const img = ref(as.img)
    
 </script>  
 <template> 
-<Wocao></Wocao>
+<w-div grid="col-3 row--45-40 g-4" >    
+  <w-div   v-for="i in '12346789'" :key="i" transition radius="4"  bg="#44567245" flex="center" hover="bg=#123456 c=white">🎄{{ i }}</w-div>
+  <w-div grid="item grow-1-5 gcol-2-3" transition radius="4"  bg="#44567245" flex="center" hover="bg=#123456 c=white">🧦5</w-div>
+</w-div>
 </template> 
 
 

@@ -1,8 +1,11 @@
 
+
+
+
+
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useClass } from './interface'  
-import Wocao from './pages/wocao.vue'
+import { useClass } from '../interface'  
  
     
 
@@ -17,7 +20,7 @@ const img = ref(as.img)
    
 </script>  
 <template> 
-<Wocao></Wocao>
+<w-div bg="red"></w-div>
 </template> 
 
 
