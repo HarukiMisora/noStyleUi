@@ -14,7 +14,7 @@ interface PluginOptions {
 }
 
 
-export default function propStyleCompile(options:PluginOptions={}):Plugin{ 
+export default async function propStyleCompile(options:PluginOptions={}):Promise<Plugin>{ 
   const justForBuild = options.justForBuild || false;
   if(justForBuild)return {name:'prop-style-compile'} //什么都不做
   // const logOut = options.debug? (options.log || console.log):()=>{}
@@ -25,7 +25,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
   const excludePath = options.excludePath || [];
   const VIRTUAL_CSS_ID = 'virtual:prop-style-compile-css'
   let RESOLVED_VIRTUAL_CSS_ID = '\0' + VIRTUAL_CSS_ID+'.css'; 
-  let {globalCSS,newCodes} = compiePre(includePath,excludePath,WGroupNames); 
+  let {globalCSS,newCodes} = await compiePre(includePath,excludePath,WGroupNames); 
 
   //扫描.vue文件，收集所有组件的style，并返回style和新的code
   // let server = null as any; // 保存 ViteDevServer 实例
@@ -63,6 +63,7 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
               // 执行自定义更新
               console.log('[prop-style] hot update', data.changeFile);
               const styles= document.getElementsByTagName('style')
+              console.log(styles)
               let propStyle:any = null
               for (let i = 0; i < styles.length; i++) {
                 const style = styles[i]
@@ -104,12 +105,12 @@ export default function propStyleCompile(options:PluginOptions={}):Plugin{
       return code;
     },
     
-    handleHotUpdate({ file, server }) {
+    async handleHotUpdate({ file, server }) {
       if (file.endsWith('.vue')){
         globalCSS = ''
         console.log(`[prop-style-compile] File changed: ${file}`);
         // 重新编译
-        const result = compiePre(includePath, excludePath, WGroupNames);
+        const result = await compiePre(includePath, excludePath, WGroupNames);
         globalCSS = result.globalCSS;
         newCodes = result.newCodes;
         

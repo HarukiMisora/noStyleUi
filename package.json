@@ -1,17 +1,18 @@
 {
   "name": "nostyleui",
   "private": false,
-  "version": "0.4.0-beta.19",
+  "version": "0.4.0-beta.20",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "build:pack": "npm run build:test && npm publish",
-    "build:test": "npm run clear && npm run build:types && vite build --emptyOutDir false && npm run build:sass",
+    "build:test": "npm run clear && npm run build:types && vite build --emptyOutDir false && npm run rewriteExternals && npm run build:sass",
     "build:sass": "sass src/noStyleUi/div/style/css.scss dist/nostyleui.css -s compressed --no-source-map",
     "build:types": "tsc -p tsconfig.lib.json",
-    "clear": "node scripts/clear.js"
+    "clear": "node scripts/clear.js",
+    "rewriteExternals": "node scripts/rewriteExternal.js"
   },
   "files": [
     "dist"

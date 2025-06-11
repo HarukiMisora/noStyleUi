@@ -1,5 +1,5 @@
 
-import fs from 'fs';
+// import fs from 'fs';
 import { compieCore } from './compieCore';
 import compileCss from './cpmpieCss';
 import type { myCSSStyleDeclaration } from '../interface/css';
@@ -10,11 +10,14 @@ import type { myCSSStyleDeclaration } from '../interface/css';
 
 
 
-export default function compiePre(includes:string[],excludes:string[],WGroupNames:string[]=[]):{globalCSS:string,newCodes:{[key:string]:string}}{
+export default async function compiePre(includes:string[],excludes:string[],WGroupNames:string[]=[]):Promise<{globalCSS:string,newCodes:{[key:string]:string}}>{
+  if (process.env.BROWSER) return {globalCSS:`/* propStyleCompie */\n`,newCodes:{}};
+
   const injectedCSS = [] as {key:string,value:myCSSStyleDeclaration,sort:number}[]
   let globalCSS = ''
   const newCodes:{[key:string]:string} = {}
   
+  const fs = await import('fs').then(res=>res.default)
   
   const runPath = process.cwd();
 

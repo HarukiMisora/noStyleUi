@@ -1,8 +1,8 @@
 import { defineConfig ,loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
-import {propStyleCompile} from './src/interface'
-// import {propStyleCompile} from './dist/no-style-ui.es.js'
+// import {propStyleCompile} from './src/interface'
+import {propStyleCompile} from './dist/no-style-ui.es.js'
 const pathResolve = (dir: string) => resolve(__dirname, dir)
 
 
@@ -36,7 +36,7 @@ export default defineConfig(({mode})=>{
       lib: {
         entry: pathResolve('./src/index.ts'),  
         name: 'noStyleUi',
-        fileName: (format) => `no-style-ui.${format}.js` 
+        fileName: (format) => `no-style-ui.${format}.js`,
       },
       rollupOptions: {
         // 确保外部化处理那些你不想打包进库的依赖 
@@ -45,8 +45,10 @@ export default defineConfig(({mode})=>{
           // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
           globals: {
             vue: 'Vue'
-          }
-        }
+          },
+
+        },
+   
       },
       outDir: 'dist' // 指定输出目录
     }):({}),
