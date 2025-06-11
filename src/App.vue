@@ -16,64 +16,40 @@ const img = ref(as.img)
    
 </script>  
 <template> 
- 
-<w-div flex="g-10"> 
-  <w-div flex="row">
-    <w-group w="30" h="30">  
-      row
-      <w-div bg="red"></w-div>
-      <w-div bg="green"></w-div>
-      <w-div bg="blue"></w-div>
-      <w-div bg="#FF0"></w-div>
-      <w-div bg="#00FFFF"></w-div>
-      <w-div bg="rgb(255,0,255)"></w-div>
-      <w-div bg="rgba(255,0,255,0.5)"></w-div>
-      <w-div bg="red+green+#00f+rgba(255,255,0,0.5)"></w-div>
-    </w-group>
-  </w-div>
-  <w-div :flex="['row-r']">
-    <w-group w="30" h="30">
-      row-r
-      <w-div bg="red"></w-div>
-      <w-div bg="green"></w-div>
-      <w-div bg="blue"></w-div>
-      <w-div bg="#FF0"></w-div>
-      <w-div bg="#00FFFF"></w-div>
-      <w-div bg="rgb(255,0,255)"></w-div>
-      <w-div bg="rgba(255,0,255,0.5)"></w-div>
-      <w-div bg="red+green+#00f+rgba(255,255,0,0.5)"></w-div>
-    </w-group>
-  </w-div>
+ <div w="600">
+<w-div flex h="150"  c="#fff" bg="green" >
+  <w-group flex="1" bd="solid red 1">
+    <w-div  flex="i-start j-end" >
+      <w-div>i-start</w-div>
+      <w-div>j-end</w-div>
+    </w-div>
+    <w-div  flex="i-center j-center" >
+      <w-div>i-center</w-div>
+      <w-div>j-center</w-div>
+    </w-div>
+    <w-div  flex="i-end j-start" >
+      <w-div>i-end</w-div>
+      <w-div>j-start</w-div>
+    </w-div>
+  </w-group>
 </w-div>
-<w-div flex="row g-10" mt="10">
-  <w-div flex="col">
-    <w-group w="30" h="30">
-      col
-      <w-div bg="red"></w-div>
-      <w-div bg="green"></w-div>
-      <w-div bg="blue"></w-div>
-      <w-div bg="#FF0"></w-div>
-      <w-div bg="#00FFFF"></w-div>
-      <w-div bg="rgb(255,0,255)"></w-div>
-      <w-div bg="rgba(255,0,255,0.5)"></w-div>
-      <w-div bg="red+green+#00f+rgba(255,255,0,0.5)"></w-div>
-    </w-group>
-  </w-div>
-  <w-div :flex="['col-r']">
-    <w-group w="30" h="30">
-      col-r
-      <w-div bg="red"></w-div>
-      <w-div bg="green"></w-div>
-      <w-div bg="blue"></w-div>
-      <w-div bg="#FF0"></w-div>
-      <w-div bg="#00FFFF"></w-div>
-      <w-div bg="rgb(255,0,255)"></w-div>
-      <w-div bg="rgba(255,0,255,0.5)"></w-div>
-      <w-div bg="red+green+#00f+rgba(255,255,0,0.5)"></w-div>
-    </w-group>
-  </w-div>
+<w-div flex h="150"  c="#fff" bg="green" >
+  <w-group flex="1" bd="solid red 1">
+    <w-div  flex="i-start j-around" >
+      <w-div>i-start</w-div>
+      <w-div>j-around</w-div>
+    </w-div>
+    <w-div  flex="i-center j-between" >
+      <w-div>i-center</w-div>
+      <w-div>j-between</w-div>
+    </w-div>
+    <w-div  flex="i-end j-evenly" >
+      <w-div>i-end</w-div>
+      <w-div>j-start</w-div>
+    </w-div>
+  </w-group>
 </w-div>
-
+</div>
 </template> 
 
 

@@ -42,7 +42,61 @@ const displayValues:any = {
     center:{
       alignItems:'center',
       justifyContent:'center'
-    }
+    },
+    row(short:string){
+      console.log({short},'...row');
+      const value = short.endsWith('-r')?'row-reverse':'row'
+      return {
+       flexDirection:value,
+      }
+    },
+    col(short:string){
+      console.log({short},'...col');
+      const value = short.endsWith('-r')?'column-reverse':'column'
+      return {
+       flexDirection:value, 
+      }
+    },
+    1:{
+      flexGrow:1,
+    },
+  },
+  items:{
+    start:{
+      alignItems:'flex-start',
+    },
+    end:{
+      alignItems:'flex-end',
+    },
+    center:{
+      alignItems:'center',
+    },
+    stretch:{
+      alignItems:'stretch',
+    },
+    baseline:{
+      alignItems:'baseline',
+    },
+  },
+  justify:{
+    start:{
+      justifyContent:'flex-start',
+    },
+    end:{
+      justifyContent:'flex-end',
+    },
+    center:{
+      justifyContent:'center',
+    },
+    between:{
+      justifyContent:'space-between',
+    },
+    around:{
+      justifyContent:'space-around',
+    },
+    evenly:{
+      justifyContent:'space-evenly',
+    },
   },
   grid:{
     center:{
