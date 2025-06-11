@@ -16,40 +16,10 @@ const img = ref(as.img)
    
 </script>  
 <template> 
- <div w="600">
-<w-div flex h="150"  c="#fff" bg="green" >
-  <w-group flex="1" bd="solid red 1">
-    <w-div  flex="i-start j-end" >
-      <w-div>i-start</w-div>
-      <w-div>j-end</w-div>
-    </w-div>
-    <w-div  flex="i-center j-center" >
-      <w-div>i-center</w-div>
-      <w-div>j-center</w-div>
-    </w-div>
-    <w-div  flex="i-end j-start" >
-      <w-div>i-end</w-div>
-      <w-div>j-start</w-div>
-    </w-div>
-  </w-group>
+<w-div grid="col-3 row--45-40 g-5"  >
+  <w-div   v-for="i in '12346789'" :key="i" transition radius="4"  bg="#44567245" flex="center" hover="bg=#123456 c=white">🎄{{ i }}</w-div>
+  <w-div grid="item grow-1-5 gcol-2-3" transition radius="4"  bg="#44567245" flex="center" hover="bg=#123456 c=white">🧦5</w-div>
 </w-div>
-<w-div flex h="150"  c="#fff" bg="green" >
-  <w-group flex="1" bd="solid red 1">
-    <w-div  flex="i-start j-around" >
-      <w-div>i-start</w-div>
-      <w-div>j-around</w-div>
-    </w-div>
-    <w-div  flex="i-center j-between" >
-      <w-div>i-center</w-div>
-      <w-div>j-between</w-div>
-    </w-div>
-    <w-div  flex="i-end j-evenly" >
-      <w-div>i-end</w-div>
-      <w-div>j-start</w-div>
-    </w-div>
-  </w-group>
-</w-div>
-</div>
 </template> 
 
 
