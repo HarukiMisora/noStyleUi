@@ -29,6 +29,17 @@ const mergeProps = [
   "position"
 ]
 
+const transformStyleName:{[key:string]:string} = {
+  borderTopWidth:'bd-t',
+  borderBottomWidth:'bd-b',
+  borderLeftWidth:'bd-l',
+  borderRightWidth:'bd-r',
+  borderLeftColor:'bd-l-c',
+  borderRightColor:'bd-r-c',
+  borderTopColor:'bd-t-c',
+  borderBottomColor:'bd-b-c',
+}
+
 
 export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
   return  restoreEscape(transformTemplate(code,(match)=>{  
@@ -232,7 +243,6 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
       styleIndex = prop.name === nodeStyleName? i:styleIndex 
       if(allProps.includes(prop.name)){ 
         const setStyle:setStyleT = (name,value) =>{ 
-          console.log({name,value},'style');
           // const item = {key:name,value:{
           //   [name]:value
           // }} as myCSSStyleDeclaration
@@ -252,14 +262,19 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             '-':'__',
             '*':'___',
             '\/':'____',
+            ',':'-'
           }
-          const key = `${<string>prop.name}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/)/g,(_match,index,str)=>{
+          const transformName = transformStyleName[<string>name] || prop.name
+          let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,)/g,(_match,index,str)=>{
             // console.log(_match,index,str,'?');    
             return match[_match]||'' 
           })}`
+
+          console.log({name,value,key},'style');
+
           if(value !== void 0){
             if(wGroupProp)className[key] = true;
-            if(!checkClassWrited(injectedCSS,'.'+key)){
+            if(!checkClassWrited(injectedCSS,'.'+key)){ 
               injectedCSS.push({
                 key:'.'+key,
                 value:<myCSSStyleDeclaration>{

@@ -6,6 +6,8 @@ type resT = [string|undefined,string|Object|undefined,number]
     r:'right',
     b:'bottom',
     l:'left',
+    y:['top','bottom'],
+    x:['left','right'],
   }
 
  const pxs = {
@@ -104,20 +106,50 @@ const displayValues:any = {
   bd:{
     s(short:string){
       const shorts = short.split('-')
-      const wocao = dirs[<'t'|'b'|'l'|'r'>shorts[3]]
-      const dir = wocao?('-'+wocao+'-'):'-'
-      const fullName = `border${dir}style`
-      return{
-        [fullName]: shorts[2]
+      const drs = dirs[<'t'|'b'|'l'|'r'>shorts[3]]
+      console.log({drs,short});
+      
+      if(Array.isArray(drs)){
+        let res:any = {}
+        for(const dr of drs){
+          const char = `-${dr}-`
+          const fullName = `border${char}style`
+          // return{
+            res[fullName]=shorts[2] 
+          // }
+        }
+        
+        return res
+      }else{
+        const char = drs?('-'+drs+'-'):'-'
+        const fullName = `border${char}style`
+        return{
+          [fullName]: shorts[2]
+        }
       }
     },
     c(short:string){
       const shorts = short.split('-')
-      const wocao = dirs[<'t'|'b'|'l'|'r'>shorts[3]]
-      const dir = wocao?('-'+wocao+'-'):'-'
-      const fullName = `border${dir}color`
-      return{
-        [fullName]: shorts[2]
+      const drs = dirs[<'t'|'b'|'l'|'r'>shorts[3]]
+      console.log({drs,short});
+      
+      if(Array.isArray(drs)){
+        let res:any = {}
+        for(const dr of drs){
+          const char = `-${dr}-`
+          const fullName = `border${char}color`
+          // return{
+            res[fullName]=shorts[2] 
+          // }
+        }
+        
+        return res
+      }else{
+        const char = drs?('-'+drs+'-'):'-'
+        const fullName = `border${char}color`
+        return{
+          [fullName]: shorts[2]
+        }
       }
     }
   }
