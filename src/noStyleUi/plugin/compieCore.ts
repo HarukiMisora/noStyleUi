@@ -63,10 +63,11 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
           generateCSS(Object.assign(node),className,injectedCSS,setClassWihoutName,false)
           // console.log({node},{props:node.props[0]});
           for(let prop of node.props){
-            for( let child of node.children){ 
-            // console.log('child=>',prop.name,{child});    
-            //自有属性?
+            for( let child of node.children.filter((item:any)=>1 === (item.type))){  
+            // console.log('child=>',prop.name,{child});       
+            //自有属性? 
             let isSelft:boolean = false
+            
             for(let childProp of child.props){
               const propName = prop.name === 'bind'? prop.rawName.replace(':','') : prop.name
               const childPropName = childProp.name === 'bind'? childProp.rawName.replace(':','') : childProp.name
