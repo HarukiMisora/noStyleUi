@@ -24,6 +24,7 @@ type resT = [string|undefined,string|Object|undefined,number]
   pl: "padding-left",
   pr: "padding-right",
   bg: "background",
+  f:"font-size",
   radius: "border-radius",
   g:"gap",
 } 
@@ -31,6 +32,9 @@ type resT = [string|undefined,string|Object|undefined,number]
 const colors = {
   c:'color',
   bc: "background-color",
+
+  fw:"font-weight",
+
 }
 const displays = ['flex','grid']
 
