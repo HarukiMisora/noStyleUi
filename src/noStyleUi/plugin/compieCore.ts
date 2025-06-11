@@ -267,7 +267,7 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             '.':'-'
           }
           const transformName = transformStyleName[<string>name] || prop.name
-          let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.)/g,(_match,index,str)=>{
+          let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.)/g,(_match)=>{
             // console.log(_match,index,str,'?');    
             return match[_match]||'' 
           })}`

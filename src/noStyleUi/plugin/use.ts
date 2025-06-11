@@ -4,16 +4,16 @@
 
 
 
-class ClassVal{
-  useing:string[] = []
-}
+// class ClassVal{
+//   useing:string[] = []
+// }
 
-interface OptionsT{
-  /** @description 选项的值 */
-  value:string
-  prop:string,
-  type:'implicit'|'value'|'key'|'key-value'[]
-}
+// interface OptionsT{
+//   /** @description 选项的值 */
+//   value:string
+//   prop:string,
+//   type:'implicit'|'value'|'key'|'key-value'[]
+// }
 
 
 /**
@@ -23,6 +23,6 @@ interface OptionsT{
  * @param expects 预期值
  * @returns 
  */
-export function useClass(prop:string[]|string,value:string,expects?:string[]):string{
+export function useClass(_prop:string[]|string,value:string,_expects?:string[]):string{
   return value
 }
