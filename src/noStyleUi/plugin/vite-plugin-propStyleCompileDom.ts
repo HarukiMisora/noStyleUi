@@ -138,7 +138,6 @@ export default async function propStyleCompile(options:PluginOptions={}):Promise
 
         return updates;
       }
-      
     }
   }
 }
