@@ -11,11 +11,11 @@ export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration,
     for(let j=0;j<values.length;j++){
       const prop = values[j] as keyofCSSStyleDeclaration;
       const val = value[prop];
-      css += `  ${camelToHyphen(<string>prop)}:${val};\n`;
+      css += `  ${camelToHyphen(<string>prop)}:${val};\n`; 
     }
     css += `}`;
   }
-  console.log(css,{injected:arr}); 
+  console.log({injected:arr}); 
   return css;
 }
 

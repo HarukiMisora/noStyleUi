@@ -93,10 +93,10 @@ export default async function propStyleCompile(options:PluginOptions={}):Promise
       // Vue 文件处理
       if (id.endsWith('.vue')) {
         const normalizedId = id.replace(/\//g, '\\');
-        // console.log(newCodes,{normalizedId});
+        // console.log(newCodes,{normalizedId}); 
         
         if (newCodes[normalizedId]) {
-          console.log({new:newCodes[normalizedId]});
+          // console.log({new:newCodes[normalizedId]});
           
           return { code: newCodes[normalizedId], map: null };
         }

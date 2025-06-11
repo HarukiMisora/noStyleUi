@@ -27,13 +27,13 @@ export default async function compiePre(includes:string[],excludes:string[],WGro
  for(let i of includes){
     //读取目录下所有文件 
     let files = fs.readdirSync(i);
-    console.log({files});
+    // console.log({files});
     
     for(let file of files){
       let filePath = i+'\\'+file
       if(fs.statSync(filePath).isFile()){
           //排除文件
-          if(excludes.some(item=>filePath.includes(item))){
+          if(excludes.some(item=>filePath.includes(item))){ 
             continue;
           }
           if(file.endsWith(".vue")){
@@ -43,7 +43,7 @@ export default async function compiePre(includes:string[],excludes:string[],WGro
             //替换内容
             const newCode = compieCore({code,WGroupNames,injectedCSS});
             if (newCode) {
-              newCodes[filePath] = newCode;
+              newCodes[filePath.replace(/\\\\/g,'\\')] = newCode;
             }
             //写入文件
             // fs.writeFileSync(filePath,content,"utf-8");
