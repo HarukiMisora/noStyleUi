@@ -1,14 +1,78 @@
 
 
 type resT = [string|undefined,string|Object|undefined,number]
-  const dirs = {
-    t:'top',
-    r:'right',
-    b:'bottom',
-    l:'left',
-    y:['top','bottom'],
-    x:['left','right'],
+
+export default function (short:string):resT{
+  const [prop,value,childValue] = short.split('-')
+  
+  console.log({prop,value,childValue,short},'class');  
+
+  const group = getGroup(prop,value,childValue,short)
+  if(group !== void 0){
+    console.log({group});
+    
+    return group
   }
+
+  if(prop in pxs){
+    const sort = getPxsSort(prop)
+    if(Array.isArray(pxs[prop as keyof typeof pxs])){
+      return [short,{
+        [pxs[prop as keyof typeof pxs][0]]:value+'px',
+        [pxs[prop as keyof typeof pxs][1]]:value+'px',
+      },sort]
+    }else{
+      return [<string>pxs[prop as keyof typeof pxs],value+'px',sort] 
+    }
+  }
+  if(prop in colors){
+    return [colors[prop as keyof typeof colors],value,0]
+  }
+  if(displays.includes(prop)){ 
+
+    return ['display',prop,0]  
+  }
+  return [undefined,undefined,0] 
+  
+}
+function getGroup(prop:string,value:string,childValue:string|undefined,short:string|undefined):resT|undefined{
+  const displays = displayValues[prop as keyof typeof displayValues]
+    if(displays!==void 0&&value in displays){
+      const displayValue = displays[value as keyof typeof displays]
+      let resValue = typeof displayValue ==='function'?displayValue(short):{...(childValue?displayValue[childValue as keyof typeof displayValue]||{}:displayValue)}
+
+      console.log({resValue,displays,prop,value,childValue},'resValue');
+      const sort = resValue?.sort||0 
+      // if(sort!==void 0){
+        delete resValue.sort 
+      // }
+        // delete resValue['*suffix']
+      return [prop+'-'+value,resValue,sort] 
+    }
+    return undefined
+}
+
+
+const dirs = {
+  t:'top',
+  r:'right',
+  b:'bottom',
+  l:'left',
+  y:['top','bottom'],
+  x:['left','right'],
+}
+
+export function getPxsSort(prop:string){
+  let arr = Object.keys(pxs)
+  for (let i = 0; i < arr.length; i++) { 
+    if(arr[i]===prop){
+      console.log({i,prop},'sortPxs')
+      return i
+    }
+  }
+  console.log({i:0,prop},'notFound')
+  return 0
+}
 
  const pxs = {
   w: "width",
@@ -217,52 +281,4 @@ const displayValues:any = {
 }
 
 
-export default function (short:string):resT{
-  const [prop,value,childValue] = short.split('-')
-  
-  console.log({prop,value,childValue,short},'class');  
 
-  const group = getGroup(prop,value,childValue,short)
-  if(group !== void 0){
-    console.log({group});
-    
-    return group
-  }
-
-  if(prop in pxs){
-    if(Array.isArray(pxs[prop as keyof typeof pxs])){
-      
-      return [short,{
-        [pxs[prop as keyof typeof pxs][0]]:value,
-        [pxs[prop as keyof typeof pxs][1]]:value,
-      },0]
-    }else{
-      return [<string>pxs[prop as keyof typeof pxs],value,1] 
-    }
-  }
-  if(prop in colors){
-    return [colors[prop as keyof typeof colors],value,0]
-  }
-  if(displays.includes(prop)){ 
-
-    return ['display',prop,0]  
-  }
-  return [undefined,undefined,0] 
-  
-}
-function getGroup(prop:string,value:string,childValue:string|undefined,short:string|undefined):resT|undefined{
-  const displays = displayValues[prop as keyof typeof displayValues]
-    if(displays!==void 0&&value in displays){
-      const displayValue = displays[value as keyof typeof displays]
-      let resValue = typeof displayValue ==='function'?displayValue(short):{...(childValue?displayValue[childValue as keyof typeof displayValue]||{}:displayValue)}
-
-      console.log({resValue,displays,prop,value,childValue},'resValue');
-      const sort = resValue?.sort||0 
-      // if(sort!==void 0){
-        delete resValue.sort 
-      // }
-        // delete resValue['*suffix']
-      return [prop+'-'+value,resValue,sort] 
-    }
-    return undefined
-}

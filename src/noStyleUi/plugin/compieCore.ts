@@ -11,7 +11,7 @@ import { config } from '../config/config';
 import createPixCss from '../div/functions/createPix.css';
 import createPositionCss from '../div/functions/createPosition.css';
 import { camelToHyphen } from '../untils';
-import abbreviationToFull from './abbreviationToFull';
+import abbreviationToFull, { getPxsSort } from './abbreviationToFull';
 import { createHoverCss } from '../div/functions/createHover.css';
 
 type injectedCSST = {key:string,value:myCSSStyleDeclaration,sort:number}[]
@@ -274,7 +274,7 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
                 value:<myCSSStyleDeclaration>{ 
                   [name]:value
                 },
-                sort:0
+                sort:getPxsSort(<string>prop.name) 
               })
             }
 

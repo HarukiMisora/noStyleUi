@@ -19,10 +19,10 @@ const img = ref(as.img)
 </script>   
 <template> 
  <w-div flex bg="#e1e1e1" bd="solid 1">
-                    <w-div h="300" w="200" bg="gray" p="20" :flex="['g-10','col']">
+                    <w-div px="50" pt="10vh" h="200" w="200" bg="gray" p="20" :flex="['g-10','col']">
                         <w-group flex hover="c=red bg=blue" transition>
                             <w-span >举世无双</w-span>
-                            <w-span >聪明绝顶</w-span>
+                            <w-span >聪明绝顶</w-span> 
                             <w-span >沉鱼落雁</w-span>
                             <w-span hover="c=red+blue+black bg=rgb(0,0,0)">hover字体的颜色也可以混合。</w-span>
                         </w-group>
