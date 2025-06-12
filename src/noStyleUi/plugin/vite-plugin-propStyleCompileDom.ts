@@ -96,7 +96,7 @@ export default async function propStyleCompile(options:PluginOptions={}):Promise
         // console.log(newCodes,{normalizedId}); 
         
         if (newCodes[normalizedId]) {
-          // console.log({new:newCodes[normalizedId]});
+          console.log({new:newCodes[normalizedId]});
           
           return { code: newCodes[normalizedId], map: null };
         }
@@ -129,7 +129,7 @@ export default async function propStyleCompile(options:PluginOptions={}):Promise
           
         }
 
-        const vuewModule =    server.moduleGraph.getModuleById(file); 
+        const vuewModule = server.moduleGraph.getModuleById(file); 
         const updates = []
         if (vuewModule) {
           server.moduleGraph.invalidateModule(vuewModule);

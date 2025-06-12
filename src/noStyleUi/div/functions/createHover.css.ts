@@ -15,8 +15,12 @@ const actions:{[key:string]:Function} = {
   c:({value,setStyle}:styleWithValuesT)=>{
     
     analysisColor(value[1],(color:string)=>{
+      // console.log({color},'nicao'); 
+
       setStyle('color',color)
     },(color:string)=>{
+      // console.log({color},'wocao');
+      
       setStyle('color',color)
     })
 

@@ -10,15 +10,20 @@ import {  analysisPxs } from "./analysis"
 
 export default function (prop:string,value:string|number,setClassName:setClassNameT,setStyle:setStyleT){
 
-  value = analysisPxs(value,'0','')
-  if(isIntegerString(<string>value)){
-    setStyle(<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop],undefined)
-    setClassName(`${prop}-${value}`,true)
-  }else{
-    console.log(setStyle);
-    
-    setStyle(<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop],<string>value)
-  }
+  value = analysisPxs(value,'0',['fw'].includes(prop)?'':'px')
+  // if(isIntegerString(<string>value)){
+  //   setStyle(<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop],undefined)
+  setClassName(`${prop}-${value}`,true) 
+  // }else{
+  //   console.log(setStyle);
+  //   if(['px','py','mx','my'].includes(prop)){
+  //     setStyle(<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop],prop.includes('x')?value+' 0':'0 '+value)
+
+  //   }else{
+  //     setStyle(<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop],<string>value) 
+
+  //   }
+  // }
 
 }
 

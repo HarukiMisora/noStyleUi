@@ -18,16 +18,35 @@ const img = ref(as.img)
    
 </script>   
 <template> 
-   <w-div  h="100vh" flex="col i-center j-center" class="main" radius="25" style="opacity: 0.9;">
-    <w-div class="title" f="80" fw="800" c="primary"  style="text-align: center;" >
-      <w-span   class="word"  v-for="(i,index) in title" :key="i">{{ i }}</w-span> 
-    </w-div>
-    <w-div   >FOR VUE3</w-div>
-    <w-div flex="g-20" mt="50">
-      <!-- <w-button type="primary">切换主题</w-button> -->
-      <w-button  type="primary" >开始使用</w-button> 
-    </w-div>
-  </w-div> 
+ <w-div flex bg="#e1e1e1" bd="solid 1">
+                    <w-div h="300" w="200" bg="gray" p="20" :flex="['g-10','col']">
+                        <w-group flex hover="c=red bg=blue" transition>
+                            <w-span >举世无双</w-span>
+                            <w-span >聪明绝顶</w-span>
+                            <w-span >沉鱼落雁</w-span>
+                            <w-span hover="c=red+blue+black bg=rgb(0,0,0)">hover字体的颜色也可以混合。</w-span>
+                        </w-group>
+                    </w-div>
+                    <w-div  flex="1 col">
+                        <w-group p="20" :bg="`${as.img} cover size--100% r-n center`" h="calc(100% / 4)" bd="b-1-solid-#0f0" transition>
+                            <w-div bg="right r-n">
+                                WGrop的作用是装载共有样式然后分发给子盒子,当然子盒自身的属性优先生效。
+                            </w-div>
+                            <w-div bg="red+blue+green" >
+                                多个颜色拼接可以混合颜色，red+blue+green 就是这个背景色。
+                                
+                            </w-div>
+                            <w-div bg="red+green+blue right" >
+                                颜色混合的顺序是从左到右混合。red+green+blue 会是这个背景色
+                            </w-div>
+                            <w-div  hover="bg=right c=red" bd="none"  >
+                                <w-span hover="c=blue">
+                                    hover属性可以直接便捷的创建hover的样式,这里有红色(父)和蓝色(子)两种hover样式。
+                                </w-span>
+                            </w-div>
+                        </w-group>
+                    </w-div>
+                </w-div>
 </template>  
 
 

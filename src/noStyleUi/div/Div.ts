@@ -43,6 +43,7 @@ export function renderHelper(props:PropT){
         hoverStyles[name] = value
     }
     const setHoverClassName:setClassNameT = (name,value=true) =>{
+        
         className[`hover-${name}`] = value
     }
 

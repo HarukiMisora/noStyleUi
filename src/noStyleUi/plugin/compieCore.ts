@@ -12,6 +12,7 @@ import createPixCss from '../div/functions/createPix.css';
 import createPositionCss from '../div/functions/createPosition.css';
 import { camelToHyphen } from '../untils';
 import abbreviationToFull from './abbreviationToFull';
+import { createHoverCss } from '../div/functions/createHover.css';
 
 type injectedCSST = {key:string,value:myCSSStyleDeclaration,sort:number}[]
 
@@ -50,17 +51,14 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
 
         const styles = {} as myCSSStyleDeclaration
         const className:{[key:string]:Boolean} ={}
-        const setClassName:setClassNameT = (name,value=true) =>{
-          className[name]= value 
-          if(value) injectCssByClassName(name,injectedCSS)
-        }
+
         const setClassWihoutName:setClassNameT = (name) =>{
           injectCssByClassName(name,injectedCSS)
         }
         //如果是WGroup组件，则将自有属性添加到子组件
 
         if(WGroupNames.includes(node.tag)){
-          generateCSS(Object.assign(node),className,injectedCSS,setClassWihoutName,false)
+          generateCSS(Object.assign(node),className,injectedCSS,false)
           // console.log({node},{props:node.props[0]});
           for(let prop of node.props){
             for( let child of node.children.filter((item:any)=>1 === (item.type))){  
@@ -135,7 +133,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         
         const nodeClassName = 'class'
         const nodeStyleName = 'style'
-        let {classIndex,styleIndex} = generateCSS(node,className,injectedCSS,setClassName)
+        let {classIndex,styleIndex} = generateCSS(node,className,injectedCSS)
         // console.log({classIndex,styleIndex});
         
         // logOut(node.props.map((item:any)=>item.name));
@@ -228,7 +226,7 @@ function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,log
 
 
 //接收一个node节点并生成css样式
-function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:injectedCSST =[],setClassName:setClassNameT,wGroupProp:boolean=true){
+function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:injectedCSST =[],wGroupProp:boolean=true){
         // logOut({node,nodeClassName,nodeStyleName});
   let classIndex = -1
   let styleIndex = -1
@@ -244,14 +242,6 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
       styleIndex = prop.name === nodeStyleName? i:styleIndex 
       if(allProps.includes(prop.name)){ 
         const setStyle:setStyleT = (name,value) =>{ 
-          // const item = {key:name,value:{
-          //   [name]:value
-          // }} as myCSSStyleDeclaration
-          // if(value === void 0 ){
-          //   delete styles[name] 
-          // }else{
-          //   styles[name] = value
-          // }
           const match:{[key:string]:string} = {
             'px':'',
             '#':'c',
@@ -271,7 +261,9 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             // console.log(_match,index,str,'?');    
             return match[_match]||'' 
           })}`
-
+          if(prop.name === 'hover'){
+            key = `hover-${key.replace(/hover-/g,'')}`
+          }
           console.log({name,value,key},'style');
 
           if(value !== void 0){
@@ -279,17 +271,27 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             if(!checkClassWrited(injectedCSS,'.'+key)){ 
               injectedCSS.push({
                 key:'.'+key,
-                value:<myCSSStyleDeclaration>{
+                value:<myCSSStyleDeclaration>{ 
                   [name]:value
                 },
                 sort:0
               })
             }
 
-          }
+          } 
 
           
     
+        }
+        const setClassName:setClassNameT = (name,value=true) =>{
+          
+          if(prop.name === 'hover'){
+            name = `hover-${name.replace(/hover-/g,'')}`
+          }
+          if(wGroupProp){
+            className[name]= value  
+          }
+          if(value) injectCssByClassName(name,injectedCSS)
         }
         
         if(attributeGrop.includes(prop.name)){
@@ -359,7 +361,7 @@ function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[]
 }
 
 function injectCssByClassName(className:string,injectedCSS:injectedCSST =[]){
-  const [full,relValue,sort] = abbreviationToFull(className)
+  const [full,relValue,sort] = abbreviationToFull(className.replace(/hover-/g,''))
   const key = '.'+className
   
   if(full!==void 0&& !checkClassWrited(injectedCSS,key)){
@@ -527,7 +529,7 @@ function restoreEscape(text: string){
 }
 
 //获取要解析的属性
-const allProps = Object.keys(config.props).filter(item=>item!=='hover')
+const allProps = Object.keys(config.props) 
 //生成样式函数
 const createStyles:{[key:string]:Function} = {
   grid:createGridCss,
@@ -537,7 +539,8 @@ const createStyles:{[key:string]:Function} = {
   bd:createBdCss,
   transition:createTransition,
   position:createPositionCss,
-  attributeGrop:createPixCss
+  attributeGrop:createPixCss,
+  hover:createHoverCss
 }
 //检查这个样式有没有被书写过
 function checkClassWrited(css:injectedCSST,name:string){

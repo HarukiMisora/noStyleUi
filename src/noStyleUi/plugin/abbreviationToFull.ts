@@ -23,6 +23,10 @@ type resT = [string|undefined,string|Object|undefined,number]
   pb: "padding-bottom",
   pl: "padding-left",
   pr: "padding-right",
+  px:["padding-left","padding-right"],
+  py:["padding-top","padding-bottom"],
+  mx:["margin-left","margin-right"],
+  my:["margin-top","margin-bottom"],
   bg: "background",
   f:"font-size",
   radius: "border-radius",
@@ -32,7 +36,6 @@ type resT = [string|undefined,string|Object|undefined,number]
 const colors = {
   c:'color',
   bc: "background-color",
-
   fw:"font-weight",
 
 }
@@ -227,7 +230,15 @@ export default function (short:string):resT{
   }
 
   if(prop in pxs){
-    return [pxs[prop as keyof typeof pxs],value+'px',0] 
+    if(Array.isArray(pxs[prop as keyof typeof pxs])){
+      
+      return [short,{
+        [pxs[prop as keyof typeof pxs][0]]:value,
+        [pxs[prop as keyof typeof pxs][1]]:value,
+      },0]
+    }else{
+      return [<string>pxs[prop as keyof typeof pxs],value,1] 
+    }
   }
   if(prop in colors){
     return [colors[prop as keyof typeof colors],value,0]
