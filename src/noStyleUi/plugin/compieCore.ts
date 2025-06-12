@@ -52,9 +52,9 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         const styles = {} as myCSSStyleDeclaration
         const className:{[key:string]:Boolean} ={}
 
-        const setClassWihoutName:setClassNameT = (name) =>{
-          injectCssByClassName(name,injectedCSS)
-        }
+        // const setClassWihoutName:setClassNameT = (name) =>{
+        //   injectCssByClassName(name,injectedCSS)
+        // }
         //如果是WGroup组件，则将自有属性添加到子组件
 
         if(WGroupNames.includes(node.tag)){
