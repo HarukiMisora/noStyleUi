@@ -10,7 +10,7 @@ import type { myCSSStyleDeclaration } from '../interface/css';
 
 
 
-export default async function compiePre(includes:string[],excludes:string[],WGroupNames:string[]=[]):Promise<{globalCSS:string,newCodes:{[key:string]:string}}>{
+export default async function compiePre(includes:string[],excludes:string[],WGroupNames:string[]=[],compieBefore:(code:string,id:string)=>string):Promise<{globalCSS:string,newCodes:{[key:string]:string}}>{
   if (process.env.BROWSER) return {globalCSS:`/* propStyleCompie */\n`,newCodes:{}};
 
   const injectedCSS = [] as {key:string,value:myCSSStyleDeclaration,sort:number}[]
@@ -24,38 +24,38 @@ export default async function compiePre(includes:string[],excludes:string[],WGro
   console.log("runPath",runPath);
 
   function eachTree(includes:string[],excludes:string[]){
- for(let i of includes){
-    //读取目录下所有文件 
-    let files = fs.readdirSync(i);
-    // console.log({files});
-    
-    for(let file of files){
-      let filePath = i+'\\'+file
-      if(fs.statSync(filePath).isFile()){
-          //排除文件
-          if(excludes.some(item=>filePath.includes(item))){ 
-            continue;
-          }
-          if(file.endsWith(".vue")){
-            //读取文件内容
-            let code = fs.readFileSync(filePath,"utf-8");
-            // console.log({filePath,code});
-            //替换内容
-            const newCode = compieCore({code,WGroupNames,injectedCSS});
-            if (newCode) {
-              newCodes[filePath.replace(/\\\\/g,'\\')] = newCode;
+  for(let i of includes){
+      //读取目录下所有文件 
+      let files = fs.readdirSync(i);
+      // console.log({files});
+      
+      for(let file of files){
+        let filePath = i+'\\'+file
+        if(fs.statSync(filePath).isFile()){
+            //排除文件
+            if(excludes.some(item=>filePath.includes(item))){ 
+              continue;
             }
-            //写入文件
-            // fs.writeFileSync(filePath,content,"utf-8");
+            if(file.endsWith(".vue")){
+              //读取文件内容
+              let code = compieBefore(fs.readFileSync(filePath,"utf-8"),filePath);
+              // console.log({filePath,code});
+              //替换内容
+              const newCode = compieCore({code,WGroupNames,injectedCSS});
+              if (newCode) {
+                newCodes[filePath.replace(/\\\\/g,'\\')] = newCode;
+              }
+              //写入文件
+              // fs.writeFileSync(filePath,content,"utf-8");
+            }
           }
-        }
 
-      else if(fs.statSync(filePath).isDirectory()){
-        
-        //递归处理目录
-        eachTree([filePath],excludes);
-      }  
-    }
+        else if(fs.statSync(filePath).isDirectory()){
+          
+          //递归处理目录
+          eachTree([filePath],excludes);
+        }  
+      }
   }
 
 }

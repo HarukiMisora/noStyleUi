@@ -129,7 +129,7 @@ const displayValues:any = {
       }
     },
     1:{
-      flexGrow:1,
+      flex:1,
     },
   },
   items:{

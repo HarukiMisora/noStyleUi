@@ -10,7 +10,8 @@ interface PluginOptions {
   log?:(...args:any[])=>void // 日志函数 
   indexFile?:(url:string)=>boolean // 入口文件
   includePath?:string[] // 包含的目录
-  excludePath?:string[] // 排除的目录
+  excludePath?:string[] // 排除的目录,
+  compileBefore?:(code:string,id:string)=>string // 编译前的处理函数
 }
 
 
@@ -24,8 +25,9 @@ export default async function propStyleCompile(options:PluginOptions={}):Promise
   const includePath = options.includePath || ['src/'];
   const excludePath = options.excludePath || [];
   const VIRTUAL_CSS_ID = 'virtual:prop-style-compile-css'
+  const compileBefore = options.compileBefore || (code=>code)
   let RESOLVED_VIRTUAL_CSS_ID = '\0' + VIRTUAL_CSS_ID+'.css'; 
-  let {globalCSS,newCodes} = await compiePre(includePath,excludePath,WGroupNames); 
+  let {globalCSS,newCodes} = await compiePre(includePath,excludePath,WGroupNames,compileBefore); 
 
   //扫描.vue文件，收集所有组件的style，并返回style和新的code
   // let server = null as any; // 保存 ViteDevServer 实例
@@ -110,7 +112,7 @@ export default async function propStyleCompile(options:PluginOptions={}):Promise
         globalCSS = ''
         console.log(`[prop-style-compile] File changed: ${file}`);
         // 重新编译
-        const result = await compiePre(includePath, excludePath, WGroupNames);
+        const result = await compiePre(includePath, excludePath, WGroupNames,compileBefore);
         globalCSS = result.globalCSS;
         newCodes = result.newCodes;
         
