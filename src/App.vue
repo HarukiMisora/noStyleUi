@@ -18,35 +18,22 @@ const img = ref(as.img)
    
 </script>   
 <template> 
- <w-div flex bg="white" bd="solid 1" grid="item">
-                    <w-div px="50" pt="10vh" h="200" w="200" bg="gray" p="20" :flex="['g-10','col']">
-                        <w-group flex hover="c=red bg=blue" transition>
-                            <w-span >举世无双</w-span>
-                            <w-span >聪明绝顶</w-span> 
-                            <w-span >沉鱼落雁</w-span>
-                            <w-span hover="c=red+blue+black bg=rgb(0,0,0)">hover字体的颜色也可以混合。</w-span>
+                    <w-div flex="g-10 wrap">
+                        <w-group w="calc(95% / 3)" h="150" c="#fff" :bg="`green size-75-75 r-n ${as.img}`" >
+                            <w-div bg="green size-75-75 r-n" >left</w-div>
+                            <w-div bg="top center" >top center</w-div>
+                            <w-div bg="right">right</w-div>
+                            <w-div bg="left center">left center</w-div>
+                            <w-div :bg="`${img} center`" transition>center</w-div>
+                            <w-div bg="right center">right center</w-div>
+                            <w-div bg="bottom left">bottom left</w-div>
+                            <w-div bg="center bottom">center bottom</w-div>
+                            <w-div bg="right bottom">right bottom</w-div>
+                            <w-div bg="p-100">p-100 距离左边100px</w-div> 
+                            <w-div bg="p-50%">p-50% 距离左边50%(position) </w-div>
+                            <w-div bg="p-100-100%">p-100-100% 距离左边100px，距离顶边100% </w-div>
                         </w-group>
                     </w-div>
-                    <w-div  flex="1 col">
-                        <w-group p="20" :bg="`${as.img} cover size--100% r-n center`" h="calc(100% / 4)" bd="b-1-solid-#0f0" transition>
-                            <w-div bg="right r-n">
-                                WGrop的作用是装载共有样式然后分发给子盒子,当然子盒自身的属性优先生效。
-                            </w-div>
-                            <w-div bg="red+blue+green" >
-                                多个颜色拼接可以混合颜色，red+blue+green 就是这个背景色。
-                                
-                            </w-div>
-                            <w-div bg="red+green+blue right" >
-                                颜色混合的顺序是从左到右混合。red+green+blue 会是这个背景色
-                            </w-div>
-                            <w-div  hover="bg=right c=red" bd="none"  >
-                                <w-span hover="c=blue">
-                                    hover属性可以直接便捷的创建hover的样式,这里有红色(父)和蓝色(子)两种hover样式。
-                                </w-span>
-                            </w-div>
-                        </w-group>
-                    </w-div>
-                </w-div>
 </template>  
 
 

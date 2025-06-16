@@ -132,6 +132,9 @@ const displayValues:any = {
     1:{
       flex:1,
     },
+    wrap:{
+      flexWrap:'wrap',
+    }
   },
   items:{
     start:{
@@ -210,7 +213,8 @@ const displayValues:any = {
       y:{
         backgroundRepeat: 'repeat-y',
       }
-    }
+    },
+
   },
   bs:{
     fill:{

@@ -249,7 +249,7 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             '%':'p', 
             '(':'_',
             ')':'_',  
-            ' ':'',
+            ' ':'-',
             '+':'_',
             '-':'__',
             '*':'___',

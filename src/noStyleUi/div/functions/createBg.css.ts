@@ -8,6 +8,7 @@ const actions:{[key:string]:Function} = {
   size:({setStyle,value}:styleWithValuesT)=>{
     const w = analysisPxs(value[1],'auto')
     const h = analysisPxs(value[2],'auto')
+    // console.log(w,h);
     
     setStyle('backgroundSize',`${w} ${h}`)  
     return true
@@ -16,7 +17,7 @@ const actions:{[key:string]:Function} = {
   p:(option:any)=>actions.posn(option),
   posn:({setStyle,value}:styleWithValuesT)=>{
     const x = analysisPxs(value[1],'0')
-    const y = analysisPxs(value[2],'0')
+    const y = analysisPxs(value[2],'0') 
     // console.log(x,y);
     
     setStyle('backgroundPositionX',x)

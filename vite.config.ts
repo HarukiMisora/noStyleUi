@@ -23,9 +23,9 @@ export default defineConfig(({mode})=>{
         // entity:'all'
         log: (debugOptions) => {
           if(debugOptions.id.endsWith('App.vue')){
-            console.log(debugOptions.message) 
+            console.log(debugOptions.message,debugOptions.fucName) 
           }else if(debugOptions.id ==='injectedCss'){
-            console.log(debugOptions.message) 
+            console.log(debugOptions.message,debugOptions.fucName)  
           }
           // console.log(debugOptions) 
         },
