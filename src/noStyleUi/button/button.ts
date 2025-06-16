@@ -22,7 +22,6 @@ export const button = defineComponent({
 
         let activeHover = ref(false)
         const mouseEnterFunction = ()=>{
-            // console.log(props);
             
             if(!props.hover||props.disabled)return
             activeHover.value = true
@@ -48,7 +47,6 @@ export const button = defineComponent({
     render(){
         
         const {className,styles,hoverStyles} = renderHelper(<PropT>this.$props)
-        // console.log(this.$props);
         
         className['w-button'] = true 
         if(this.$props.type !=='none'){

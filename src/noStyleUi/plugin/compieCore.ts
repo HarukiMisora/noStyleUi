@@ -13,6 +13,7 @@ import createPositionCss from '../div/functions/createPosition.css';
 import { camelToHyphen } from '../untils';
 import abbreviationToFull, { getPxsSort } from './abbreviationToFull';
 import { createHoverCss } from '../div/functions/createHover.css';
+import type { logOutF } from './vite-plugin-propStyleCompileDom';
 
 type injectedCSST = {key:string,value:myCSSStyleDeclaration,sort:number}[]
 
@@ -42,7 +43,7 @@ const transformStyleName:{[key:string]:string} = {
 }
 
 
-export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
+export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOutF,id:string){ 
   return  restoreEscape(transformTemplate(code,(match)=>{  
       // logOut({match},'卧槽'); 
       // console.log('match=>',match);  
@@ -58,7 +59,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         //如果是WGroup组件，则将自有属性添加到子组件
 
         if(WGroupNames.includes(node.tag)){
-          generateCSS(Object.assign(node),className,injectedCSS,false)
+          generateCSS(Object.assign(node),className,injectedCSS,false,logOut,id)
           // console.log({node},{props:node.props[0]});
           for(let prop of node.props){
             for( let child of node.children.filter((item:any)=>1 === (item.type))){  
@@ -83,7 +84,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
                 4:()=>{//子不为bind，父为bind
                   const temp = JSON.parse(JSON.stringify(childProp))
                   const temp2 = JSON.parse(JSON.stringify(prop))
-                  injectedCSSAnly(temp.name,temp.value.content,injectedCSS)
+                  injectedCSSAnly(temp.name,temp.value.content,injectedCSS,logOut)
                   childProp.name = temp2.name 
                   childProp.exp = temp2.exp
                   childProp.type = temp2.type 
@@ -133,7 +134,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT){
         
         const nodeClassName = 'class'
         const nodeStyleName = 'style'
-        let {classIndex,styleIndex} = generateCSS(node,className,injectedCSS)
+        let {classIndex,styleIndex} = generateCSS(node,className,injectedCSS,true,logOut,id)
         // console.log({classIndex,styleIndex});
         
         // logOut(node.props.map((item:any)=>item.name));
@@ -226,7 +227,7 @@ function eachTree(node:any,callback:(node:any,index:number,parent:any)=>void,log
 
 
 //接收一个node节点并生成css样式
-function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:injectedCSST =[],wGroupProp:boolean=true){
+function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:injectedCSST =[],wGroupProp:boolean=true,logOut:logOutF,id:string){
         // logOut({node,nodeClassName,nodeStyleName});
   let classIndex = -1
   let styleIndex = -1
@@ -264,7 +265,8 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
           if(prop.name === 'hover'){
             key = `hover-${key.replace(/hover-/g,'')}`
           }
-          console.log({name,value,key},'style');
+          logOut({message:{name,value,key},fucName:'generateCSS',id,time:Date.now()})
+          // console.log({name,value,key},'style');
 
           if(value !== void 0){
             if(wGroupProp)className[key] = true;
@@ -291,7 +293,7 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
           if(wGroupProp){
             className[name]= value  
           }
-          if(value) injectCssByClassName(name,injectedCSS)
+          if(value) injectCssByClassName(name,injectedCSS,logOut) 
         }
         
         if(attributeGrop.includes(prop.name)){
@@ -331,8 +333,8 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
   return {classIndex,styleIndex}
 }
 //只注入css样式,不用考虑类名的注入
-function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[]){
-  console.log('injectedCSSAnly\n'); 
+function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[],logOut:logOutF){
+  // console.log('injectedCSSAnly\n'); 
   
   const setStyle = (name:string,value:string) => {
     const key = `${prop}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
@@ -346,7 +348,7 @@ function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[]
           sort:0
         }
         injectedCSS.push(injectedCSSItem)
-        console.log({injectedCSSItem});
+        // console.log({injectedCSSItem});
       }
 
     }
@@ -354,14 +356,14 @@ function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[]
   }
   const setClassName:setClassNameT = (name,value=true) =>{
     if(!value)return
-    injectCssByClassName(name,injectedCSS)
+    injectCssByClassName(name,injectedCSS,logOut)
   }
   createStyles[prop](content,setClassName,setStyle) 
 
 }
 
-function injectCssByClassName(className:string,injectedCSS:injectedCSST =[]){
-  const [full,relValue,sort] = abbreviationToFull(className.replace(/hover-/g,''))
+function injectCssByClassName(className:string,injectedCSS:injectedCSST =[],logOut:logOutF){
+  const [full,relValue,sort] = abbreviationToFull(className.replace(/hover-/g,''),logOut)
   const key = '.'+className
   
   if(full!==void 0&& !checkClassWrited(injectedCSS,key)){

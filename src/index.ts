@@ -27,7 +27,6 @@ export{
 export {group as WGroup} from './noStyleUi/group/group'
 export {ghost as WGhost} from './noStyleUi/ghost/ghost'
 export  function propStyle(Vue:any){
-    // console.log(variables);
     Vue.component('WGroup',WGroup)
     Vue.component('WGhost',WGhost)
 

@@ -18,7 +18,7 @@ const img = ref(as.img)
    
 </script>   
 <template> 
- <w-div flex bg="#e1e1e1" bd="solid 1">
+ <w-div flex bg="white" bd="solid 1" grid="item">
                     <w-div px="50" pt="10vh" h="200" w="200" bg="gray" p="20" :flex="['g-10','col']">
                         <w-group flex hover="c=red bg=blue" transition>
                             <w-span >举世无双</w-span>

@@ -1,7 +1,8 @@
 import { camelToHyphen } from "../untils";
 import type { myCSSStyleDeclaration,keyofCSSStyleDeclaration } from "../interface/css";
+import type { logOutF } from "./vite-plugin-propStyleCompileDom";
 //css编译
-export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration,sort:number}[]):string{
+export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration,sort:number}[],logOut:logOutF,id:string):string{
   let css = '';
   arr.sort((a,b)=>a.sort-b.sort);
   for(let i=0;i<arr.length;i++){
@@ -10,7 +11,7 @@ export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration,
     if(key.startsWith('.hover-')){
       key +=':hover';
     }
-    console.log({key},'className');
+    // console.log({key},'className');
     
     css += `\n${key} {\n`;
     for(let j=0;j<values.length;j++){
@@ -20,9 +21,9 @@ export default function compileCss(arr: {key:string,value:myCSSStyleDeclaration,
     }
     css += `}`;
   }
-  console.log({injected:arr}); 
+  logOut({id,message:{injected:arr},fucName:'compileCss',time:Date.now()}) 
   return css;
 }
-
+ 
 
 

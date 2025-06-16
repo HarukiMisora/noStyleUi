@@ -1,15 +1,16 @@
+import type { logOutF } from "./vite-plugin-propStyleCompileDom";
 
 
 type resT = [string|undefined,string|Object|undefined,number]
 
-export default function (short:string):resT{
+export default function (short:string,logOut:logOutF):resT{
   const [prop,value,childValue] = short.split('-')
   
-  console.log({prop,value,childValue,short},'class');  
+  logOut({id:'abbreviationToFull',fucName:'abbreviationToFull',message:{short,prop,value,childValue},time:Date.now()})
 
   const group = getGroup(prop,value,childValue,short)
   if(group !== void 0){
-    console.log({group});
+    // console.log({group});
     
     return group
   }
@@ -41,7 +42,7 @@ function getGroup(prop:string,value:string,childValue:string|undefined,short:str
       const displayValue = displays[value as keyof typeof displays]
       let resValue = typeof displayValue ==='function'?displayValue(short):{...(childValue?displayValue[childValue as keyof typeof displayValue]||{}:displayValue)}
 
-      console.log({resValue,displays,prop,value,childValue},'resValue');
+      // console.log({resValue,displays,prop,value,childValue},'resValue');
       const sort = resValue?.sort||0 
       // if(sort!==void 0){
         delete resValue.sort 
@@ -66,15 +67,15 @@ export function getPxsSort(prop:string){
   let arr = Object.keys(pxs)
   for (let i = 0; i < arr.length; i++) { 
     if(arr[i]===prop){
-      console.log({i,prop},'sortPxs')
+      // console.log({i,prop},'sortPxs')
       return i
     }
   }
-  console.log({i:0,prop},'notFound')
+  // console.log({i:0,prop},'notFound')
   return 0
 }
 
- const pxs = {
+ const pxs = { 
   w: "width",
   h: "height",
   m: "margin",
@@ -115,14 +116,14 @@ const displayValues:any = {
       justifyContent:'center'
     },
     row(short:string){
-      console.log({short},'...row');
+      // console.log({short},'...row');
       const value = short.endsWith('-r')?'row-reverse':'row'
       return {
        flexDirection:value,
       }
     },
     col(short:string){
-      console.log({short},'...col');
+      // console.log({short},'...col');
       const value = short.endsWith('-r')?'column-reverse':'column'
       return {
        flexDirection:value, 
@@ -232,7 +233,7 @@ const displayValues:any = {
     s(short:string){
       const shorts = short.split('-')
       const drs = dirs[<'t'|'b'|'l'|'r'>shorts[3]]
-      console.log({drs,short});
+      // console.log({drs,short});
       
       if(Array.isArray(drs)){
         let res:any = {}
@@ -256,7 +257,7 @@ const displayValues:any = {
     c(short:string){
       const shorts = short.split('-')
       const drs = dirs[<'t'|'b'|'l'|'r'>shorts[3]]
-      console.log({drs,short});
+      // console.log({drs,short});
       
       if(Array.isArray(drs)){
         let res:any = {}

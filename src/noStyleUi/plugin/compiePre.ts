@@ -3,6 +3,7 @@
 import { compieCore } from './compieCore';
 import compileCss from './cpmpieCss';
 import type { myCSSStyleDeclaration } from '../interface/css';
+import type { logOutF } from './vite-plugin-propStyleCompileDom';
 
 //获取运行目录
 
@@ -10,7 +11,7 @@ import type { myCSSStyleDeclaration } from '../interface/css';
 
 
 
-export default async function compiePre(includes:string[],excludes:string[],WGroupNames:string[]=[],compieBefore:(code:string,id:string)=>string):Promise<{globalCSS:string,newCodes:{[key:string]:string}}>{
+export default async function compiePre(includes:string[],excludes:string[],WGroupNames:string[]=[],compieBefore:(code:string,id:string)=>string,logOut:logOutF):Promise<{globalCSS:string,newCodes:{[key:string]:string}}>{
   if (process.env.BROWSER) return {globalCSS:`/* propStyleCompie */\n`,newCodes:{}};
 
   const injectedCSS = [] as {key:string,value:myCSSStyleDeclaration,sort:number}[]
@@ -21,7 +22,7 @@ export default async function compiePre(includes:string[],excludes:string[],WGro
   
   const runPath = process.cwd();
 
-  console.log("runPath",runPath);
+  // console.log("runPath",runPath);
 
   function eachTree(includes:string[],excludes:string[]){
   for(let i of includes){
@@ -39,9 +40,9 @@ export default async function compiePre(includes:string[],excludes:string[],WGro
             if(file.endsWith(".vue")){
               //读取文件内容
               let code = compieBefore(fs.readFileSync(filePath,"utf-8"),filePath);
-              // console.log({filePath,code});
+              logOut({id:filePath,message:code,fucName:'compieBefore',time:Date.now()});
               //替换内容
-              const newCode = compieCore({code,WGroupNames,injectedCSS});
+              const newCode = compieCore({code,WGroupNames,injectedCSS},logOut,filePath);
               if (newCode) {
                 newCodes[filePath.replace(/\\\\/g,'\\')] = newCode;
               }
@@ -64,7 +65,7 @@ export default async function compiePre(includes:string[],excludes:string[],WGro
 
   eachTree(includes.map(item=>runPath + (item.startsWith("/")? item : "/" + item).replace(/\//g,"\\")),excludes);
 
-  const css = compileCss(injectedCSS);
+  const css = compileCss(injectedCSS,logOut,'injectedCSS');
   // console.log({injectedCSS});
   if (css) {
     globalCSS += css + '\n'; 

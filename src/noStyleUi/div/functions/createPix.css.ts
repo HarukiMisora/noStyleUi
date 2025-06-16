@@ -15,7 +15,7 @@ export default function (prop:string,value:string|number,setClassName:setClassNa
     setStyle(<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop],undefined)
     setClassName(`${prop}-${value}`,true)
   }else{
-    console.log(setStyle);
+    // console.log(setStyle);
     if(['px','py','mx','my'].includes(prop)){ 
       // setStyle(<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop],prop.includes('x')?value+' 0':'0 '+value)
     setClassName(`${prop}-${value}`,true)

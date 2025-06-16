@@ -11,17 +11,24 @@ export default defineConfig(({mode})=>{
   const env = loadEnv(mode, process.cwd());
   let buildWhat:string|'pack'|'test' = 'pack'
 
-  // console.log({mode});
   
 
   return { 
     plugins: [ 
       vue(),
       propStyleCompile({    
-        debug: false,  
+        debug: true,  
         justForBuild: false, 
         // indexFile: (url) => url.includes('src/App.vue'),
         // entity:'all'
+        log: (debugOptions) => {
+          if(debugOptions.id.endsWith('App.vue')){
+            console.log(debugOptions.message) 
+          }else if(debugOptions.id ==='injectedCss'){
+            console.log(debugOptions.message) 
+          }
+          // console.log(debugOptions) 
+        },
       })
     ],
     resolve: { 

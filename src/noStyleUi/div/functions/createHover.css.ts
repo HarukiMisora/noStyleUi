@@ -15,11 +15,9 @@ const actions:{[key:string]:Function} = {
   c:({value,setStyle}:styleWithValuesT)=>{
     
     analysisColor(value[1],(color:string)=>{
-      // console.log({color},'nicao'); 
 
       setStyle('color',color)
     },(color:string)=>{
-      // console.log({color},'wocao');
       
       setStyle('color',color)
     })
@@ -38,7 +36,7 @@ const actions:{[key:string]:Function} = {
 
 
 export function createHoverCss(options:string[]|string,setClassName:setClassNameT,setStyle:setStyleT){
-  // console.log(options);
+
 
   const arr = Array.isArray(options)?options:options.split(' ')
   // console.log(arr);
