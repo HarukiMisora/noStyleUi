@@ -6,7 +6,7 @@ const createPositionCss:createCssFuncT = (options,setClassName,setStyle)=>{
   // console.log(options)
   analysisProps(options,(propAndValue:string[])=>{
     actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})
-  })
+  },'position')
 }
 
 

@@ -1,6 +1,7 @@
+import { getPropDedupeConfig } from "../../config/config";
 import type { classNameWithStyleT, keyofCSSStyleDeclaration, setClassNameT, setStyleT } from "../../interface/css";
-import {  isValidPixelValue } from "../../test";
-import { analysisColor, analysisProps, analysisPxs } from "./analysis";
+import {  isValidColor, isValidPixelValue } from "../../test";
+import { analysisColor, analysisProps, analysisPxs, dedupeByType } from "./analysis";
 
 
 
@@ -100,6 +101,8 @@ const actions:{[key:string]:Function} = {
 export function createBdCss(options:string[]|string,setClassName:setClassNameT|undefined,setStyle:setStyleT,_dir:string='n'){
     // console.log(options,_dir);
     let lastColor:string = ''
+    // options = dedupeByType(options,[isValidColor])
+    
     analysisProps(options,(propAndValue:string[])=>{
       if(isValidPixelValue(propAndValue[0])){
         const size = analysisPxs(propAndValue[0],'0','px')
@@ -123,10 +126,10 @@ export function createBdCss(options:string[]|string,setClassName:setClassNameT|u
             lastColor = color
 
           }else{
-            setStyle("borderColor",color)
+            setStyle("borderColor",color) 
           }
         })
       }
-    },['t-','l-','b-', 'r-','x-','y-'])
+    },'bd')
 }
 

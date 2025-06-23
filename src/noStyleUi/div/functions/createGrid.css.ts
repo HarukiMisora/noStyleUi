@@ -49,7 +49,7 @@ export default function (options:string[]|string|boolean,setClassName:setClassNa
   if(typeof options !== 'boolean'){
     analysisProps(options,(propAndValue:string[])=>{
       actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})
-    })
+    },'grid')
   }
 
 }

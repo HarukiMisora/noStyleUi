@@ -112,8 +112,51 @@ export const config:configT = {
         }
     }
 }
-
-
+// 获取属性去重的依据
+export const getPropDedupeConfig = (prop:string)=>{
+    const configs:{[key:string]:{pre:string[],test:((value:string)=>boolean)[]}} = {
+        bd:{
+            pre:['t-','b-', 'l-', 'r-', 'x-', 'y-'],
+            test:[
+                (value)=>['solid','dashed','dotted','double','groove','ridge','inset','outset','ridge'].includes(value)
+            ]
+        },
+        bg:{
+            pre:['size-','r-','p-'],
+            test:[
+                (value)=>['fill','contain','cover','none'].includes(value),
+                (value)=>value === 'center',
+                (value)=>['left','right'].includes(value),
+                (value)=>['top','bottom'].includes(value),
+            ]
+        },
+        flex:{
+            pre:['g-','i-','j-'],
+            test:[
+                (value)=>value==='center',
+                (value)=>value==='1',
+                (value)=>value==='item',
+                (value)=>value==='flex',
+                value=>['wrap','nowrap'].includes(value),
+                value=>['row','col','row-r','col-r'].includes(value),
+            ]
+        },
+        grid:{
+            pre:['g-','row-','col-','item-','gcol-','grow-'],
+            test:[]
+        },
+        position:{
+            pre:['t-', 'r-', 'b-', 'l-','z-'],
+            test:[
+                value=>['rel','abs','fixed','sty','sticky','stc','static'].includes(value),
+            ]
+        }
+    }
+    return configs?.[prop]||{
+        pre:[],
+        test:[]
+    }
+}
 
 export function SetConfig(){
 

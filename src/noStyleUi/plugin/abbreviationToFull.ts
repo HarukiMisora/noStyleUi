@@ -63,11 +63,21 @@ const dirs = {
   x:['left','right'],
 }
 
-export function getPxsSort(prop:string){
+export function getPxsSort(prop:string,styleName?:string){
   let arr = Object.keys(pxs)
+    // console.log({prop,styleName},'getPxsSortStyle');
+
+  if(styleName !== void 0){
+    const sort =styleSort?.[prop]?.(styleName)
+    // console.log({prop,styleName,sort},'getPxsSortStyle');
+
+    return sort
+
+  }
+  
   for (let i = 0; i < arr.length; i++) { 
     if(arr[i]===prop){
-      // console.log({i,prop},'sortPxs')
+      // console.log({prop,styleName,sort:1},'getPxsSort');
       return i
     }
   }
@@ -106,7 +116,14 @@ const colors = {
 }
 const displays = ['flex','grid']
 
-
+const styleSort:{[key:string]:(styleNmae:string)=>number} ={
+  bd:(styleName)=>{
+    if(styleName.startsWith('borderLeft')||styleName.startsWith('borderRight')||styleName.startsWith('borderTop')||styleName.startsWith('borderBottom')){
+      return 1
+    }
+    return 0
+  }
+}
 
 
 const displayValues:any = {
@@ -245,7 +262,8 @@ const displayValues:any = {
           const char = `-${dr}-`
           const fullName = `border${char}style`
           // return{
-            res[fullName]=shorts[2] 
+          res[fullName]=shorts[2] 
+          res.sort=1
           // }
         }
         
@@ -254,7 +272,8 @@ const displayValues:any = {
         const char = drs?('-'+drs+'-'):'-'
         const fullName = `border${char}style`
         return{
-          [fullName]: shorts[2]
+          [fullName]: shorts[2],
+          sort:drs?1:0
         }
       }
     },
@@ -270,6 +289,8 @@ const displayValues:any = {
           const fullName = `border${char}color`
           // return{
             res[fullName]=shorts[2] 
+            res.sort=1
+
           // }
         }
         
@@ -278,7 +299,8 @@ const displayValues:any = {
         const char = drs?('-'+drs+'-'):'-'
         const fullName = `border${char}color`
         return{
-          [fullName]: shorts[2]
+          [fullName]: shorts[2],
+          sort:drs?1:0
         }
       }
     }

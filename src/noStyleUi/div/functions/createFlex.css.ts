@@ -67,7 +67,7 @@ export function creatFlexCss(options:string|string[]|boolean,setClassName:setCla
     if(typeof options !== 'boolean'){
       analysisProps(options,(propAndValue:string[])=>{
         actions[propAndValue[0]]?.({setClassName,setStyle,value:propAndValue})
-      })
+      },'flex')
     }
 
 }

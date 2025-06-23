@@ -22,10 +22,10 @@ export default defineConfig(({mode})=>{
         // indexFile: (url) => url.includes('src/App.vue'),
         // entity:'all'
         log: (debugOptions) => {
-          if(debugOptions.id.endsWith('App.vue')){
-            console.log(debugOptions.message,debugOptions.fucName) 
+          if(debugOptions.id.endsWith('App.vue')&&!['compieBefore','transform'].includes(debugOptions.fucName)){ 
+            // console.log(debugOptions.message,debugOptions.fucName)  
           }else if(debugOptions.id ==='injectedCss'){
-            console.log(debugOptions.message,debugOptions.fucName)  
+            // console.log(debugOptions.message,debugOptions.fucName)  
           }
           // console.log(debugOptions) 
         },

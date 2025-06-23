@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useClass } from './interface'  
-import Wocao from './pages/wocao.vue'
  
     
 const title = 'Prop Style !';
@@ -18,29 +17,24 @@ const img = ref(as.img)
    
 </script>   
 <template> 
-                    <w-div flex="g-10 wrap">
-                        <w-group w="calc(95% / 3)" h="150" c="#fff" :bg="`green size-75-75 r-n ${as.img}`" >
-                            <w-div bg="green size-75-75 r-n" >left</w-div>
-                            <w-div bg="top center" >top center</w-div>
-                            <w-div bg="right">right</w-div>
-                            <w-div bg="left center">left center</w-div>
-                            <w-div :bg="`${img} center`" transition>center</w-div>
-                            <w-div bg="right center">right center</w-div>
-                            <w-div bg="bottom left">bottom left</w-div>
-                            <w-div bg="center bottom">center bottom</w-div>
-                            <w-div bg="right bottom">right bottom</w-div>
-                            <w-div bg="p-100">p-100 距离左边100px</w-div> 
-                            <w-div bg="p-50%">p-50% 距离左边50%(position) </w-div>
-                            <w-div bg="p-100-100%">p-100-100% 距离左边100px，距离顶边100% </w-div>
-                        </w-group>
-                    </w-div>
-</template>  
-
-
-
-
-
-
+<w-div :flex="['g-10','wrap']" c="green">
+  <w-group  radius="50%" w="100" h="100" flex="center" :bg="[as.head,'fill']" hover="bd=gray;" >
+    <w-div bd="l-solid t-dashed r-double b-dotted" ></w-div>
+    <w-div bd="y-dashed black x-solid-red"></w-div>
+    <w-div bd="dotted blue y-red" hover="bd=black"></w-div>
+    <w-div bd="double r-solid-red+#fff"></w-div>
+  </w-group>
+</w-div>
+<w-div :flex="['g-10','wrap']">
+  <w-group transition=".1s" radius="50%" w="100" h="100" flex="center" :bg="[as.head,'fill','r-n']" hover="bd=solid;10">
+    <w-div bd="t-groove" ></w-div>
+    <w-div bd="r-outset-red" ></w-div>
+    <w-div bd="b-inset blue" ></w-div>
+    <w-div bd="l-ridge" ></w-div>
+  </w-group>
+</w-div>
+</template>   
+ 
 <style scoped lang="scss">
 .test{
   // width: 100vw;

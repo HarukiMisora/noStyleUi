@@ -93,7 +93,7 @@ const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
       }
 
     }
-  })
+  },'bg')
 
   
 

@@ -1,3 +1,4 @@
+import colorValues from "../var/colorValues";
 
 
 
@@ -8,9 +9,25 @@ export function isValidColor(color:string) {
     const rgbaColor = /^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0\.\d+|1\.0)\s*\)$/;
     const hslColor = /^hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*\)$/;
     const hslaColor = /^hsla\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(0\.\d+|1\.0)\s*\)$/;
- 
+    
     return hexColor.test(color) || rgbColor.test(color) || rgbaColor.test(color) || hslColor.test(color) || hslaColor.test(color);
 }
+export function isColor(color:string){
+    if(isValidColor(color)||colorValues.includes(color)){
+        return true
+    }
+    if(color.includes('+')){
+        for(let c of color.split('+')){
+            // console.log(c);
+            if(!isValidColor(c)&&!colorValues.includes(c)){
+                return false
+            }
+        }
+        return true
+    }
+    return false
+}
+
 
 export function isImage(url:string){
     return new RegExp('^.*.(jpg|png|gif|webp|avif|svg)$').test(url)

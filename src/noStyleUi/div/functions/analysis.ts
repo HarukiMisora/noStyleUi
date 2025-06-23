@@ -1,13 +1,14 @@
 
-import { isValidColor } from "../../test"
+import { getPropDedupeConfig } from "../../config/config"
+import { isColor, isImage, isValidColor, isValidPixelValue } from "../../test"
 import colorValues from "../../var/colorValues"
 
 
 //属性集分析
-export function analysisProps(options:string[]|string,callback:Function,prefixes:string[]=[]){
+export function analysisProps(options:string[]|string,callback:Function,propName:string=''){
   // console.log(options);
   
-  const arr = propRepeatRemove((typeof options === 'string'?options.split(' '):options),prefixes)
+  const arr = propRepeatRemove((typeof options === 'string'?options.split(' '):options),propName) 
   // console.log(arr);
   
   
@@ -82,17 +83,76 @@ export const setNestedMixColor = (mixColors:string[])=>{
 
 
 
-export const propRepeatRemove:(words:string[],prefixes:string[])=>string[] = (words,prefixes)=>{
+export const propRepeatRemove:(words:string[],propName:string)=>string[] = (words,propName)=>{
   // const words = str;
-  // console.log(words,prefixes);
-  const last:{[key:string]:string} = words.reduce((acc, word) => {
-    const prefix = prefixes.find(p => word.startsWith(p));
-    return prefix ? {...acc, [prefix]: word} : acc;
-}, {});
+//   const last:{[key:string]:string} = words.reduce((acc, word) => {
+//     const prefix = prefixes.find(p => word.startsWith(p));
+//     return prefix ? {...acc, [prefix]: word} : acc;
+// }, {});
 
-const seen = new Set();
-return words.filter(word => {
-    const prefix = prefixes.find(p => word.startsWith(p));
-    return !prefix || (word === last[prefix] && !seen.has(prefix) && seen.add(prefix));
-});
+// const seen = new Set();
+// return words.filter(word => {
+//     const prefix = prefixes.find(p => word.startsWith(p));
+//     return !prefix || (word === last[prefix] && !seen.has(prefix) && seen.add(prefix));
+// });
+// words = ['1','2','3']
+
+const {pre,test} = getPropDedupeConfig(propName)
+  
+const withPre = pre.map((p)=>{
+  return (value:string)=>{
+    return value.startsWith(p)
+  }
+})
+const testes = [isColor,isValidPixelValue,isImage,...withPre,...test]
+const res = dedupeByType(words,testes)
+// for(let k of pre){
+//   for( let i=0;i<res.length;i++){
+//       if(res[i].startsWith(k)){
+//         console.log(res[i].replace(k,'').split('-'),'鸡巴哦'); 
+//         res[i] = dedupeByType(res[i].replace(k,'').split('-'),testes)
+//       } 
+//   }   
+// }
+
+
+// console.log({words,pre,res});   
+
+return res
+
+
+
+
+}
+
+
+//依据类型去重
+export function dedupeByType(values:string[], typeCheckers:((value:string)=>boolean)[]) {
+    const lastValues = new Map(); // 存储每种类型最后出现的值
+    
+    // 初始化Map，以验证函数为key
+    for (const checker of typeCheckers) {
+        lastValues.set(checker, null);
+    }
+    
+    // 遍历所有值
+    for (const value of values) {
+        // 检查值属于哪种类型
+        for (const checker of typeCheckers) {
+            if (checker(value)) {
+                lastValues.set(checker, value);
+                break; // 假设类型互斥，找到后就可以跳出循环
+            }
+        }
+    }
+    
+    // 收集结果，过滤掉未被匹配的类型(null)
+    const result = [];
+    for (const [checker, value] of lastValues) {
+        if (value !== null) {
+            result.push(value);
+        }
+    }
+    
+    return result;
 }

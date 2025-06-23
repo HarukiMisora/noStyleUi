@@ -28,7 +28,8 @@ const mergeProps = [
   "grid",
   "bd",
   "bg",
-  "position"
+  "position",
+  "hover"
 ]
 
 const transformStyleName:{[key:string]:string} = {
@@ -40,6 +41,12 @@ const transformStyleName:{[key:string]:string} = {
   borderRightColor:'bd-r-c',
   borderTopColor:'bd-t-c',
   borderBottomColor:'bd-b-c',
+  backgroundColor:'bg-c',
+  top:'position-t',
+  bottom:'position-b',
+  left:'position-l',
+  right:'position-r',
+  zIndex:'z'
 }
 
 
@@ -59,13 +66,13 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
         //如果是WGroup组件，则将自有属性添加到子组件
 
         if(WGroupNames.includes(node.tag)){
-          generateCSS(Object.assign(node),className,injectedCSS,false,logOut,id)
-          // console.log({node},{props:node.props[0]});
+          // generateCSS(Object.assign(node),className,injectedCSS,false,logOut,id)
+          // console.log({node},{props:node.props}); 
           for(let prop of node.props){
             for( let child of node.children.filter((item:any)=>1 === (item.type))){  
             // console.log('child=>',prop.name,{child});       
             //自有属性? 
-            let isSelft:boolean = false
+            let isSelft:boolean = false 
             
             for(let childProp of child.props){
               const propName = prop.name === 'bind'? prop.rawName.replace(':','') : prop.name
@@ -74,6 +81,8 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
               const stateProp = prop.name === 'bind'? 0 : 1
               const steteChildProp = childProp.name === 'bind'? 2 : 4
               const stateGroup = stateProp + steteChildProp
+      
+              
               const acition:{[key:number]:Function} = { 
                 2:()=>{//两个都是Bind属性  
                   childProp.exp.content = childProp.exp.content.replace(/"/g,'') +"+ ' ' +"+prop.exp.content.replace(/"/g,'')
@@ -99,18 +108,25 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
 
                 },
                 5:()=>{//两个都是普通属性
-                  childProp.value.content = childProp.value.content + " " + prop.value.content
+                  // console.log('我草拟嘛');
+                  
+                  childProp.value.content =  prop.value.content + " " + childProp.value.content 
                 },
               }
               // if() 
 
               if(propName === childPropName){
+                // if(propName === 'hover'){
+                //   console.log(stateGroup,'stateGroup',propName);     
+                // }
                 // console.log(propName,childPropName);
                 
                 isSelft = true
                 if(mergeProps.includes(propName)){
                   // console.log({child,prop},'--------------');
                   acition?.[stateGroup]?.() 
+                  // console.log({childProp});  
+                  
                   
                 }
               }
@@ -241,9 +257,15 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
       // logOut('prop=>'+i,prop.type,{[prop.name]:prop.value?.content});  
       classIndex = prop.name === nodeClassName? i:classIndex
       styleIndex = prop.name === nodeStyleName? i:styleIndex 
+      // if(prop.name.startsWith('static-')){
+      //   prop.name = prop.name.replace('static-','')
+      // }
       if(allProps.includes(prop.name)){ 
-        const setStyle:setStyleT = (name,value) =>{ 
-          const match:{[key:string]:string} = {
+        const propName = prop.name.replace(/static-|static|s.-/g,'').toLowerCase()
+        // console.log([prop.name,propName,'propName',node.tag]);  
+        
+        const setStyle:setStyleT = (styleName,value) =>{  
+          const match:{[key:string]:string} = { 
             'px':'',
             '#':'c',
             '%':'p', 
@@ -257,37 +279,39 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             ',':'-',
             '.':'-'
           }
-          const transformName = transformStyleName[<string>name] || prop.name
+          const transformName = transformStyleName[<string>styleName] || propName
           let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.)/g,(_match)=>{
             // console.log(_match,index,str,'?');    
             return match[_match]||'' 
           })}`
-          if(prop.name === 'hover'){
+          if(propName === 'hover'){
             key = `hover-${key.replace(/hover-/g,'')}`
           }
-          logOut({message:{name,value,key},fucName:'generateCSS',id,time:Date.now()})
-          // console.log({name,value,key},'style');
-
+          logOut({message:{styleName,value,key,transformName},fucName:'generateCSS',id,time:Date.now()})
+          if(propName === 'position')
+          console.log({propName,value,key,styleName,transformName},'style');
+          
           if(value !== void 0){
             if(wGroupProp)className[key] = true;
             if(!checkClassWrited(injectedCSS,'.'+key)){ 
               injectedCSS.push({
                 key:'.'+key,
                 value:<myCSSStyleDeclaration>{ 
-                  [name]:value
+                  [styleName]:value
                 },
-                sort:getPxsSort(<string>prop.name) 
+                sort:getPxsSort(<string>propName,<string>styleName) 
               })
             }
-
-          } 
+          }else{
+            className[key] = false;
+          }
 
           
     
         }
         const setClassName:setClassNameT = (name,value=true) =>{
           
-          if(prop.name === 'hover'){
+          if(propName === 'hover'){
             name = `hover-${name.replace(/hover-/g,'')}`
           }
           if(wGroupProp){
@@ -296,28 +320,28 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
           if(value) injectCssByClassName(name,injectedCSS,logOut) 
         }
         
-        if(attributeGrop.includes(prop.name)){
+        if(attributeGrop.includes(propName)){
 
-          createPixCss(prop.name,prop.value?.content,setClassName,setStyle)
+          createPixCss(propName,prop.value?.content,setClassName,setStyle)
         }
         else{
 
-          try{
+          // try{
             
-            createStyles[prop.name]?.(prop.value?.content||'',setClassName,setStyle) 
+            createStyles[propName]?.(prop.value?.content||'',setClassName,setStyle) 
 
-          }catch(e){
-            // console.log(e);
-            
-            const sourceLine = node.loc.source.split('\n')[0]
-            const start = prop.loc.start.column-prop.name.length
-            const end = prop.loc.end.column-prop.name.length
-            throw new Error(
-              `${prop.name} 得到了一个错误的值：${prop.value?.content}\n`+
-              `at line ${prop.loc.start.line} column ${prop.loc.start.column}\n  `+
-              sourceLine.slice(0,start)+underline(sourceLine.slice(start,end))+sourceLine.slice(end)+'\n'
-            )
-          }
+          // }catch(e){
+          //   // console.log(e);
+             
+          //   const sourceLine = node.loc.source.split('\n')[0]
+          //   const start = prop.loc.start.column-prop.name.length
+          //   const end = prop.loc.end.column-prop.name.length
+          //   throw new Error(
+          //     `${prop.name} 得到了一个错误的值：${prop.value?.content}\n`+
+          //     `at line ${prop.loc.start.line} column ${prop.loc.start.column}\n  `+
+          //     sourceLine.slice(0,start)+underline(sourceLine.slice(start,end))+sourceLine.slice(end)+'\n'
+          //   )
+          // }
         } 
         // console.log({classIndex,styleIndex},i);
         
@@ -531,7 +555,14 @@ function restoreEscape(text: string){
 }
 
 //获取要解析的属性
-const allProps = Object.keys(config.props) 
+const allProps = [
+  ...Object.keys(config.props), 
+  ...Object.keys(config.props).map(item=>`static-${item}`),
+  ...Object.keys(config.props).map(item=>`static${item[0].toUpperCase()}${item.slice(1)}`),
+  ...Object.keys(config.props).map(item=>`s.-${item}`),//设置s.语法糖
+]
+// console.log(allProps,'allProps');
+
 //生成样式函数
 const createStyles:{[key:string]:Function} = {
   grid:createGridCss,
