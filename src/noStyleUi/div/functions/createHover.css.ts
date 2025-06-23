@@ -24,6 +24,7 @@ const actions:{[key:string]:Function} = {
 
   },
   bd:({value,setClassName,setStyle}:{value:string[],setClassName:setClassNameT,setStyle:setStyleT})=>{
+    // console.log(value);
     
     const prop = value[1].split(';')
     createBdCss(prop,setClassName,setStyle)
@@ -37,9 +38,10 @@ const actions:{[key:string]:Function} = {
 
 export function createHoverCss(options:string[]|string,setClassName:setClassNameT,setStyle:setStyleT){
 
-
+  // console.log(options.split(' '));
+  
   const arr = mergeUniqueItems(Array.isArray(options)?options:options.split(' '))
-  // console.log({arr});
+  console.log({arr});
 
   for(let com of arr){ 
     // console.log(com);
@@ -53,20 +55,27 @@ export function createHoverCss(options:string[]|string,setClassName:setClassName
 }
 //合并
 function mergeUniqueItems(arr:string[]) {
+    console.log({arr});
+    
     const map = new Map();
     
     for (const item of arr) {
         const [key, values] = item.split('=');
-        if (!map.has(key)) {
+        
+        if (!map.has(key)&&values!==void 0) {
             map.set(key, new Set());
         }
-        
-        const valueParts = values.split(';').filter(Boolean);
-        const existingSet = map.get(key);
-        
-        for (const part of valueParts) {
-            existingSet.add(part);
+        if (values!==void 0) {
+          const valueParts = values.split(';').filter(Boolean);
+
+          const existingSet = map.get(key);
+          
+          for (const part of valueParts) {
+              existingSet.add(part);
+          }
+
         }
+
     }
     
     const result = [];

@@ -148,7 +148,7 @@ export function dedupeByType(values:string[], typeCheckers:((value:string)=>bool
     
     // 收集结果，过滤掉未被匹配的类型(null)
     const result = [];
-    for (const [checker, value] of lastValues) {
+    for (const [_checker, value] of lastValues) {
         if (value !== null) {
             result.push(value);
         }

@@ -587,6 +587,6 @@ function checkClassWrited(css:injectedCSST,name:string){
 
 const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
 //下划线(node环境下)
-function underline(text: string): string {
-  return `\x1b[4m${text}\x1b[0m`;
-}
+// function underline(text: string): string {
+//   return `\x1b[4m${text}\x1b[0m`;
+// }

@@ -26,11 +26,11 @@ const img = ref(as.img)
   </w-group>
 </w-div>
 <w-div :flex="['g-10','wrap']">
-  <w-group transition=".1s" radius="50%" w="100" h="100" flex="center" :bg="[as.head,'fill','r-n']" hover="bd=solid;10">
+  <w-group transition=".1s" radius="50%" w="100" h="100" flex="center" :bg="[as.head,'fill','r-n']" >
     <w-div bd="t-groove" ></w-div>
     <w-div bd="r-outset-red" ></w-div>
     <w-div bd="b-inset blue" ></w-div>
-    <w-div bd="l-ridge" ></w-div>
+    <w-div bd="l-ridge"  hover="bd=solid;10"></w-div>
   </w-group>
 </w-div>
 </template>   

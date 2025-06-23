@@ -1,7 +1,7 @@
-import { getPropDedupeConfig } from "../../config/config";
+
 import type { classNameWithStyleT, keyofCSSStyleDeclaration, setClassNameT, setStyleT } from "../../interface/css";
-import {  isValidColor, isValidPixelValue } from "../../test";
-import { analysisColor, analysisProps, analysisPxs, dedupeByType } from "./analysis";
+import {   isValidPixelValue } from "../../test";
+import { analysisColor, analysisProps, analysisPxs } from "./analysis";
 
 
 

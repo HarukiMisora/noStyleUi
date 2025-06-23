@@ -12,7 +12,7 @@
     "rootDir": "src",
     "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,
-
+    "target": "es6"
   },
   "include": ["src/**/*", "interface/**/*.d.ts" ,"packages/**/*"],
   "exclude": ["src/main.ts","src/noStyleUi/style/style.class.ts"]
