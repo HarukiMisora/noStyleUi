@@ -262,9 +262,12 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
       // }
       if(allProps.includes(prop.name)){ 
         const propName = prop.name.replace(/static-|static|s.-/g,'').toLowerCase()
-        // console.log([prop.name,propName,'propName',node.tag]);  
+        if(prop.name.startsWith('static-'))
+        console.log([prop.name,propName,'propName',node.tag],1111111111111111111111111,{prop});  
         
         const setStyle:setStyleT = (styleName,value) =>{  
+          console.log(styleName,value);
+          
           const match:{[key:string]:string} = { 
             'px':'',
             '#':'c',
@@ -280,16 +283,19 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             '.':'-'
           }
           const transformName = transformStyleName[<string>styleName] || propName
+          
           let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.)/g,(_match)=>{
             // console.log(_match,index,str,'?');    
             return match[_match]||'' 
           })}`
+          // console.log({transformName,key});
+
           if(propName === 'hover'){
             key = `hover-${key.replace(/hover-/g,'')}`
           }
           logOut({message:{styleName,value,key,transformName},fucName:'generateCSS',id,time:Date.now()})
-          if(propName === 'position')
-          console.log({propName,value,key,styleName,transformName},'style');
+          // if(propName === 'position')
+          // console.log({propName,value,key,styleName,transformName},'style');
           
           if(value !== void 0){
             if(wGroupProp)className[key] = true;

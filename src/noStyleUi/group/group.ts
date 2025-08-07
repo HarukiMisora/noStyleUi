@@ -84,7 +84,7 @@ export const group = defineComponent({
                 }else{
                     delete i.props?.class
                     delete i.props?.style
-                    console.log(i.props,'卧槽');
+                    // console.log(i.props,'卧槽');
                 }
                 
   

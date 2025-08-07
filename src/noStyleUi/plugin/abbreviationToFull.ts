@@ -122,6 +122,13 @@ const styleSort:{[key:string]:(styleNmae:string)=>number} ={
       return 1
     }
     return 0
+  },
+  hover:(styleName)=>{
+    // console.log(styleName,'bg');
+    if(styleName.startsWith('backgroundSize')||styleName.startsWith('backgroundPosition')){
+      return 1
+    }
+    return 0
   }
 }
 

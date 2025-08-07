@@ -67,7 +67,7 @@ const createBgCss:createCssFuncT = (options,setClassName,setStyle)=>{
 
     //填充样式
     if(['fill','contain','cover','none'].includes(propAndValue[0])){
-        // console.log(lastItem);
+        // console.log({lastItem});  
         
         setClassName(lastItem,false)
         setClassName(`bs-${propAndValue[0]}`,true)

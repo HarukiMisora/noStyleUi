@@ -17,21 +17,13 @@ const img = ref(as.img)
    
 </script>   
 <template> 
-<w-div :flex="['g-10','wrap']" c="green">
-  <w-group  radius="50%" w="100" h="100" flex="center" :bg="[as.head,'fill']" hover="bd=gray;" >
-    <w-div bd="l-solid t-dashed r-double b-dotted" ></w-div>
-    <w-div bd="y-dashed black x-solid-red"></w-div>
-    <w-div bd="dotted blue y-red" hover="bd=black"></w-div>
-    <w-div bd="double r-solid-red+#fff"></w-div>
-  </w-group>
-</w-div>
 <w-div :flex="['g-10','wrap']">
-  <w-group transition=".1s" radius="50%" w="100" h="100" flex="center" :bg="[as.head,'fill','r-n']" >
-    <w-div bd="t-groove" ></w-div>
-    <w-div bd="r-outset-red" ></w-div>
-    <w-div bd="b-inset blue" ></w-div>
-    <w-div bd="l-ridge"  hover="bd=solid;10"></w-div>
-  </w-group>
+    <w-group transition radius="50%" w="100" h="100" flex="center" :bg="as.head" s.-bg="r-n fill" hover="bg=cover;size-50-50">
+        <w-div bd="t-groove" hover="bg=left"></w-div>
+        <w-div bd="r-outset-red" hover="bg=right"></w-div>
+        <w-div bd="b-inset blue" hover="bg=top;center"></w-div>
+        <w-div bd="l-ridge" hover="bg=bottom;center"></w-div> 
+    </w-group>
 </w-div>
 </template>   
  
