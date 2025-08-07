@@ -17,8 +17,8 @@ const img = ref(as.img)
    
 </script>   
 <template> 
-<w-div :flex="['g-10','wrap']">
-    <w-group transition radius="50%" w="100" h="100" flex="center" :bg="as.head" s.-bg="r-n fill" hover="bg=cover;size-50-50">
+<w-div :flex="['g-10','wrap']" ml="120">
+    <w-group transition radius="50%" w="100" h="100"  :bg="as.head" s.-bg="r-n fill" hover="bg=cover;size-50-50">
         <w-div bd="t-groove" hover="bg=left"></w-div>
         <w-div bd="r-outset-red" hover="bg=right"></w-div>
         <w-div bd="b-inset blue" hover="bg=top;center"></w-div>

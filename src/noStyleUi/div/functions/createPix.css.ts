@@ -9,8 +9,10 @@ import {  analysisPxs } from "./analysis"
 
 
 export default function (prop:string,value:string|number,setClassName:setClassNameT,setStyle:setStyleT){
+  
+  value = analysisPxs(value,'0','px')
+  // console.log(prop,value);
 
-  value = analysisPxs(value,'0','')
   if(isIntegerString(<string>value)){
     setStyle(<keyofCSSStyleDeclaration>attributeGropStyle[<keyof Pxs>prop],undefined)
     setClassName(`${prop}-${value}`,true)
