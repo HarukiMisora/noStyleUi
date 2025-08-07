@@ -262,11 +262,11 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
       // }
       if(allProps.includes(prop.name)){ 
         const propName = prop.name.replace(/static-|static|s.-/g,'').toLowerCase()
-        if(prop.name.startsWith('static-'))
-        console.log([prop.name,propName,'propName',node.tag],1111111111111111111111111,{prop});  
+        // if(prop.name.startsWith('static-'))
+        // console.log([prop.name,propName,'propName',node.tag],1111111111111111111111111,{prop});  
         
         const setStyle:setStyleT = (styleName,value) =>{  
-          console.log(styleName,value);
+          // console.log(styleName,value);
           
           const match:{[key:string]:string} = { 
             'px':'',

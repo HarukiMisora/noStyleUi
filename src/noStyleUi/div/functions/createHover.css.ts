@@ -41,7 +41,7 @@ export function createHoverCss(options:string[]|string,setClassName:setClassName
   // console.log(options.split(' '));
   
   const arr = mergeUniqueItems(Array.isArray(options)?options:options.split(' '))
-  console.log({arr});
+  // console.log({arr});
 
   for(let com of arr){ 
     // console.log(com);
@@ -55,7 +55,7 @@ export function createHoverCss(options:string[]|string,setClassName:setClassName
 }
 //合并
 function mergeUniqueItems(arr:string[]) {
-    console.log({arr});
+    // console.log({arr});
     
     const map = new Map();
     
