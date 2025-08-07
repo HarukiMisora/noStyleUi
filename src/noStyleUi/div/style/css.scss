@@ -1,6 +1,6 @@
 
 @use  './colors.scss' as *;
-@use './theme.scss';
+// @use './theme.scss';
 @use './flex.scss';
 @use './background.scss';
 @use 'sass:meta';
@@ -8,7 +8,7 @@
 @use './hover.scss';
 @use './grid.scss';
 
-@use '../../button/style/index.scss';
+// @use '../../button/style/index.scss';
 
 $i:0;
 @while $i<=1920{

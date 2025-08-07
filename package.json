@@ -1,15 +1,17 @@
 {
-  "name": "nostyleui",
+  "name": "propstyle",
   "private": false,
-  "version": "0.4.0-beta.31",
+  "version": "0.4.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "build:pack": "npm run build:test && npm publish",
-    "build:test": "npm run clear && npm run build:types && vite build --emptyOutDir false && npm run rewriteExternals && npm run build:sass",
+    "build:beta": "npm run build:test && npm publish --tag beta",
+    "build:test": "npm run clear && npm run build:types && vite build --emptyOutDir false && npm run rewriteExternals && npm run build:sass && npm run build:sassUi",
     "build:sass": "sass src/noStyleUi/div/style/css.scss dist/nostyleui.css -s compressed --no-source-map",
+    "build:sassUi": "sass src/noStyleUi/button/style/index.scss dist/ui.css -s compressed --no-source-map",
     "build:types": "tsc -p tsconfig.lib.json",
     "clear": "node scripts/clear.js",
     "rewriteExternals": "node scripts/rewriteExternal.js"
@@ -47,7 +49,8 @@
       "require": "./dist/no-style-ui.umd.js"
     },
     "./*": "./dist/*",
-    "./style": "./dist/nostyleui.css"
+    "./style": "./dist/nostyleui.css",
+    "./ui": "./dist/ui.css"
   },
   "keywords": [
     "nostyleui"

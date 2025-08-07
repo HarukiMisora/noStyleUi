@@ -24,6 +24,7 @@ const img = ref(as.img)
         <w-div bd="b-inset blue" hover="bg=top;center"></w-div>
         <w-div bd="l-ridge" hover="bg=bottom;center"></w-div> 
     </w-group>
+    <w-button type="primary">asd</w-button>
 </w-div>
 </template>   
  

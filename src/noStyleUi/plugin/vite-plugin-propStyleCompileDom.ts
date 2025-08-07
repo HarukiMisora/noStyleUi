@@ -74,7 +74,7 @@ export default async function propStyleCompile(options:PluginOptions={}):Promise
               // 执行自定义更新
               console.log('[prop-style] hot update', data.changeFile);
               const styles= document.getElementsByTagName('style')
-              console.log(styles)
+              // console.log(styles)
               let propStyle:any = null
               for (let i = 0; i < styles.length; i++) {
                 const style = styles[i]
