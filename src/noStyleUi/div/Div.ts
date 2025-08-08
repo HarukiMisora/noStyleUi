@@ -1,7 +1,7 @@
 
 
 import {  defineComponent , h, ref} from 'vue'
-import { config } from '../config/config'
+import { attributeGrop, config } from '../config/config'
 import createGridCss from './functions/createGrid.css'
 import createBgCss from './functions/createBg.css'
 import {  createHoverCss } from './functions/createHover.css'
@@ -27,12 +27,12 @@ type PropT = {[key in keyof typeof styleProps]?:string}
 // }
 
 export function renderHelper(props:PropT){
-
+    
     const className:{[key:string]:Boolean} ={}
     const hoverClassName:{[key:string]:Boolean} ={}
     const styles = {} as myCSSStyleDeclaration
     const hoverStyles = {} as myCSSStyleDeclaration
-    const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
+    // const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
     const setClassName:setClassNameT = (name,value=true) =>{
         className[name]= value
     }

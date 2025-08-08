@@ -7,7 +7,7 @@ import { createFontColorCss } from '../div/functions/createFontColor.css';
 import { creatFlexCss } from '../div/functions/createFlex.css';
 import { createBdCss } from '../div/functions/createBd.css';
 import { createTransition } from '../div/functions/createTransition';
-import { config } from '../config/config';
+import { attributeGrop, config } from '../config/config';
 import createPixCss from '../div/functions/createPix.css';
 import createPositionCss from '../div/functions/createPosition.css';
 import { camelToHyphen } from '../untils';
@@ -676,7 +676,7 @@ function checkClassWrited(css:injectedCSST,name:string){
   return false
 }
 
-const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']
+
 //下划线(node环境下)
 // function underline(text: string): string {
 //   return `\x1b[4m${text}\x1b[0m`;
