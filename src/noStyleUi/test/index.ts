@@ -33,6 +33,7 @@ export function isImage(url:string){
     return new RegExp('^.*.(jpg|png|gif|webp|avif|svg)$').test(url)
 }
 export function isIntegerString(str:string) {
+    
     return Number.isInteger(Number(str)) && str.trim() !== "";
 }
 

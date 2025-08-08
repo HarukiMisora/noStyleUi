@@ -328,7 +328,7 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
         
         if(attributeGrop.includes(propName)){
 
-          createPixCss(propName,prop.value?.content,setClassName,setStyle)
+          createPixCss(propName,prop.value?.content,setClassName,setStyle,'node')
         }
         else{
 
