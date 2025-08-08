@@ -1,6 +1,7 @@
 
 import type {PropType} from 'vue'
 import type { buttonAbstractType, buttonEffectType, buttonSizeType, buttonType, configT, groupCusPropsType } from '../interface/compoment'
+import type { Pxs } from '../interface/css'
 
 
 export const config:configT = {
@@ -161,3 +162,5 @@ export const getPropDedupeConfig = (prop:string)=>{
 export function SetConfig(){
 
 }
+
+export const attributeGrop:(keyof Pxs)[] = ['w','h','x','y','f','fw','p','px','py','pl','pt','pb','pr','m','mx','my','ml','mt','mb','mr','radius']

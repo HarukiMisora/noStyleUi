@@ -18,8 +18,8 @@ const img = ref(as.img)
 const effect = ref('text') 
 </script>   
 <template> 
-  <w-group flex c="red" hover="c=red bg=blue" transition>
-    <w-span hover="c=red c=red+blue+black bg=rgb(0,0,0)">hover字体的颜色也可以混合。</w-span>
+  <w-group flex c="red" hover="c=red bg=blue f=70 ml=20 px=50" f="20" transition>
+    <w-span f="50" hover="c=red c=red+blue+black bg=rgb(0,0,0)">hover字体的颜色也可以混合。</w-span>
   </w-group>
   
 </template>   

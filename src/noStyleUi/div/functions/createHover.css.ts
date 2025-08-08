@@ -1,8 +1,10 @@
 
-import type { setClassNameT, setStyleT, styleWithValuesT } from "../../interface/css";
+import { attributeGrop } from "../../config/config";
+import type { Pxs, setClassNameT, setStyleT, styleWithValuesT } from "../../interface/css";
 import { analysisColor } from "./analysis";
 import { createBdCss } from "./createBd.css";
 import createBgCss from "./createBg.css";
+import createPixCss from "./createPix.css";
 
 
 
@@ -49,9 +51,16 @@ export function createHoverCss(options:string[]|string,setClassName:setClassName
   for(let com of arr){ 
     // console.log(com);
     const option = com.split('=')
-    // console.log(option);
+    const prop =option[0]
+    if(attributeGrop.includes(<keyof Pxs>prop)){
     
-    actions[option[0]]?.({value:option,setClassName,setStyle})
+      createPixCss(prop,option[1],setClassName,setStyle)
+    }
+
+
+
+    
+    actions[prop]?.({value:option,setClassName,setStyle})
     
   }
 
