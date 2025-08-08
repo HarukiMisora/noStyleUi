@@ -36,11 +36,12 @@ export function analysisColor(color:string,validColor:Function,cssColor:Function
     return true
   }
   if(isValidColor(color)){
-
+    
     validColor(color)
     return true
   }
   if(colorValues.includes(color)){
+
     cssColor(color)
     return true
   }
