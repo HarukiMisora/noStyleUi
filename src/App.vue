@@ -1,12 +1,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useClass } from './interface'  
+import { useClass } from 'propstyle'  
  
     
 const title = 'Prop Style !';
 
-const test = ref(useClass('flex','center'))  
+const test = ref(   useClass('flex','center',['i-center','j-center',"'456'"])  )  
+const test2 = ref(   useClass('flex','center')  )  
 
 const bottom = ref(100)
 const as = { 
@@ -18,7 +19,7 @@ const effect = ref('text')
 </script>   
 <template> 
   <w-group :cus-props="{type:'primary',effect:''}"> 
-    <w-button type="error" @click="effect = effect === 'text'? 'defalut' : 'text'" >沉</w-button>
+    <w-button type="error" @click="effect = effect === 'text'? 'defalut' : 'text'" w="100">沉</w-button>
     <!-- <w-button>鱼</w-button>
     <w-button>落</w-button>
     <w-button>雁</w-button> -->

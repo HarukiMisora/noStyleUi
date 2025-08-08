@@ -52,7 +52,8 @@ const transformStyleName:{[key:string]:string} = {
 
 
 export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOutF,id:string){ 
-  return  restoreEscape(transformTemplate(code,(match)=>{  
+  return  restoreEscape(transformTemplate(code,
+    (match)=>{  //coreNode
       // logOut({match},'卧槽'); 
       // console.log('match=>',match);  
       const ast:RootNode = parse(match)
@@ -239,12 +240,44 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
       // logOut({newTmeplate},'--------------------------------------');
 
       return newTmeplate
-  })).replace(/<will-be-replace>|<\/will-be-replace>/g,'')
+    },
+    (match)=>{ //useClass *********************************************************************************************************************
+      const format = match.replace(/\r\n/g,'').trim()
+      // console.log({format});
+
+      const [prop,value,expects] = format.replace('useClass(','').slice(0,-1).split(/,(?![^\[]*\])/)
+      const enhanced = analyzeStringEnhanced(value)
+      const enhancedProp = analyzeStringEnhanced(prop)
+      // console.log({prop,value,expects,enhanced,enhancedProp});
+      //只允许字面量为字符串
+      if(enhanced.type==='string'&&enhancedProp.type==='string'){
+        if(enhancedProp.value in createStyles){
+          injectedCSSAnly(enhancedProp.value,enhanced.value,injectedCSS,logOut)
+        }else{
+          throw new Error(`useClass得到了一个非法的Prop名称  ${enhancedProp.value}`)
+        }
+      }else{
+        throw new Error(`useClass 的字面量只能为字符串`)
+      }
+      if(expects !== void 0){
+        const values = expects.slice(1,-1).split(',')
+        // console.log({values});
+        for(let value of values){
+          const enhancedValue = analyzeStringEnhanced(value)
+          if(enhancedValue.type==='string'){
+            injectedCSSAnly(enhancedProp.value,enhancedValue.value,injectedCSS,logOut)
+          }
+        }
+        
+      }
+      return value
+    }
+  )).replace(/<will-be-replace>|<\/will-be-replace>/g,'')
 }
 
 
 //匹配template标签
-function transformTemplate(html: string,after:(match:string)=>string){//,attrs:string,content:string)=>string) {
+function transformTemplate(html: string,template:(match:string)=>string,useClass:(match:string)=>string){//,attrs:string,content:string)=>string) {
   // 对script标签里面的template标签进行转义
   return html.replace(/<script[\s\S]*<\/script>/g,(match)=>{
     return setEscapeArr(match,[
@@ -255,11 +288,14 @@ function transformTemplate(html: string,after:(match:string)=>string){//,attrs:s
   }).replace(
     /<template[\s\S]*<\/template>/g,
     (match) => { 
-      return after(setEscapeArr(match,[
+      return template(setEscapeArr(match,[
         {key:'&',escapeChart:'AMT'},
         {key:'@',escapeChart:'AT'}
       ]))//, attrs, content) 
     } 
+  ).replace(
+    /useClass\s*\([\s\S]*?\)\s*(?=[);,}\n]|$)/g,
+    useClass
   )
 }
  
