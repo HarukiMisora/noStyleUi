@@ -9,7 +9,7 @@ import { createFontColorCss } from './functions/createFontColor.css'
 import { creatFlexCss } from './functions/createFlex.css'
 import { createBdCss } from './functions/createBd.css'
 import { createTransition } from './functions/createTransition'
-import type {  myCSSStyleDeclaration, Pxs, setClassNameT, setStyleT } from '../interface/css'
+import type {  myCSSStyleDeclaration, setClassNameT, setStyleT } from '../interface/css'
 import createPixCss from './functions/createPix.css'
 import createPositionCss from './functions/createPosition.css'
 
