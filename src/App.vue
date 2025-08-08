@@ -18,12 +18,10 @@ const img = ref(as.img)
 const effect = ref('text') 
 </script>   
 <template> 
-  <w-group :cus-props="{type:'primary',effect:''}"> 
-    <w-button type="error" @click="effect = effect === 'text'? 'defalut' : 'text'" w="100">沉</w-button>
-    <!-- <w-button>鱼</w-button>
-    <w-button>落</w-button>
-    <w-button>雁</w-button> -->
+  <w-group flex hover="c=red bg=blue" transition>
+    <w-span hover="c=red c=red+blue+black bg=rgb(0,0,0)">hover字体的颜色也可以混合。</w-span>
   </w-group>
+  
 </template>   
  
 <style scoped lang="scss">

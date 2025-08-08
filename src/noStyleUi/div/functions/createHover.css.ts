@@ -10,11 +10,14 @@ const actions:{[key:string]:Function} = {
 
   bg:({value,setClassName,setStyle}:{value:string[],setClassName:setClassNameT,setStyle:setStyleT})=>{
     const prop = value[1].split(';')
+    // console.log(prop);
+    
     createBgCss(prop,setClassName,setStyle)
   },
   c:({value,setStyle}:styleWithValuesT)=>{
+    const colors = value[1].split(';')
     
-    analysisColor(value[1],(color:string)=>{
+    analysisColor(colors[colors.length-1],(color:string)=>{
 
       setStyle('color',color)
     },(color:string)=>{
@@ -61,6 +64,7 @@ function mergeUniqueItems(arr:string[]) {
     
     for (const item of arr) {
         const [key, values] = item.split('=');
+        // console.log({key,values});
         
         if (!map.has(key)&&values!==void 0) {
             map.set(key, new Set());

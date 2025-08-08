@@ -72,7 +72,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
           for(let prop of node.props){
 
             for( let child of node.children.filter((item:any)=>1 === (item.type))){ 
-                 if(prop.name === 'bind'&&[':cus-props',':cusProps',':CusProps'].includes(prop.rawName)){
+              if(prop.name === 'bind'&&[':cus-props',':cusProps',':CusProps'].includes(prop.rawName)){
                 const cusProps = prop.exp.content.slice(1,-1).split(',')
                 // console.log(cusProps);
                 for(let cusProp of cusProps){
@@ -140,6 +140,8 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
                   },
                   5:()=>{//两个都是普通属性
                     childProp.value.content =  prop.value.content + " " + childProp.value.content 
+                    // console.log(childProp.value.content);
+                    
                   },
                 }
                 // if() 
@@ -148,7 +150,6 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
                   // if(propName === 'hover'){
                   //   console.log(stateGroup,'stateGroup',propName);     
                   // }
-                  // console.log(propName,childPropName);
                   
                   isSelft = true
                   if(mergeProps.includes(propName)){
