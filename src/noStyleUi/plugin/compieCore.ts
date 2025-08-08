@@ -355,11 +355,13 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             '*':'___',
             '\/':'____', 
             ',':'-',
-            '.':'-'
+            '.':'-',
+            '"':'_',
+            ":":'_'
           }
           const transformName = transformStyleName[<string>styleName] || propName
           
-          let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.)/g,(_match)=>{
+          let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.|"|:)/g,(_match)=>{
             // console.log(_match,index,str,'?');    
             return match[_match]||'' 
           })}`
@@ -383,6 +385,8 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
                 sort:getPxsSort(<string>propName,<string>styleName) 
               })
             }
+            // console.log(injectedCSS);
+            
           }else{
             className[key] = false;
           }

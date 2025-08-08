@@ -43,6 +43,8 @@ export default async function compiePre(includes:string[],excludes:string[],WGro
               logOut({id:filePath,message:code,fucName:'compieBefore',time:Date.now()});
               //替换内容
               const newCode = compieCore({code,WGroupNames,injectedCSS},logOut,filePath);
+              // console.log({newCode});
+              
               if (newCode) {
                 newCodes[filePath.replace(/\\\\/g,'\\')] = newCode;
               }
