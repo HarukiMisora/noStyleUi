@@ -33,7 +33,6 @@ export const group = defineComponent({
     name: 'WGroup',
     props:groupProps,
     render(){
-        // console.log(this.$props);
         
         const vNodes = this.$slots.default?.()
         const cusProps:any = {}

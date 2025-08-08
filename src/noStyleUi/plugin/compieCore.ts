@@ -14,6 +14,7 @@ import { camelToHyphen } from '../untils';
 import abbreviationToFull, { getPxsSort } from './abbreviationToFull';
 import { createHoverCss } from '../div/functions/createHover.css';
 import type { logOutF } from './vite-plugin-propStyleCompileDom';
+import { analyzeStringEnhanced, generateBindProp, generateProp } from './functions';
 
 type injectedCSST = {key:string,value:myCSSStyleDeclaration,sort:number}[]
 
@@ -64,76 +65,113 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
         //   injectCssByClassName(name,injectedCSS)
         // }
         //如果是WGroup组件，则将自有属性添加到子组件
-
         if(WGroupNames.includes(node.tag)){
           // generateCSS(Object.assign(node),className,injectedCSS,false,logOut,id)
-          // console.log({node},{props:node.props}); 
+          // console.log({node},{props:node.props?.[0]}); 
           for(let prop of node.props){
-            for( let child of node.children.filter((item:any)=>1 === (item.type))){  
-            // console.log('child=>',prop.name,{child});       
-            //自有属性? 
-            let isSelft:boolean = false 
-            
-            for(let childProp of child.props){
-              const propName = prop.name === 'bind'? prop.rawName.replace(':','') : prop.name
-              const childPropName = childProp.name === 'bind'? childProp.rawName.replace(':','') : childProp.name
-              
-              const stateProp = prop.name === 'bind'? 0 : 1
-              const steteChildProp = childProp.name === 'bind'? 2 : 4
-              const stateGroup = stateProp + steteChildProp
-      
-              
-              const acition:{[key:number]:Function} = { 
-                2:()=>{//两个都是Bind属性  
-                  childProp.exp.content = childProp.exp.content.replace(/"/g,'') +"+ ' ' +"+prop.exp.content.replace(/"/g,'')
-                },
-                3:(child=childProp,parent=prop)=>{//父不为bind，子为bind
-                  child.exp.content = child.exp.content.replace(/"/g,'') +" + ' "+parent.value.content.replace(/'/g,'\\\'')+"'"
-                },
-                4:()=>{//子不为bind，父为bind
-                  const temp = JSON.parse(JSON.stringify(childProp))
-                  const temp2 = JSON.parse(JSON.stringify(prop))
-                  injectedCSSAnly(temp.name,temp.value.content,injectedCSS,logOut)
-                  childProp.name = temp2.name 
-                  childProp.exp = temp2.exp
-                  childProp.type = temp2.type 
-                  childProp.rawName = temp2.rawName
-                  childProp.arg = temp2.arg
-                  delete childProp.value
-                  // prop = temp 
-                  // console.log(4,{temp2,childProp});   
-                  
-                  acition[3](childProp,temp)  
-                  // console.log(4,'acitive',{temp2,childProp});    
 
-                },
-                5:()=>{//两个都是普通属性
-                  // console.log('我草拟嘛');
-                  
-                  childProp.value.content =  prop.value.content + " " + childProp.value.content 
-                },
-              }
-              // if() 
+            for( let child of node.children.filter((item:any)=>1 === (item.type))){ 
+                 if(prop.name === 'bind'&&[':cus-props',':cusProps',':CusProps'].includes(prop.rawName)){
+                const cusProps = prop.exp.content.slice(1,-1).split(',')
+                // console.log(cusProps);
+                for(let cusProp of cusProps){
 
-              if(propName === childPropName){
-                // if(propName === 'hover'){
-                //   console.log(stateGroup,'stateGroup',propName);     
-                // }
-                // console.log(propName,childPropName);
-                
-                isSelft = true
-                if(mergeProps.includes(propName)){
-                  // console.log({child,prop},'--------------');
-                  acition?.[stateGroup]?.() 
-                  // console.log({childProp});  
+                  const [key,...value] = cusProp.split(':')
                   
+                  const trueValue = value.length===0? key : value.join(':')
+                  
+                  // console.log(key,trueValue,value);
+                  if(child.props.map((item:any)=>{return item.name==='bind'? item.rawName.replace(':','') : item.name}).includes(key)){
+                    continue
+                  }
+                  //检验value字面量
+                  const enhanced = analyzeStringEnhanced(trueValue)
+                  // console.log({enhanced});
+                  if(['invalid','unknown'].includes(enhanced.type)){
+                    throw new Error(`${enhanced.type} prop value: ${trueValue} in ${node.tag} component`)
+                  }
+                  //字符串，则创建普通prop属性，表达式、数字、变量则创建bind属性
+                  const newProp = enhanced.type ==='string'?generateProp(key,trueValue):generateBindProp(key,trueValue)
+                  child.props.push(newProp)
                   
                 }
+
+                continue
               }
-            }
-            if(!isSelft){
-              child.props.push(prop) 
-            } 
+          
+            // console.log('child=>',prop.name,{child,prop});     
+
+            //自有属性? 
+              let isSelft:boolean = false 
+              
+              for(let childProp of child.props){
+                const propName = prop.name === 'bind'? prop.rawName.replace(':','') : prop.name
+                const childPropName = childProp.name === 'bind'? childProp.rawName.replace(':','') : childProp.name
+                
+                const stateProp = prop.name === 'bind'? 0 : 1
+                const steteChildProp = childProp.name === 'bind'? 2 : 4
+                const stateGroup = stateProp + steteChildProp
+         
+                
+                const acition:{[key:number]:Function} = { 
+                  2:()=>{//两个都是Bind属性  
+                    childProp.exp.content = childProp.exp.content.replace(/"/g,'') +"+ ' ' +"+prop.exp.content.replace(/"/g,'')
+                  },
+                  3:(child=childProp,parent=prop)=>{//父不为bind，子为bind
+                    child.exp.content = child.exp.content.replace(/"/g,'') +" + ' "+parent.value.content.replace(/'/g,'\\\'')+"'"
+                  },
+                  4:()=>{//子不为bind，父为bind
+                    const temp = JSON.parse(JSON.stringify(childProp))
+                    const temp2 = JSON.parse(JSON.stringify(prop))
+                    injectedCSSAnly(temp.name,temp.value.content,injectedCSS,logOut)
+                    childProp.name = temp2.name 
+                    childProp.exp = temp2.exp
+                    childProp.type = temp2.type 
+                    childProp.rawName = temp2.rawName
+                    childProp.arg = temp2.arg
+                    delete childProp.value
+                    // prop = temp 
+                    // console.log(4,{temp2,childProp});   
+                    
+                    acition[3](childProp,temp)  
+                    // console.log(4,'acitive',{temp2,childProp});    
+
+                  },
+                  5:()=>{//两个都是普通属性
+                    childProp.value.content =  prop.value.content + " " + childProp.value.content 
+                  },
+                }
+                // if() 
+
+                if(propName === childPropName){
+                  // if(propName === 'hover'){
+                  //   console.log(stateGroup,'stateGroup',propName);     
+                  // }
+                  // console.log(propName,childPropName);
+                  
+                  isSelft = true
+                  if(mergeProps.includes(propName)){
+                    // console.log({child,prop},'--------------');
+                    acition?.[stateGroup]?.() 
+                    // console.log({childProp});  
+                    
+                    
+                  }
+                }
+                
+           
+
+
+              }
+
+              if(!isSelft){
+                child.props.push(prop) 
+              } 
+              // if(prop.name==='bind'&&[':cus-props',':cusProps',':CusProps'].includes(prop.rawName)){
+              //     // child.props.push(prop) 
+              //     // console.log(child.props,'child.props');
+                  
+              // }
             // console.log(isSelft,prop);
             
             }

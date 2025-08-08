@@ -14,12 +14,15 @@ const as = {
   img:'https://www.iamwzc.com/TMXK/noStyleUiDoc/img.png'    
 }
 const img = ref(as.img)
-   
+const effect = ref('text') 
 </script>   
 <template> 
-<w-div  :mx="120">
-asd
-</w-div>
+  <w-group :cus-props="{type:'primary',effect:''}"> 
+    <w-button type="error" @click="effect = effect === 'text'? 'defalut' : 'text'" >沉</w-button>
+    <!-- <w-button>鱼</w-button>
+    <w-button>落</w-button>
+    <w-button>雁</w-button> -->
+  </w-group>
 </template>   
  
 <style scoped lang="scss">

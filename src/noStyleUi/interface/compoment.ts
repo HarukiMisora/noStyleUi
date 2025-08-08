@@ -5,7 +5,7 @@ export type buttonEffectType = 'box'|'text'|'none'|'biger'|'small'|'rotate'
 export type buttonType = 'default'|'primary'|'info'|'success'|'warning'|'error'|'tertiary'|'none'
 export type buttonAbstractType = 'default'|'unseen'|'dash'|'glass'|'round'
 export type buttonSizeType = 'mini'|'small'|'default'|'biger'
-export type groupCusPropsType = [string,any][]
+export type groupCusPropsType = {[key:string]:any}
 import type {PropType} from 'vue'
 
 
