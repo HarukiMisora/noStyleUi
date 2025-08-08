@@ -6,7 +6,7 @@ import { useClass } from 'propstyle'
     
 const title = 'Prop Style !';
 
-const test = ref(   useClass('flex','center',['i-center','j-center',"'456'"])  )  
+const test = ref(   useClass('ml','120px',['i-center','j-center',"'456'"])  )  
 const test2 = ref(   useClass('flex','center')  )  
 
 const bottom = ref(100)

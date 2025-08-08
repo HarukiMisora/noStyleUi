@@ -252,7 +252,7 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
       // console.log({prop,value,expects,enhanced,enhancedProp});
       //只允许字面量为字符串
       if(enhanced.type==='string'&&enhancedProp.type==='string'){
-        if(enhancedProp.value in createStyles){
+        if(enhancedProp.value in createStyles||attributeGrop.includes(enhancedProp.value)){
           injectedCSSAnly(enhancedProp.value,enhanced.value,injectedCSS,logOut)
         }else{
           throw new Error(`useClass得到了一个非法的Prop名称  ${enhancedProp.value}`)
@@ -445,7 +445,7 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
 function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[],logOut:logOutF){
   // console.log('injectedCSSAnly\n'); 
   
-  const setStyle = (name:string,value:string) => {
+  const setStyle:setStyleT = (name,value) => {
     const key = `${prop}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
     if(value !== void 0){
       if(!checkClassWrited(injectedCSS,'.'+key)){
@@ -467,7 +467,13 @@ function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[]
     if(!value)return
     injectCssByClassName(name,injectedCSS,logOut)
   }
+  if(attributeGrop.includes(<keyof Pxs>prop)){
+    createPixCss(prop,content,setClassName,setStyle,'node')
+  }else{
   createStyles[prop](content,setClassName,setStyle) 
+
+  }
+  
 
 }
 
