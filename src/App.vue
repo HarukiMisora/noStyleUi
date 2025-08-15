@@ -1,26 +1,23 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useClass } from 'propstyle'  
+import { useClass } from 'propstyle'
+useClass('w','',['50%','100%'])
  
     
-const title = 'Prop Style !';
 
-const test = ref(   useClass('ml','120px',['i-center','j-center',"'456'"])  )  
-const test2 = ref(   useClass('c','red')  )  
 
-const bottom = ref(100)
+
 const as = { 
   head:'https://www.iamwzc.com/TMXK/noStyleUiDoc/head.png', 
   img:'https://www.iamwzc.com/TMXK/noStyleUiDoc/img.png'    
 }
 const img = ref(as.img)
-const effect = ref('text') 
 </script>   
 <template> 
 
-  <w-group   s.-bg="green size-100 r-n"  :bg="img"   >
-    <w-div bg="p-100-75" >p-100 距离左边100px</w-div>
+  <w-group hover="c=red;"  s.-bg="green size-100 r-n" :w="'50%'" :bg="img"   >
+    <w-div bg="p-100-75" w="50%" >p-100 距离左边100px</w-div>
 
   </w-group>
   

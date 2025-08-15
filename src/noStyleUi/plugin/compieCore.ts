@@ -32,6 +32,22 @@ const mergeProps = [
   "position",
   "hover"
 ]
+const transformStyleNameMatch:{[key:string]:string} = { 
+    'px':'',
+    '#':'c',
+    '%':'p', 
+    '(':'_',
+    ')':'_',  
+    ' ':'-',
+    '+':'_',
+    '-':'__',
+    '*':'___',
+    '\/':'____', 
+    ',':'-',
+    '.':'-',
+    '"':'_',
+    ":":'_'
+  }
 
 const transformStyleName:{[key:string]:string} = {
   borderTopWidth:'bd-t',
@@ -352,27 +368,12 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
         const setStyle:setStyleT = (styleName,value) =>{  
           // console.log(styleName,value);
           
-          const match:{[key:string]:string} = { 
-            'px':'',
-            '#':'c',
-            '%':'p', 
-            '(':'_',
-            ')':'_',  
-            ' ':'-',
-            '+':'_',
-            '-':'__',
-            '*':'___',
-            '\/':'____', 
-            ',':'-',
-            '.':'-',
-            '"':'_',
-            ":":'_'
-          }
+  
           const transformName = transformStyleName[<string>styleName] || propName
           
           let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.|"|:)/g,(_match)=>{
             // console.log(_match,index,str,'?');    
-            return match[_match]||'' 
+            return transformStyleNameMatch[_match]||'' 
           })}`
           // console.log({transformName,key});
           
@@ -453,9 +454,26 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
 //只注入css样式,不用考虑类名的注入
 function injectedCSSAnly(prop:string,content:string,injectedCSS:injectedCSST =[],logOut:logOutF){
   // console.log('injectedCSSAnly\n'); 
+
+
+
+
   
   const setStyle:setStyleT = (name,value) => {
-    const key = `${prop}-${String(value).replace(/px|\(|,|\)| |\./g,'').replace(/\//g,'-').replace(/#/g,'c')}`
+
+
+    const transformName = transformStyleName[<string>name] || prop
+    
+    let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.|"|:)/g,(_match)=>{
+      // console.log(_match,index,str,'?');    
+      return transformStyleNameMatch[_match]||'' 
+    })}`
+    // console.log({transformName,key});
+    
+    if(prop === 'hover'){
+      key = `hover-${key.replace(/hover-/g,'')}`
+    }
+
     if(value !== void 0){
       if(!checkClassWrited(injectedCSS,'.'+key)){
         const injectedCSSItem = {
