@@ -7,7 +7,7 @@ import { useClass } from 'propstyle'
 const title = 'Prop Style !';
 
 const test = ref(   useClass('ml','120px',['i-center','j-center',"'456'"])  )  
-const test2 = ref(   useClass('flex','center')  )  
+const test2 = ref(   useClass('c','red')  )  
 
 const bottom = ref(100)
 const as = { 
@@ -18,8 +18,10 @@ const img = ref(as.img)
 const effect = ref('text') 
 </script>   
 <template> 
-  <w-group flex c="red"  bg="https://www.iamwzc.com/TMXK/noStyleUiDoc/img.png" hover="c=red; f=70 ml=20 px=50" f="20" transition>
-    <w-span f="50" hover="c=red c=red+blue+black bg=rgb(0,0,0);https://www.iamwzc.com/TMXK/noStyleUiDoc/head.png;fill">hover字体的颜色也可以混合。</w-span>
+
+  <w-group   s.-bg="green size-100 r-n"  :bg="img"   >
+    <w-div bg="p-100-75" >p-100 距离左边100px</w-div>
+
   </w-group>
   
 </template>   

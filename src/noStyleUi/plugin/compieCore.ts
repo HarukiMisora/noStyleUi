@@ -43,6 +43,8 @@ const transformStyleName:{[key:string]:string} = {
   borderTopColor:'bd-t-c',
   borderBottomColor:'bd-b-c',
   backgroundColor:'bg-c',
+  backgroundPositionX:'bpx',
+  backgroundPositionY:'bpy',
   top:'position-t',
   bottom:'position-b',
   left:'position-l',
@@ -69,9 +71,12 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
         if(WGroupNames.includes(node.tag)){
           // generateCSS(Object.assign(node),className,injectedCSS,false,logOut,id)
           // console.log({node},{props:node.props?.[0]}); 
+          const afterMergeProps:Function[] = []
+
           for(let prop of node.props){
 
             for( let child of node.children.filter((item:any)=>1 === (item.type))){ 
+              //处理 cus-props的情况
               if(prop.name === 'bind'&&[':cus-props',':cusProps',':CusProps'].includes(prop.rawName)){
                 const cusProps = prop.exp.content.slice(1,-1).split(',')
                 // console.log(cusProps);
@@ -100,13 +105,15 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
                 continue
               }
           
-            // console.log('child=>',prop.name,{child,prop});     
+            // console.log('child=>',prop.name,{child,prop});    
+
 
             //自有属性? 
               let isSelft:boolean = false 
               
               for(let childProp of child.props){
-                const propName = prop.name === 'bind'? prop.rawName.replace(':','') : prop.name
+                const propName = prop.name === 'bind'? prop.rawName.replace(':','') : prop.name.replace(/s.-|static-/,'')
+                
                 const childPropName = childProp.name === 'bind'? childProp.rawName.replace(':','') : childProp.name
                 
                 const stateProp = prop.name === 'bind'? 0 : 1
@@ -122,20 +129,17 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
                     child.exp.content = child.exp.content.replace(/"/g,'') +" + ' "+parent.value.content.replace(/'/g,'\\\'')+"'"
                   },
                   4:()=>{//子不为bind，父为bind
-                    const temp = JSON.parse(JSON.stringify(childProp))
                     const temp2 = JSON.parse(JSON.stringify(prop))
-                    injectedCSSAnly(temp.name,temp.value.content,injectedCSS,logOut)
-                    childProp.name = temp2.name 
-                    childProp.exp = temp2.exp
-                    childProp.type = temp2.type 
-                    childProp.rawName = temp2.rawName
-                    childProp.arg = temp2.arg
-                    delete childProp.value
-                    // prop = temp 
-                    // console.log(4,{temp2,childProp});   
+                    const bindProp = {
+                      name:temp2.name,
+                      exp:temp2.exp,
+                      type:temp2.type,
+                      rawName:temp2.rawName,
+                      arg:temp2.arg,
+                    }
                     
-                    acition[3](childProp,temp)  
-                    // console.log(4,'acitive',{temp2,childProp});    
+                    afterMergeProps.push(()=>child.props.push(bindProp))
+                    // console.log(4,{temp2,childProp});   
 
                   },
                   5:()=>{//两个都是普通属性
@@ -178,9 +182,14 @@ export function compieCore({code,WGroupNames,injectedCSS}:optionsT,logOut:logOut
             
             }
           }
+
+          afterMergeProps.forEach((item:Function)=>{
+            item()
+          })
+          //清空WGroup的自有属性
           node.props.length = 0
           // console.log(node.children[0].props,'卧槽');    
-          
+          //添加删除标识
           node.tag = 'will-be-replace'
           // console.log(node); 
           
@@ -366,7 +375,7 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
             return match[_match]||'' 
           })}`
           // console.log({transformName,key});
-
+          
           if(propName === 'hover'){
             key = `hover-${key.replace(/hover-/g,'')}`
           }

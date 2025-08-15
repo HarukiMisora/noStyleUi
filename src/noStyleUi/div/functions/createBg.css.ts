@@ -16,6 +16,8 @@ const actions:{[key:string]:Function} = {
   //图片位置
   p:(option:any)=>actions.posn(option),
   posn:({setStyle,value}:styleWithValuesT)=>{
+    // console.log(1111);
+    
     const x = analysisPxs(value[1],'0')
     const y = analysisPxs(value[2],'0') 
     // console.log(x,y);
