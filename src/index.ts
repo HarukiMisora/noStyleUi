@@ -1,5 +1,5 @@
 
-import { WButton, WDiv, WSpan,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index.ts'
+import { WButton, WDiv, WSpan,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost,WRecyclingBucket} from './index.ts'
 import {vUpdate} from './noStyleUi/directive/update'
 import propStyleCompile from './noStyleUi/plugin/vite-plugin-propStyleCompileDom'
 export {useClass} from './noStyleUi/plugin/use'
@@ -21,16 +21,16 @@ export {
     img as WImg,
 
 } from './noStyleUi/div/Div'
-export{
-    button as WButton,
-}from './noStyleUi/button/button'
+export{button as WButton}from './noStyleUi/button/button'
+export {recyclingBucket as WRecyclingBucket} from './noStyleUi/recyclingbucket/recyclingbucket'
 export {group as WGroup} from './noStyleUi/group/group'
 export {ghost as WGhost} from './noStyleUi/ghost/ghost'
 export  function propStyle(Vue:any){
     Vue.component('WGroup',WGroup)
     Vue.component('WGhost',WGhost)
-
-
+    console.log(WRecyclingBucket);
+    
+    Vue.component('WRecyclingBucket',WRecyclingBucket)
     Vue.component('WA',WA)
     Vue.component('WDiv',WDiv)
     Vue.component('WSpan',WSpan)

@@ -1,0 +1,41 @@
+
+
+//move-effect
+@keyframes w-recy-infinite-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.w-recycling-bucket-rotate-animation {
+  animation: w-recy-infinite-rotate 0.5s linear infinite;
+  transform-origin: center;
+}
+
+
+//effect
+@keyframes w-recy-shake {
+  0%, 100% { transform: translate(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translate(-10px); }
+  20%, 40%, 60%, 80% { transform: translate(10px); }
+}
+.w-recycling-bucket-shake-animation {
+  animation: w-recy-shake 0.2s ease-in-out;
+}
+
+@keyframes w-recy-flash {
+  0%, 50%, 100% { 
+    opacity: 1;
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+  25% { 
+    opacity: 0.7;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 1);
+  }
+  75% { 
+    opacity: 0.7;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 1);
+  }
+}
+
+.w-recycling-bucket-flash-animation {
+  animation: w-recy-flash 0.6s ease-in-out;
+}

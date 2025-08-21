@@ -1,11 +1,20 @@
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useClass } from 'propstyle'
 useClass('w','',['50%','100%'])
- 
-    
-
+import { CartSharp } from '@vicons/ionicons5'
+const  bucketRef = ref()
+const cartNumber = ref(0)
+const GoodsRefs = ref()
+function addGoods (e:MouseEvent,index:number){
+  
+  cartNumber.value++
+  bucketRef.value.recycle(GoodsRefs.value[index-1])
+  // bucketRef.value.recycle(e.target)
+  
+  
+}
 
 
 const as = { 
@@ -15,11 +24,26 @@ const as = {
 const img = ref(as.img)
 </script>   
 <template> 
+    <w-recycling-bucket ref="bucketRef" mt="20"  :delay="100" :duration="1000" easing="ease" effect="shake" :move-effect="['rotate','small']">
+      <w-div f="18" w="50" position="rel" >
+        <CartSharp></CartSharp>
+        <span v-if="cartNumber" c="#fff" bg="red" w="25" h="25" fw="800" flex="center" radius="50%" position="abs l-50 b-40 ">{{ cartNumber }}</span>
+      </w-div>
+    </w-recycling-bucket>
+    <w-div flex="g-10 wrap" p="20">
+      <w-group hover="bd=1;red;solid"  bd="1 #0000 solid" p="5" radius="8" transition bg=" contain r-n" w="200"    >
+        <w-div v-for="i in 10" :key="i" @click="addGoods($event,i)" ref="GoodsRefs">
+          <w-div  h="200" w="188" :bg="img" s.-bg="contain r-n" radius="8">
+          </w-div>
+          <w-p px="5">商品名称</w-p>
+          <w-p px="5" c="red">
+            ￥99999 元
+          </w-p>
 
-  <w-group hover="c=red;"  s.-bg="green size-100 r-n" :w="'50%'" :bg="img"   >
-    <w-div bg="p-100-75" w="50%" >p-100 距离左边100px</w-div>
+        </w-div>
+      </w-group>
+    </w-div>
 
-  </w-group>
   
 </template>   
  

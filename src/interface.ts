@@ -1,4 +1,4 @@
-import {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost} from './index'
+import {WDiv,WSpan,WButton,WGroup,WA,WP,WH1,WCanvas,WDetailes,WLi,WMeter,WOl,WSummary,WTarck,WUl,WVideo,WImg,WGhost,WRecyclingBucket} from './index'
 export {propStyle,propStyleCompile,useClass} from './index'
 declare module 'vue'{
     export interface GlobalComponents{
@@ -20,6 +20,7 @@ declare module 'vue'{
         WUl:typeof WUl
         WVideo:typeof WVideo
         WImg:typeof WImg
+        WRecyclingBucket:typeof WRecyclingBucket
     }
 }
 

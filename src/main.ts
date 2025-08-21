@@ -5,9 +5,10 @@ import App from './App.vue'
 
 import {propStyle} from './index'
 // import './noStyleUi/div/style/css.scss'
-import './noStyleUi/button/style/index.scss'
+import './noStyleUi/style/ui.scss'
 
-   
+  console.log(propStyle);
+  
 createApp(App).use(propStyle).mount('#app')
 
 

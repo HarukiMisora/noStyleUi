@@ -11,7 +11,7 @@
     "build:beta": "npm run build:test && npm publish --tag beta",
     "build:test": "npm run clear && npm run build:types && vite build --emptyOutDir false && npm run rewriteExternals && npm run build:sass && npm run build:sassUi",
     "build:sass": "sass src/noStyleUi/div/style/css.scss dist/nostyleui.css -s compressed --no-source-map",
-    "build:sassUi": "sass src/noStyleUi/button/style/index.scss dist/ui.css -s compressed --no-source-map",
+    "build:sassUi": "sass src/noStyleUi/style/ui.scss dist/ui.css -s compressed --no-source-map",
     "build:types": "tsc -p tsconfig.lib.json",
     "clear": "node scripts/clear.js",
     "rewriteExternals": "node scripts/rewriteExternal.js"
