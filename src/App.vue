@@ -16,7 +16,8 @@ function addGoods (e:MouseEvent,index:number){
   })
   // bucketRef.value.recycle(e.target)
   
-  
+  const min= ref(0)
+  const max= ref(100)
 }
 
 
@@ -27,26 +28,10 @@ const as = {
 const img = ref(as.img)
 </script>   
 <template> 
-    <w-recycling-bucket ref="bucketRef" mt="20"  position="abs r-50 t--50" :delay="100" :duration="1000" easing="ease" effect="shake" :move-effect="['rotate','small']">
-      <w-div f="18" w="50" position="rel" >
-        <CartSharp></CartSharp>
-        <span v-if="cartNumber" c="#fff" bg="red" w="25" h="25" fw="800" flex="center" radius="50%" position="abs l-50 b-40 ">{{ cartNumber }}</span>
-      </w-div>
-    </w-recycling-bucket>
-    <w-div flex="g-10 wrap" p="20">
-      <w-group hover="bd=1;red;solid"  bd="1 #0000 solid" p="5" radius="8" transition bg=" contain r-n" w="200"    >
-        <w-div v-for="i in 10" :key="i" @click="addGoods($event,i)" ref="GoodsRefs">
-          <w-div  h="200" w="188" :bg="as.img" s.-bg="size-500 p-5--50 r-n" radius="8">
-          </w-div>
-          <w-p px="5">商品名称</w-p>
-          <w-p px="5" c="red">
-            ￥99999 元
-            <w-button></w-button>
-          </w-p>
-
-        </w-div>
-      </w-group>
-    </w-div>
+<w-div grid="col-3 row-?-45-40 g-5"  >
+  <w-div   v-for="i in '12346789'" :key="i" transition radius="4"  bg="#44567245" flex="center" hover="bg=#123456 c=white">🎄{{ i }}</w-div>
+  <w-div grid="item grow-1-5 gcol-2-3" transition radius="4"  bg="#44567245" flex="center" hover="bg=#123456 c=white">🧦5</w-div>
+</w-div>
 
   
 </template>   

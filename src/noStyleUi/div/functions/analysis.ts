@@ -21,6 +21,9 @@ export function analysisProps(options:string[]|string,callback:Function,propName
           propAndValue.splice(j,1)
           propAndValue[j]='-'+propAndValue[j]
         }
+        if(propAndValue[j]==='?'){
+          propAndValue[j] =''
+        }
       }
       callback(propAndValue)
   }
