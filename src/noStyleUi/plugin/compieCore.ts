@@ -65,7 +65,9 @@ const transformStyleName:{[key:string]:string} = {
   bottom:'position-b',
   left:'position-l',
   right:'position-r',
-  zIndex:'z'
+  zIndex:'z',
+  gridColumn:'grid-c',
+  gridRow:'grid-r',
 }
 
 
@@ -366,10 +368,11 @@ function generateCSS(node:any,className:{[key:string]:Boolean} ={},injectedCSS:i
         // console.log([prop.name,propName,'propName',node.tag],1111111111111111111111111,{prop});  
         
         const setStyle:setStyleT = (styleName,value) =>{  
-          // console.log(styleName,value);
           
   
           const transformName = transformStyleName[<string>styleName] || propName
+          console.log(styleName,value,transformName);
+
           
           let key = `${<string>transformName}-${String(value).replace(/(px|\/|#|%|\(|\)| |\+|\-|\*|\/|,|\.|"|:)/g,(_match)=>{
             // console.log(_match,index,str,'?');    
