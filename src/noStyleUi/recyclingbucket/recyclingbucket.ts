@@ -1,6 +1,6 @@
 import { defineComponent, h , ref, onMounted, render} from "vue";
 
-interface optionsT{startX?:number,startY?:number,endX?:number,endY?:number,moveEffect?:moveEffectT[],effect?:effectT}
+interface optionsT{startX?:number,startY?:number,endX?:number,endY?:number,moveEffect?:moveEffectT[],effect?:effectT,callBack?:Function}
 type effectT = 'none'|'shake'|'flash'
 type moveEffectT = 'rotate'|'small'
 export const  recyclingBucket =  defineComponent({
@@ -59,7 +59,8 @@ export const  recyclingBucket =  defineComponent({
             endX:options?.endX||position.value.left,
             endY:options?.endY||position.value.top,
             moveEffect:options?.moveEffect,
-            effect:options?.effect
+            effect:options?.effect,
+            callBack:options?.callBack
           })
         }else{
           // 接收一个鼠标事件
@@ -72,13 +73,14 @@ export const  recyclingBucket =  defineComponent({
             endX:options?.endX||position.value.left,
             endY:options?.endY||position.value.top,
             moveEffect:options?.moveEffect,
-            effect:options?.effect
+            effect:options?.effect,
+            callBack:options?.callBack
           })
         }
       }
 
       // 执行移动动画
-      function doIt(div:HTMLElement,{startX,startY,endX,endY,moveEffect,effect}:optionsT){
+      function doIt(div:HTMLElement,{startX,startY,endX,endY,moveEffect,effect,callBack}:optionsT){
         const easingValue   = props.easing in easingType? easingType[props.easing] : props.easing
           // console.log(moveEffect);
           
@@ -109,6 +111,7 @@ export const  recyclingBucket =  defineComponent({
           setTimeout(()=>{
             document.body.removeChild(div)
             effectEvents[effectThis]?.(bucketRef.value)
+            callBack?.()
           },props.duration+props.delay)
       }
       const effectEvents:{[key in effectT]:Function} = {
