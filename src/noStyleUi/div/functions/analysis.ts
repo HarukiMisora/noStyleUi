@@ -16,6 +16,12 @@ export function analysisProps(options:string[]|string,callback:Function,propName
 
   for(let i =0;i<arrLength;i++){
       const propAndValue = arr[i].split('-')
+      for(let j=0;j<propAndValue.length;j++){
+        if(propAndValue[j]===''){
+          propAndValue.splice(j,1)
+          propAndValue[j]='-'+propAndValue[j]
+        }
+      }
       callback(propAndValue)
   }
 
